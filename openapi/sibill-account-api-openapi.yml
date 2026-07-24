@@ -1,0 +1,1148 @@
+openapi: 3.0.0
+info:
+  title: Sibill Integration Account API
+  version: 1.0.0
+  x-logo:
+    altText: Sibill logo
+    backgroundColor: '#FFFFFF'
+    url: https://sibill.com/wp-content/uploads/2022/12/logo-sibill.svg
+servers:
+- url: http://integration.app.svc.cluster.local:4000
+  variables: {}
+security: []
+tags:
+- name: Account
+paths:
+  /api/v1/companies/{company_id}/accounts:
+    get:
+      callbacks: {}
+      description: 'The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.
+
+        A cursor is needed to traverse the results.
+
+        '
+      operationId: SibillWeb.Integration.V1.AccountsController.index
+      parameters:
+      - description: The company the accounts belong to
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The page size
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+      - description: 'The pagination cursor. A cursor is used to paginate through a large set of data.
+
+          It is a unique identifier that represents a specific position in the dataset.
+
+          '
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+      - description: 'List of filters on the resource. Currently the fields that allow to be filtered are: `id`'
+        in: query
+        name: filter
+        required: false
+        schema:
+          type: object
+      - description: 'Fields for which we can order the results. Sortable fields: `created_at`'
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountList'
+          description: Ok
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: List all accounts for the company
+      tags:
+      - Account
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request GET \\\n     --url ${base_url}/api/v1/companies/:company_id/accounts \\\n     --header \"Authorization: Bearer ${authorization_token}\"\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'GET /api/v1/companies/:company_id/accounts HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/accounts"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}]
+
+
+          Req.get(url, headers: headers)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/accounts"
+
+          headers = {"Authorization": "Bearer ${authorization_token}"}
+
+
+          response = requests.get(url, headers=headers)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/accounts\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/accounts\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"GET\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+  /api/v1/companies/{company_id}/accounts/{id}:
+    get:
+      callbacks: {}
+      description: Returns all the information for a specific account from its identifier
+      operationId: SibillWeb.Integration.V1.AccountsController.show
+      parameters:
+      - description: The company the account belongs to
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The account identifier
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountData'
+          description: Ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Not found
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Get a account
+      tags:
+      - Account
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request GET \\\n     --url ${base_url}/api/v1/companies/:company_id/accounts/:account_id \\\n     --header \"Authorization: Bearer ${authorization_token}\"\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'GET /api/v1/companies/:company_id/accounts/:account_id HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/accounts/:account_id"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}]
+
+
+          Req.get(url, headers: headers)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/accounts/:account_id"
+
+          headers = {"Authorization": "Bearer ${authorization_token}"}
+
+
+          response = requests.get(url, headers=headers)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/accounts/:account_id\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/accounts/:account_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"GET\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+components:
+  schemas:
+    Page:
+      properties:
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          nullable: true
+          type: string
+        size:
+          description: The current page size
+          type: integer
+      title: Page
+      type: object
+    AccountList:
+      description: List of account representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AccountSchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: AccountList
+      type: object
+    AccountData:
+      description: Account data object
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountSchema'
+      title: AccountData
+      type: object
+    IntegrationError:
+      properties:
+        errors:
+          description: The list of errors encountered during the operation with detailed information
+          items:
+            properties:
+              code:
+                description: Short code identifying an error type
+                example: bad_request
+                type: string
+              detail:
+                description: The message detail that describes the error
+                example: null value where string expected
+                nullable: true
+                type: string
+              source:
+                nullable: true
+                properties:
+                  pointer:
+                    description: The exact position in the request where the error occurred
+                    example: /data/attributes/name
+                    type: string
+                type: object
+              title:
+                description: The message title that describes the error. It is a short, human-readable summary of the problem
+                example: Invalid value
+                type: string
+            type: object
+          type: array
+      required:
+      - errors
+      title: IntegrationError
+      type: object
+    AccountSchema:
+      description: Account data representation
+      properties:
+        available_balance:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          nullable: true
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+        balance_date:
+          description: The date when the account balance was last updated
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        created_at:
+          description: Creation date of the record
+          format: date-time
+          readOnly: true
+          type: string
+        credit_limit:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          nullable: true
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+        currency:
+          description: 'The currency of the account.
+
+
+            Possible values are:
+
+            "- AED\n- AFN\n- ALL\n- AMD\n- ANG\n- AOA\n- ARS\n- AUD\n- AWG\n- AZN\n- BAM\n- BBD\n- BDT\n- BGN\n- BHD\n- BIF\n- BMD\n- BND\n- BOB\n- BOV\n- BRL\n- BSD\n- BTN\n- BWP\n- BYN\n- BZD\n- CAD\n- CDF\n- CHE\n- CHF\n- CHW\n- CLF\n- CLP\n- CNY\n- COP\n- COU\n- CRC\n- CUC\n- CUP\n- CVE\n- CZK\n- DJF\n- DKK\n- DOP\n- DZD\n- EGP\n- ERN\n- ETB\n- EUR\n- FJD\n- FKP\n- GBP\n- GEL\n- GHS\n- GIP\n- GMD\n- GNF\n- GTQ\n- GYD\n- HKD\n- HNL\n- HRK\n- HTG\n- HUF\n- IDR\n- ILS\n- INR\n- IQD\n- IRR\n- ISK\n- JMD\n- JOD\n- JPY\n- KES\n- KGS\n- KHR\n- KMF\n- KPW\n- KRW\n- KWD\n- KYD\n- KZT\n- LAK\n- LBP\n- LKR\n- LRD\n- LSL\n- LYD\n- MAD\n- MDL\n- MGA\n- MKD\n- MMK\n- MNT\n- MOP\n- MRU\n- MUR\n- MVR\n- MWK\n- MXN\n- MXV\n- MYR\n- MZN\n- NAD\n- NGN\n- NIO\n- NOK\n- NPR\n- NZD\n- OMR\n- PAB\n- PEN\n- PGK\n- PHP\n- PKR\n- PLN\n- PYG\n- QAR\n- RON\n- RSD\n- RUB\n- RWF\n- SAR\n- SBD\n- SCR\n- SDG\n- SEK\n- SGD\n- SHP\n- SLL\n- SOS\n- SRD\n- SSP\n- STN\n- SVC\n- SYP\n- SZL\n- THB\n- TJS\n- TMT\n- TND\n- TOP\n- TRY\n- TTD\n- TWD\n- TZS\n- UAH\n- UGX\n- USD\n- USN\n- UYI\n- UYU\n- UYW\n- UZS\n- VES\n- VND\n- VUV\n- WST\n- XAF\n- XAG\n- XAU\n- XBA\n- XBB\n- XBC\n- XBD\n- XCD\n- XDR\n- XOF\n- XPD\n- XPF\n- XPT\n- XSU\n- XTS\n- XUA\n- XXX\n- YER\n- ZAR\n- ZMW\n- ZWL"
+
+            '
+          enum:
+          - AED
+          - AFN
+          - ALL
+          - AMD
+          - ANG
+          - AOA
+          - ARS
+          - AUD
+          - AWG
+          - AZN
+          - BAM
+          - BBD
+          - BDT
+          - BGN
+          - BHD
+          - BIF
+          - BMD
+          - BND
+          - BOB
+          - BOV
+          - BRL
+          - BSD
+          - BTN
+          - BWP
+          - BYN
+          - BZD
+          - CAD
+          - CDF
+          - CHE
+          - CHF
+          - CHW
+          - CLF
+          - CLP
+          - CNY
+          - COP
+          - COU
+          - CRC
+          - CUC
+          - CUP
+          - CVE
+          - CZK
+          - DJF
+          - DKK
+          - DOP
+          - DZD
+          - EGP
+          - ERN
+          - ETB
+          - EUR
+          - FJD
+          - FKP
+          - GBP
+          - GEL
+          - GHS
+          - GIP
+          - GMD
+          - GNF
+          - GTQ
+          - GYD
+          - HKD
+          - HNL
+          - HRK
+          - HTG
+          - HUF
+          - IDR
+          - ILS
+          - INR
+          - IQD
+          - IRR
+          - ISK
+          - JMD
+          - JOD
+          - JPY
+          - KES
+          - KGS
+          - KHR
+          - KMF
+          - KPW
+          - KRW
+          - KWD
+          - KYD
+          - KZT
+          - LAK
+          - LBP
+          - LKR
+          - LRD
+          - LSL
+          - LYD
+          - MAD
+          - MDL
+          - MGA
+          - MKD
+          - MMK
+          - MNT
+          - MOP
+          - MRU
+          - MUR
+          - MVR
+          - MWK
+          - MXN
+          - MXV
+          - MYR
+          - MZN
+          - NAD
+          - NGN
+          - NIO
+          - NOK
+          - NPR
+          - NZD
+          - OMR
+          - PAB
+          - PEN
+          - PGK
+          - PHP
+          - PKR
+          - PLN
+          - PYG
+          - QAR
+          - RON
+          - RSD
+          - RUB
+          - RWF
+          - SAR
+          - SBD
+          - SCR
+          - SDG
+          - SEK
+          - SGD
+          - SHP
+          - SLL
+          - SOS
+          - SRD
+          - SSP
+          - STN
+          - SVC
+          - SYP
+          - SZL
+          - THB
+          - TJS
+          - TMT
+          - TND
+          - TOP
+          - TRY
+          - TTD
+          - TWD
+          - TZS
+          - UAH
+          - UGX
+          - USD
+          - USN
+          - UYI
+          - UYU
+          - UYW
+          - UZS
+          - VES
+          - VND
+          - VUV
+          - WST
+          - XAF
+          - XAG
+          - XAU
+          - XBA
+          - XBB
+          - XBC
+          - XBD
+          - XCD
+          - XDR
+          - XOF
+          - XPD
+          - XPF
+          - XPT
+          - XSU
+          - XTS
+          - XUA
+          - XXX
+          - YER
+          - ZAR
+          - ZMW
+          - ZWL
+          nullable: true
+          readOnly: true
+          type: string
+        current_balance:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          nullable: true
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+        id:
+          description: The id of the account
+          example: 019f8035-9c14-7aa7-9185-f8cd9f742d26
+          format: uuid
+          readOnly: true
+          type: string
+        nickname:
+          description: A friendly name for the account
+          nullable: true
+          readOnly: true
+          type: string
+      title: AccountSchema
+      type: object
+  securitySchemes:
+    authorization:
+      description: Sibill Integration API scheme documentation
+      scheme: bearer
+      type: https

@@ -1,0 +1,1532 @@
+openapi: 3.0.0
+info:
+  title: Sibill Integration Account Flow API
+  version: 1.0.0
+  x-logo:
+    altText: Sibill logo
+    backgroundColor: '#FFFFFF'
+    url: https://sibill.com/wp-content/uploads/2022/12/logo-sibill.svg
+servers:
+- url: http://integration.app.svc.cluster.local:4000
+  variables: {}
+security: []
+tags:
+- name: Flow
+paths:
+  /api/v1/companies/{company_id}/documents/{document_id}/flows:
+    get:
+      callbacks: {}
+      description: 'The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.
+
+        A cursor is needed to traverse the results.
+
+        '
+      operationId: SibillWeb.Integration.V1.FlowsController.index
+      parameters:
+      - description: The company the flows belongs to
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The document identifier
+        in: path
+        name: document_id
+        required: true
+        schema:
+          type: string
+      - description: The page size
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+      - description: 'The pagination cursor. A cursor is used to paginate through a large set of data.
+
+          It is a unique identifier that represents a specific position in the dataset.
+
+          '
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowList'
+          description: Ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Not found
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Get the list of flows for the given document
+      tags:
+      - Flow
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request GET \\\n     --url ${base_url}/api/v1/companies/:company_id/documents/:document_id/flows \\\n     --header \"Authorization: Bearer ${authorization_token}\"\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'GET /api/v1/companies/:company_id/documents/:document_id/flows HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/documents/:document_id/flows"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}]
+
+
+          Req.get(url, headers: headers)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/documents/:document_id/flows"
+
+          headers = {"Authorization": "Bearer ${authorization_token}"}
+
+
+          response = requests.get(url, headers=headers)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/documents/:document_id/flows\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/:document_id/flows\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"GET\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+    post:
+      callbacks: {}
+      operationId: SibillWeb.Integration.V1.FlowsController.create
+      parameters:
+      - description: The company the flow belongs to
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The document identifier
+        in: path
+        name: document_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlowCreate'
+        description: Flow
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowData'
+          description: Flow created
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unprocessable Entity
+      security:
+      - authorization: []
+      summary: Create a new flow for the given document
+      tags:
+      - Flow
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request POST \\\n     --url ${base_url}/api/v1/companies/:company_id/documents/:document_id/flows \\\n     --header \"Authorization: Bearer ${authorization_token}\" \\\n     --header \"Content-Type: application/json\" \\\n     --data '${your payload here}'\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'POST /api/v1/companies/:company_id/documents/:document_id/flows HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          Content-Type: application/json
+
+          ${your payload here}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/documents/:document_id/flows"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}, {"Content-Type", "application/json"}]
+
+          payload = ${your payload here}
+
+
+          Req.post(url, headers: headers, body: payload)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/documents/:document_id/flows"
+
+          headers = {"Authorization": "Bearer ${authorization_token}", "Content-Type": "application/json"}
+
+          payload = ${your payload here}
+
+
+          response = requests.post(url, headers=headers, json=payload)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/documents/:document_id/flows\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .header(\"Content-Type\", \"application/json\")\n  .POST(HttpRequest.BodyPublishers.ofString(${your payload here}))\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/:document_id/flows\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"POST\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+  /api/v1/companies/{company_id}/documents/{document_id}/flows/{id}:
+    delete:
+      callbacks: {}
+      operationId: SibillWeb.Integration.V1.FlowsController.delete
+      parameters:
+      - description: The company the flow belongs to
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The document identifier
+        in: path
+        name: document_id
+        required: true
+        schema:
+          type: string
+      - description: The flow identifier
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          content:
+            application/json: {}
+          description: Flow delete response
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Not found
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Delete a flow for the given document
+      tags:
+      - Flow
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request DELETE \\\n     --url ${base_url}/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id \\\n     --header \"Authorization: Bearer ${authorization_token}\"\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'DELETE /api/v1/companies/:company_id/documents/:document_id/flows/:flow_id HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}]
+
+
+          Req.delete(url, headers: headers)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id"
+
+          headers = {"Authorization": "Bearer ${authorization_token}"}
+
+
+          response = requests.delete(url, headers=headers)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .DELETE()\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"DELETE\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+    get:
+      callbacks: {}
+      operationId: SibillWeb.Integration.V1.FlowsController.show
+      parameters:
+      - description: The company the flow belongs to
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The document identifier
+        in: path
+        name: document_id
+        required: true
+        schema:
+          type: string
+      - description: The flow identifier
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowData'
+          description: Ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Not found
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Get a specific flow for the document
+      tags:
+      - Flow
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request GET \\\n     --url ${base_url}/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id \\\n     --header \"Authorization: Bearer ${authorization_token}\"\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'GET /api/v1/companies/:company_id/documents/:document_id/flows/:flow_id HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}]
+
+
+          Req.get(url, headers: headers)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id"
+
+          headers = {"Authorization": "Bearer ${authorization_token}"}
+
+
+          response = requests.get(url, headers=headers)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"GET\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+    patch:
+      callbacks: {}
+      operationId: SibillWeb.Integration.V1.FlowsController.update
+      parameters:
+      - description: The company where to execute the operation
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The document identifier
+        in: path
+        name: document_id
+        required: true
+        schema:
+          type: string
+      - description: The flow identifier
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlowUpdate'
+        description: Flow
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowData'
+          description: Flow updated
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unprocessable Entity
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Update an existing flow
+      tags:
+      - Flow
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request PATCH \\\n     --url ${base_url}/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id \\\n     --header \"Authorization: Bearer ${authorization_token}\" \\\n     --header \"Content-Type: application/json\" \\\n     --data '${your payload here}'\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'PATCH /api/v1/companies/:company_id/documents/:document_id/flows/:flow_id HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          Content-Type: application/json
+
+          ${your payload here}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}, {"Content-Type", "application/json"}]
+
+          payload = ${your payload here}
+
+
+          Req.patch(url, headers: headers, body: payload)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id"
+
+          headers = {"Authorization": "Bearer ${authorization_token}", "Content-Type": "application/json"}
+
+          payload = ${your payload here}
+
+
+          response = requests.patch(url, headers=headers, json=payload)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .header(\"Content-Type\", \"application/json\")\n  .PATCH(HttpRequest.BodyPublishers.ofString(${your payload here}))\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"PATCH\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+components:
+  schemas:
+    Page:
+      properties:
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          nullable: true
+          type: string
+        size:
+          description: The current page size
+          type: integer
+      title: Page
+      type: object
+    FlowCreate:
+      description: Create flow data object
+      properties:
+        account_id:
+          description: The id of the account
+          example: 019f8035-d770-7a49-a7e9-5e4c20a3381a
+          format: uuid
+          nullable: true
+          type: string
+        amount:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+        expected_payment_date:
+          description: The date when the flow is due
+          format: date
+          type: string
+        payment_date:
+          description: The date when the flow was paid
+          format: date
+          type: string
+        payment_method:
+          description: 'The payment method.
+
+
+            Possible values are:
+
+            - `CARD`: Payment by debit or credit card.
+
+            - `CASH`: Payment in cash.
+
+            - `CHECK`: Payment by bank check.
+
+            - `DEFERRED`: Amount not collected at the time of sale (e.g. ticket, corrispettivo).
+
+            - `TAX_FORM`: Payment via tax withholding form (e.g. F24 ritenute d''acconto).
+
+            - `FISCAL_CREDIT`: Payment offset by a fiscal/tax credit.
+
+            - `OTHER`: Any payment method not covered by the other values.
+
+            - `POSTAL`: Payment via postal order or postal current account (bollettino postale).
+
+            - `RIBA`: Ricevuta Bancaria — Italian bank receipt collection instrument.
+
+            - `SDD`: SEPA Direct Debit — recurring bank debit authorised by the payer.
+
+            - `TRANSFER`: Bank wire transfer (bonifico bancario).
+
+            '
+          enum:
+          - CARD
+          - CASH
+          - CHECK
+          - DEFERRED
+          - TAX_FORM
+          - FISCAL_CREDIT
+          - OTHER
+          - POSTAL
+          - RIBA
+          - SDD
+          - TRANSFER
+          nullable: true
+          type: string
+        payment_status:
+          description: 'The payment status.
+
+
+            Possible values are:
+
+            - `PAID`: The flow has been paid.
+
+            - `TO_PAY`: The flow is to be paid.
+
+            '
+          enum:
+          - PAID
+          - TO_PAY
+          type: string
+      required:
+      - amount
+      - expected_payment_date
+      - payment_date
+      - payment_status
+      title: FlowCreate
+      type: object
+    FlowData:
+      description: Flow data object
+      properties:
+        data:
+          $ref: '#/components/schemas/FlowSchema'
+      title: FlowData
+      type: object
+    FlowUpdate:
+      description: Update flow data object
+      properties:
+        amount:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+        expected_payment_date:
+          description: The date when the flow is due
+          format: date
+          type: string
+        id:
+          description: The flow identifier
+          example: 019f8035-d795-7309-8237-08857e973d3d
+          format: uuid
+          readOnly: true
+          type: string
+        payment_date:
+          description: The date when the flow was paid
+          format: date
+          type: string
+        payment_method:
+          description: The payment method
+          enum:
+          - CARD
+          - CASH
+          - CHECK
+          - DEFERRED
+          - TAX_FORM
+          - FISCAL_CREDIT
+          - OTHER
+          - POSTAL
+          - RIBA
+          - SDD
+          - TRANSFER
+          nullable: true
+          type: string
+        payment_status:
+          description: The payment status
+          enum:
+          - PAID
+          - TO_PAY
+          type: string
+      title: FlowUpdate
+      type: object
+    FlowList:
+      description: List of flow representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/FlowSchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: FlowList
+      type: object
+    IntegrationError:
+      properties:
+        errors:
+          description: The list of errors encountered during the operation with detailed information
+          items:
+            properties:
+              code:
+                description: Short code identifying an error type
+                example: bad_request
+                type: string
+              detail:
+                description: The message detail that describes the error
+                example: null value where string expected
+                nullable: true
+                type: string
+              source:
+                nullable: true
+                properties:
+                  pointer:
+                    description: The exact position in the request where the error occurred
+                    example: /data/attributes/name
+                    type: string
+                type: object
+              title:
+                description: The message title that describes the error. It is a short, human-readable summary of the problem
+                example: Invalid value
+                type: string
+            type: object
+          type: array
+      required:
+      - errors
+      title: IntegrationError
+      type: object
+    FlowSchema:
+      description: Flow data representation
+      properties:
+        account_id:
+          description: The id of the account
+          example: 019f8035-d726-7b45-847b-05e0fb123222
+          format: uuid
+          nullable: true
+          readOnly: true
+          type: string
+        amount:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+        created_at:
+          description: The date of creation
+          format: date-time
+          readOnly: true
+          type: string
+        document_id:
+          description: The id of the document
+          example: 019f8035-d726-7414-ad31-76243aee0460
+          format: uuid
+          readOnly: true
+          type: string
+        expected_payment_date:
+          description: The date when the flow is due/The date when the flow was paid when the flow is reconciled
+          format: date
+          readOnly: true
+          type: string
+        id:
+          description: The flow identifier
+          example: 019f8035-9d1c-7d2e-9eae-763f79a2d5d9
+          format: uuid
+          readOnly: true
+          type: string
+        payment_date:
+          description: The date when the flow is due
+          format: date
+          readOnly: true
+          type: string
+        payment_method:
+          description: 'The payment method.
+
+
+            Possible values are:
+
+            - `CARD`: Payment by debit or credit card.
+
+            - `CASH`: Payment in cash.
+
+            - `CHECK`: Payment by bank check.
+
+            - `DEFERRED`: Amount not collected at the time of sale (e.g. ticket, corrispettivo).
+
+            - `TAX_FORM`: Payment via tax withholding form (e.g. F24 ritenute d''acconto).
+
+            - `FISCAL_CREDIT`: Payment offset by a fiscal/tax credit.
+
+            - `OTHER`: Any payment method not covered by the other values.
+
+            - `POSTAL`: Payment via postal order or postal current account (bollettino postale).
+
+            - `RIBA`: Ricevuta Bancaria — Italian bank receipt collection instrument.
+
+            - `SDD`: SEPA Direct Debit — recurring bank debit authorised by the payer.
+
+            - `TRANSFER`: Bank wire transfer (bonifico bancario).
+
+            '
+          enum:
+          - CARD
+          - CASH
+          - CHECK
+          - DEFERRED
+          - TAX_FORM
+          - FISCAL_CREDIT
+          - OTHER
+          - POSTAL
+          - RIBA
+          - SDD
+          - TRANSFER
+          nullable: true
+          readOnly: true
+          type: string
+        payment_status:
+          description: 'The payment status.
+
+
+            Possible values are:
+
+            - `PAID`: The flow has been paid.
+
+            - `TO_PAY`: The flow is to be paid.
+
+            '
+          enum:
+          - PAID
+          - TO_PAY
+          readOnly: true
+          type: string
+      title: FlowSchema
+      type: object
+  securitySchemes:
+    authorization:
+      description: Sibill Integration API scheme documentation
+      scheme: bearer
+      type: https

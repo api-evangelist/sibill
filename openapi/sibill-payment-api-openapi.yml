@@ -1,0 +1,433 @@
+openapi: 3.0.0
+info:
+  title: Sibill Integration Account Payment API
+  version: 1.0.0
+  x-logo:
+    altText: Sibill logo
+    backgroundColor: '#FFFFFF'
+    url: https://sibill.com/wp-content/uploads/2022/12/logo-sibill.svg
+servers:
+- url: http://integration.app.svc.cluster.local:4000
+  variables: {}
+security: []
+tags:
+- name: Payment
+paths:
+  /api/v1/companies/{company_id}/requests/bulk-payment:
+    post:
+      callbacks: {}
+      description: Creates a draft payment operation from bulk-payment rows and returns the Sibill app redirect URL.
+      operationId: SibillWeb.Integration.V1.RequestsController.bulk_payment
+      parameters:
+      - description: The company where to create the draft payment operation
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                payments:
+                  items:
+                    properties:
+                      amount:
+                        properties:
+                          amount:
+                            example: '2500.00'
+                            type: string
+                          currency:
+                            enum:
+                            - EUR
+                            example: EUR
+                            type: string
+                        required:
+                        - amount
+                        - currency
+                        type: object
+                      payee_identifier:
+                        example: IT60X0542811101000000123456
+                        type: string
+                      payee_name:
+                        example: Mario Rossi
+                        type: string
+                      reason:
+                        example: Stipendio maggio 2026
+                        type: string
+                    required:
+                    - amount
+                    - payee_identifier
+                    - payee_name
+                    - reason
+                    type: object
+                  minItems: 1
+                  type: array
+              required:
+              - payments
+              type: object
+        description: Bulk payment request
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    properties:
+                      request_id:
+                        format: uuid
+                        type: string
+                    required:
+                    - request_id
+                    type: object
+                  links:
+                    items:
+                      properties:
+                        href:
+                          format: uri
+                          type: string
+                        rel:
+                          enum:
+                          - externalLink
+                          type: string
+                      type: object
+                    type: array
+                required:
+                - data
+                - links
+                type: object
+          description: Bulk payment request created
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unprocessable Entity
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Create a draft bulk payment request
+      tags:
+      - Payment
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request POST \\\n     --url ${base_url}/api/v1/companies/:company_id/requests/bulk-payment \\\n     --header \"Authorization: Bearer ${authorization_token}\" \\\n     --header \"Content-Type: application/json\" \\\n     --data '${your payload here}'\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'POST /api/v1/companies/:company_id/requests/bulk-payment HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          Content-Type: application/json
+
+          ${your payload here}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/requests/bulk-payment"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}, {"Content-Type", "application/json"}]
+
+          payload = ${your payload here}
+
+
+          Req.post(url, headers: headers, body: payload)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/requests/bulk-payment"
+
+          headers = {"Authorization": "Bearer ${authorization_token}", "Content-Type": "application/json"}
+
+          payload = ${your payload here}
+
+
+          response = requests.post(url, headers=headers, json=payload)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/requests/bulk-payment\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .header(\"Content-Type\", \"application/json\")\n  .POST(HttpRequest.BodyPublishers.ofString(${your payload here}))\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/requests/bulk-payment\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"POST\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+  /api/v1/companies/{company_id}/requests/f24/ocr:
+    post:
+      callbacks: {}
+      description: 'Upload a raw F24 PDF for asynchronous OCR processing.
+
+
+        The PDF is stored in S3 under a company-scoped path and an `F24Upload`
+
+        record is created with status `WAITING_OCR`. The response contains a
+
+        `request_id` that uniquely identifies the processing job — use it to
+
+        correlate the OCR result delivered later via webhook.
+
+
+        The request body must be the raw binary content of the PDF file with
+
+        `Content-Type: application/pdf`. The `file_name` query parameter is
+
+        required and should reflect the original file name; `label` is optional
+
+        and can be used to attach a human-readable description to the upload.
+
+
+        Requires the `*` wildcard permission or the `payments:f24:write` permission.
+
+        '
+      operationId: SibillWeb.Integration.V1.RequestsController.f24_ocr
+      parameters:
+      - description: The company where to execute the operation
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: User-provided file_name for the operation
+        in: query
+        name: file_name
+        required: true
+        schema:
+          type: string
+      - description: User-provided label for the operation
+        in: query
+        name: label
+        required: true
+        schema:
+          type: string
+      - description: Indicate the original mime type of the resource. It could be <b>application/pdf</b>
+        in: header
+        name: content-type
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/pdf:
+            schema:
+              format: binary
+              type: object
+        description: PDF file
+        required: false
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    properties:
+                      request_id:
+                        type: string
+                    required:
+                    - request_id
+                    type: object
+                  links:
+                    items:
+                      properties:
+                        href:
+                          format: uri
+                          type: string
+                        rel:
+                          enum:
+                          - externalLink
+                          type: string
+                      type: object
+                    type: array
+                required:
+                - data
+                - links
+                type: object
+          description: OCR request accepted
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unprocessable Entity
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Submit an F24 PDF for OCR processing
+      tags:
+      - Payment
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request POST \\\n     --url ${base_url}/api/v1/companies/:company_id/requests/f24/ocr?file_name=:file_name&label=:label \\\n     --header \"Authorization: Bearer ${authorization_token}\" \\\n     --header \"Content-Type: application/pdf\" \\\n     --data '${your payload here}'\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'POST /api/v1/companies/:company_id/requests/f24/ocr?file_name=:file_name&label=:label HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          Content-Type: application/pdf
+
+          ${your payload here}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/requests/f24/ocr?file_name=:file_name&label=:label"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}, {"Content-Type", "application/pdf"}]
+
+          payload = ${your payload here}
+
+
+          Req.post(url, headers: headers, body: payload)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/requests/f24/ocr?file_name=:file_name&label=:label"
+
+          headers = {"Authorization": "Bearer ${authorization_token}", "Content-Type": "application/pdf"}
+
+          payload = ${your payload here}
+
+
+          response = requests.post(url, headers=headers, json=payload)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/requests/f24/ocr?file_name=:file_name&label=:label\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .header(\"Content-Type\", \"application/pdf\")\n  .POST(HttpRequest.BodyPublishers.ofString(${your payload here}))\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/requests/f24/ocr?file_name=:file_name&label=:label\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"POST\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/pdf\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+components:
+  schemas:
+    IntegrationError:
+      properties:
+        errors:
+          description: The list of errors encountered during the operation with detailed information
+          items:
+            properties:
+              code:
+                description: Short code identifying an error type
+                example: bad_request
+                type: string
+              detail:
+                description: The message detail that describes the error
+                example: null value where string expected
+                nullable: true
+                type: string
+              source:
+                nullable: true
+                properties:
+                  pointer:
+                    description: The exact position in the request where the error occurred
+                    example: /data/attributes/name
+                    type: string
+                type: object
+              title:
+                description: The message title that describes the error. It is a short, human-readable summary of the problem
+                example: Invalid value
+                type: string
+            type: object
+          type: array
+      required:
+      - errors
+      title: IntegrationError
+      type: object
+  securitySchemes:
+    authorization:
+      description: Sibill Integration API scheme documentation
+      scheme: bearer
+      type: https

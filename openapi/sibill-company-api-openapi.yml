@@ -1,0 +1,263 @@
+openapi: 3.0.0
+info:
+  title: Sibill Integration Account Company API
+  version: 1.0.0
+  x-logo:
+    altText: Sibill logo
+    backgroundColor: '#FFFFFF'
+    url: https://sibill.com/wp-content/uploads/2022/12/logo-sibill.svg
+servers:
+- url: http://integration.app.svc.cluster.local:4000
+  variables: {}
+security: []
+tags:
+- name: Company
+paths:
+  /api/v1/companies:
+    get:
+      callbacks: {}
+      description: List all the companies for the current integrator
+      operationId: SibillWeb.Integration.V1.CompaniesController.index
+      parameters:
+      - description: 'Fields that will be expanded. Expandable fields: `company_identity`, `subscriptions`'
+        in: query
+        name: expand
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyList'
+          description: Ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: List all the available companies
+      tags:
+      - Company
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request GET \\\n     --url ${base_url}/api/v1/companies \\\n     --header \"Authorization: Bearer ${authorization_token}\"\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'GET /api/v1/companies HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}]
+
+
+          Req.get(url, headers: headers)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies"
+
+          headers = {"Authorization": "Bearer ${authorization_token}"}
+
+
+          response = requests.get(url, headers=headers)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"GET\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+components:
+  schemas:
+    IntegrationError:
+      properties:
+        errors:
+          description: The list of errors encountered during the operation with detailed information
+          items:
+            properties:
+              code:
+                description: Short code identifying an error type
+                example: bad_request
+                type: string
+              detail:
+                description: The message detail that describes the error
+                example: null value where string expected
+                nullable: true
+                type: string
+              source:
+                nullable: true
+                properties:
+                  pointer:
+                    description: The exact position in the request where the error occurred
+                    example: /data/attributes/name
+                    type: string
+                type: object
+              title:
+                description: The message title that describes the error. It is a short, human-readable summary of the problem
+                example: Invalid value
+                type: string
+            type: object
+          type: array
+      required:
+      - errors
+      title: IntegrationError
+      type: object
+    SubscriptionData:
+      description: Subscription data representation
+      properties:
+        created_at:
+          description: Creation date
+          format: date-time
+          readOnly: true
+          type: string
+        status:
+          description: 'Shows the status of the subscription.
+
+
+            Possible values are:
+
+
+            - `TRIAL`: The subscription is in trial
+
+            - `TRIAL_WILL_END`: Trial period is nearing its end
+
+            - `TRIAL_WITH_PAYMENT_METHOD`: The subscription is in trial and a payment method had been provided
+
+            - `ACTIVE`: The subscription is active
+
+            - `PAST_DUE`: The trial has ended and no valid payment method has been provided
+
+            - `CANCELED`: The subscription has been canceled
+
+            - `INCOMPLETE`: The payment for the subscription has failed
+
+            '
+          enum:
+          - PRE_TRIAL
+          - TRIAL
+          - TRIAL_WILL_END
+          - TRIAL_WITH_PAYMENT_METHOD
+          - ACTIVE
+          - PAST_DUE
+          - CANCELED
+          - INCOMPLETE
+          - UNPAID
+          readOnly: true
+          type: string
+      title: SubscriptionData
+      type: object
+    CompanyList:
+      description: List of company representations
+      properties:
+        data:
+          items:
+            properties:
+              company_identity:
+                description: Company address information
+                nullable: true
+                properties:
+                  address:
+                    description: Address of the company
+                    readOnly: true
+                    type: string
+                  city:
+                    description: City where the company resides
+                    readOnly: true
+                    type: string
+                  country:
+                    description: Country where the company resides
+                    readOnly: true
+                    type: string
+                  postal_code:
+                    description: Postal code
+                    readOnly: true
+                    type: string
+                  province_code:
+                    description: Province code
+                    readOnly: true
+                    type: string
+                readOnly: true
+                type: object
+              country:
+                description: Company country, expressed in ISO format
+                readOnly: true
+                type: string
+              fiscal_regime:
+                description: Company fiscal regime. It's expressed as a code, like RF0{n}
+                readOnly: true
+                type: string
+              id:
+                description: Company unique identifier
+                example: 019f8035-9c2e-7d45-9545-583658868ea8
+                format: uuid
+                readOnly: true
+                type: string
+              name:
+                description: Company name
+                readOnly: true
+                type: string
+              subscriptions:
+                description: A list of subscriptions
+                items:
+                  $ref: '#/components/schemas/SubscriptionData'
+                nullable: true
+                readOnly: true
+                type: array
+              vat_number:
+                description: Company value added tax (VAT) number
+                readOnly: true
+                type: string
+            type: object
+          type: array
+      title: CompanyList
+      type: object
+  securitySchemes:
+    authorization:
+      description: Sibill Integration API scheme documentation
+      scheme: bearer
+      type: https

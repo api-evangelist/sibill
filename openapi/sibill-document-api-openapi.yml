@@ -1,0 +1,3188 @@
+openapi: 3.0.0
+info:
+  title: Sibill Integration Account Document API
+  version: 1.0.0
+  x-logo:
+    altText: Sibill logo
+    backgroundColor: '#FFFFFF'
+    url: https://sibill.com/wp-content/uploads/2022/12/logo-sibill.svg
+servers:
+- url: http://integration.app.svc.cluster.local:4000
+  variables: {}
+security: []
+tags:
+- name: Document
+paths:
+  /api/v1/companies/{company_id}/documents:
+    get:
+      callbacks: {}
+      description: 'The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.
+
+        A cursor is needed to traverse the results.
+
+        '
+      operationId: SibillWeb.Integration.V1.DocumentsController.index
+      parameters:
+      - description: The company the documents belong to
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The page size
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+      - description: 'The pagination cursor. A cursor is used to paginate through a large set of data.
+
+          It is a unique identifier that represents a specific position in the dataset.
+
+          '
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+      - description: 'Fields that will be expanded. Expandable fields: `category`, `counterpart`, `flows`, `subcategory`'
+        in: query
+        name: expand
+        required: false
+        schema:
+          type: string
+      - description: 'List of filters on the resource. Currently the fields that allow to be filtered are: `creation_date`, `delivery_date`, `direction`, `status`, `type`, `number`,`counterpart_company_name`, `notes`, `progressive`, `sectional_id`, `source_id`'
+        in: query
+        name: filter
+        required: false
+        schema:
+          type: object
+      - description: 'Fields for which we can order the results. Sortable fields: `created_at`, `creation_date`, `delivery_date`, `number`, `progressive`'
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentList'
+          description: Ok
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: List all the company's documents
+      tags:
+      - Document
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request GET \\\n     --url ${base_url}/api/v1/companies/:company_id/documents \\\n     --header \"Authorization: Bearer ${authorization_token}\"\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'GET /api/v1/companies/:company_id/documents HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/documents"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}]
+
+
+          Req.get(url, headers: headers)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/documents"
+
+          headers = {"Authorization": "Bearer ${authorization_token}"}
+
+
+          response = requests.get(url, headers=headers)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/documents\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"GET\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+  /api/v1/companies/{company_id}/documents/invoice:
+    post:
+      callbacks: {}
+      description: 'Create an invoice. By default will be created as draft and not issued.
+
+
+
+        The request body (that could be <b>application/xml</b> or <b>application/json</b>) represent the <a href=''https://www.fatturapa.gov.it/it/norme-e-regole/documentazione-fattura-elettronica/formato-fatturapa/'' target=''_blank''>Italian Electronic invoice format</a>.
+
+        For example, if the XML content comes from another system — perhaps as a file — the request body will contain the file''s content.
+
+        The content should represent only one invoice; content with multiple invoices is not supported yet.
+
+
+        The invoice `numero` is under customer control (i.e. customer must choose it), while the `file name` and the `progressivo invio` are automatically generated by the system.
+
+        '
+      operationId: SibillWeb.Integration.V1.DocumentsActionsController.create_invoice
+      parameters:
+      - description: The company where to execute the operation
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: Issue the invoice after creating it. If true, the invoice is issued. Default value is false. In this case, the invoice is created as a draft and not issued.
+        in: query
+        name: issue
+        required: false
+        schema:
+          type: boolean
+      - description: A unique identifier used to match an invoice with its corresponding transaction. This can be, for example, an ID coming from your collection system (ex. Transaction ID on Stripe or Paypal) that you want to pass when issuing the invoice to be able to reconcile the movement and the invoice automatically
+        in: query
+        name: reconciliation_identifier
+        required: false
+        schema:
+          type: string
+      - description: The sectional identifier to associate with the document
+        in: query
+        name: sectional_id
+        required: false
+        schema:
+          type: string
+      - description: Automatically populate/override invoice number with the next number of `sectional_id`. If `sectional_id` is null, it generates a number without sectional
+        in: query
+        name: automatic_number
+        required: false
+        schema:
+          type: boolean
+      - description: Indicate the original mime type of the resource. It could be <b>application/xml</b> or <b>application/json</b>
+        in: header
+        name: content-type
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice'
+          application/xml:
+            example: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<FatturaElettronica xmlns=\"http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2\"\n  xsi:schemaLocation=\"http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 schema.xsd\"\n  versione=\"FPA12\"\n  SistemaEmittente=\"{L}LapLI{s\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n  <FatturaElettronicaHeader xmlns=\"\">\n    <DatiTrasmissione>\n      <IdTrasmittente>\n        <IdPaese>KO</IdPaese>\n        <IdCodice>string</IdCodice>\n      </IdTrasmittente>\n      <ProgressivoInvio>IIs{{s</ProgressivoInvio>\n      <FormatoTrasmissione>FPA12</FormatoTrasmissione>\n      <CodiceDestinatario>EM1A07</CodiceDestinatario>\n      <ContattiTrasmittente />\n      <PECDestinatario>%+R--}--.#V!=@+?=?yUK?*3A?yj++?+--.Z.*!-=fmuh</PECDestinatario>\n    </DatiTrasmissione>\n    <CedentePrestatore>\n      <DatiAnagrafici>\n        <IdFiscaleIVA>\n          <IdPaese>WX</IdPaese>\n          <IdCodice>string</IdCodice>\n        </IdFiscaleIVA>\n        <Anagrafica>\n          <Nome>BBpuIutaaIScBBII</Nome>\n          <Cognome>a</Cognome>\n        </Anagrafica>\n        <RegimeFiscale>RF01</RegimeFiscale>\n      </DatiAnagrafici>\n      <Sede>\n        <Indirizzo>ea</Indirizzo>\n        <CAP>37675</CAP>\n        <Comune>Lue</Comune>\n        <Nazione>IT</Nazione>\n      </Sede>\n      <StabileOrganizzazione>\n        <Indirizzo>aiu</Indirizzo>\n        <CAP>66435</CAP>\n        <Comune>{ceSaBpiBmep</Comune>\n        <Nazione>IT</Nazione>\n      </StabileOrganizzazione>\n      <IscrizioneREA>\n        <Ufficio>FT</Ufficio>\n        <NumeroREA>tLIa}pp{}apsan]c{]a]</NumeroREA>\n        <StatoLiquidazione>LN</StatoLiquidazione>\n      </IscrizioneREA>\n      <Contatti />\n      <RiferimentoAmministrazione>ns{IiicpaaIip}IiaLa{</RiferimentoAmministrazione>\n    </CedentePrestatore>\n    <RappresentanteFiscale>\n      <DatiAnagrafici>\n        <IdFiscaleIVA>\n          <IdPaese>MK</IdPaese>\n          <IdCodice>string</IdCodice>\n        </IdFiscaleIVA>\n        <Anagrafica>\n          <Denominazione>I{BipIs{a}ap{LucBiu</Denominazione>\n        </Anagrafica>\n      </DatiAnagrafici>\n    </RappresentanteFiscale>\n    <CessionarioCommittente>\n      <DatiAnagrafici>\n        <Anagrafica>\n          <Denominazione>em</Denominazione>\n        </Anagrafica>\n      </DatiAnagrafici>\n      <Sede>\n        <Indirizzo>BmeiSp{eu}eLSL</Indirizzo>\n        <CAP>65255</CAP>\n        <Comune>ippea}ntBSLIu{IBplSce}{SmB}{{{LL</Comune>\n        <Nazione>IT</Nazione>\n      </Sede>\n      <StabileOrganizzazione>\n        <Indirizzo>{B{}eaeniLp{aBlpaa{p{LBLincpLI}{SBc{SeS}}}ae{e</Indirizzo>\n        <CAP>48679</CAP>\n        <Comune>lLtBpa</Comune>\n        <Nazione>IT</Nazione>\n      </StabileOrganizzazione>\n      <RappresentanteFiscale>\n        <IdFiscaleIVA>\n          <IdPaese>ZO</IdPaese>\n          <IdCodice>string</IdCodice>\n        </IdFiscaleIVA>\n        <Denominazione>LBcc}e}aLBcsSLS{BI}aeapcce}n</Denominazione>\n      </RappresentanteFiscale>\n    </CessionarioCommittente>\n    <TerzoIntermediarioOSoggettoEmittente>\n      <DatiAnagrafici>\n        <Anagrafica>\n          <Nome>t}iaScccpa{ieLnSLp}BncieSci{uI{i{pce}cScSSaLBBcpIlSa}Bnpcac</Nome>\n          <Cognome>aaSm}{LI{BBc}i}a{nncms}eelSeBpuiBapi}ciLpLeaci{n}</Cognome>\n        </Anagrafica>\n      </DatiAnagrafici>\n    </TerzoIntermediarioOSoggettoEmittente>\n    <SoggettoEmittente>CC</SoggettoEmittente>\n  </FatturaElettronicaHeader>\n  <FatturaElettronicaBody xmlns=\"\">\n    <DatiGenerali>\n      <DatiGeneraliDocumento>\n        <TipoDocumento>TD16</TipoDocumento>\n        <Divisa>TUL</Divisa>\n        <Data>2017-10-03</Data>\n        <Numero>iniaaB</Numero>\n      </DatiGeneraliDocumento>\n      <DatiOrdineAcquisto>\n        <IdDocumento>Li]ci{pc}iII]</IdDocumento>\n      </DatiOrdineAcquisto>\n      <DatiContratto>\n        <IdDocumento>tp{t}IBippn{}B]</IdDocumento>\n      </DatiContratto>\n      <DatiConvenzione>\n        <IdDocumento>ap]L}BniaLa{pcn</IdDocumento>\n      </DatiConvenzione>\n      <DatiRicezione>\n        <IdDocumento>ccILstLB</IdDocumento>\n      </DatiRicezione>\n      <DatiFattureCollegate>\n        <IdDocumento>I}Ip{tpa]]ac]IL}pBsn</IdDocumento>\n      </DatiFattureCollegate>\n      <DatiSAL>\n        <RiferimentoFase>361</RiferimentoFase>\n      </DatiSAL>\n      <DatiDDT>\n        <NumeroDDT>sBi}nat</NumeroDDT>\n        <DataDDT>1972-12-17</DataDDT>\n      </DatiDDT>\n      <DatiTrasporto />\n      <FatturaPrincipale>\n        <NumeroFatturaPrincipale>{]nppLpiB</NumeroFatturaPrincipale>\n        <DataFatturaPrincipale>1970-08-14</DataFatturaPrincipale>\n      </FatturaPrincipale>\n    </DatiGenerali>\n    <DatiBeniServizi>\n      <DettaglioLinee>\n        <NumeroLinea>8284</NumeroLinea>\n        <Descrizione>n</Descrizione>\n        <PrezzoUnitario>1369450.2349058</PrezzoUnitario>\n        <PrezzoTotale>-805869.765094196</PrezzoTotale>\n        <AliquotaIVA>4402260</AliquotaIVA>\n      </DettaglioLinee>\n      <DatiRiepilogo>\n        <AliquotaIVA>3148340</AliquotaIVA>\n        <ImponibileImporto>4413100.2349058</ImponibileImporto>\n        <Imposta>3371250.2349058</Imposta>\n      </DatiRiepilogo>\n    </DatiBeniServizi>\n    <DatiVeicoli>\n      <Data>2012-11-25</Data>\n      <TotalePercorso>}BtL{L</TotalePercorso>\n    </DatiVeicoli>\n    <DatiPagamento>\n      <CondizioniPagamento>TP01</CondizioniPagamento>\n      <DettaglioPagamento>\n        <ModalitaPagamento>MP17</ModalitaPagamento>\n        <ImportoPagamento>-3583049.7650942</ImportoPagamento>\n      </DettaglioPagamento>\n    </DatiPagamento>\n    <Allegati>\n      <NomeAttachment>pel</NomeAttachment>\n      <AlgoritmoCompressione>pctaaL}LIa</AlgoritmoCompressione>\n      <FormatoAttachment>{cIsIpaIIi</FormatoAttachment>\n      <DescrizioneAttachment>SsLcp</DescrizioneAttachment>\n      <Attachment>YTM0NZomIzI2OTsmIzM0NTueYQ==</Attachment>\n    </Allegati>\n  </FatturaElettronicaBody>\n  <FatturaElettronicaBody xmlns=\"\">\n    <DatiGenerali>\n      <DatiGeneraliDocumento>\n        <TipoDocumento>TD05</TipoDocumento>\n        <Divisa>MWH</Divisa>\n        <Data>1996-10-28</Data>\n        <Numero>aBt{i}{tiIptpnac]</Numero>\n      </DatiGeneraliDocumento>\n      <DatiOrdineAcquisto>\n        <IdDocumento>{cnIpc}i]Is]c</IdDocumento>\n      </DatiOrdineAcquisto>\n      <DatiContratto>\n        <IdDocumento>n]i}</IdDocumento>\n      </DatiContratto>\n      <DatiConvenzione>\n        <IdDocumento>]a}I}}c}aa</IdDocumento>\n      </DatiConvenzione>\n      <DatiRicezione>\n        <IdDocumento>a{}s}</IdDocumento>\n      </DatiRicezione>\n      <DatiFattureCollegate>\n        <IdDocumento>ct}LI</IdDocumento>\n      </DatiFattureCollegate>\n      <DatiSAL>\n        <RiferimentoFase>369</RiferimentoFase>\n      </DatiSAL>\n      <DatiDDT>\n        <NumeroDDT>Ban</NumeroDDT>\n        <DataDDT>1972-11-14</DataDDT>\n      </DatiDDT>\n      <DatiTrasporto />\n      <FatturaPrincipale>\n        <NumeroFatturaPrincipale>t}{i}napBic</NumeroFatturaPrincipale>\n        <DataFatturaPrincipale>2016-12-16</DataFatturaPrincipale>\n      </FatturaPrincipale>\n    </DatiGenerali>\n    <DatiBeniServizi>\n      <DettaglioLinee>\n        <NumeroLinea>2867</NumeroLinea>\n        <Descrizione>pL</Descrizione>\n        <PrezzoUnitario>-2058329.7650942</PrezzoUnitario>\n        <PrezzoTotale>3961400.2349058</PrezzoTotale>\n        <AliquotaIVA>-1219789.7650942</AliquotaIVA>\n      </DettaglioLinee>\n      <DatiRiepilogo>\n        <AliquotaIVA>2690430</AliquotaIVA>\n        <ImponibileImporto>-4257529.7650942</ImponibileImporto>\n        <Imposta>2794280.2349058</Imposta>\n      </DatiRiepilogo>\n    </DatiBeniServizi>\n    <DatiVeicoli>\n      <Data>1996-12-06</Data>\n      <TotalePercorso>aBcpcBLtc{tBi}s</TotalePercorso>\n    </DatiVeicoli>\n    <DatiPagamento>\n      <CondizioniPagamento>TP03</CondizioniPagamento>\n      <DettaglioPagamento>\n        <ModalitaPagamento>MP18</ModalitaPagamento>\n        <ImportoPagamento>-4401059.7650942</ImportoPagamento>\n      </DettaglioPagamento>\n    </DatiPagamento>\n    <Allegati>\n      <NomeAttachment>t}ae</NomeAttachment>\n      <AlgoritmoCompressione>snn}Bt}n{</AlgoritmoCompressione>\n      <FormatoAttachment>iLBnsnLanc</FormatoAttachment>\n      <DescrizioneAttachment>}spLLILSeSaBlSLiiiinSIc}ptBI{SccasstI</DescrizioneAttachment>\n      <Attachment>YTM0NZomIzI2OTsmIzM0NTueYQ==</Attachment>\n    </Allegati>\n  </FatturaElettronicaBody>\n  <FatturaElettronicaBody xmlns=\"\">\n    <DatiGenerali>\n      <DatiGeneraliDocumento>\n        <TipoDocumento>TD18</TipoDocumento>\n        <Divisa>FAB</Divisa>\n        <Data>1970-08-27</Data>\n        <Numero>snpan{acB]aantB</Numero>\n      </DatiGeneraliDocumento>\n      <DatiOrdineAcquisto>\n        <IdDocumento>s</IdDocumento>\n      </DatiOrdineAcquisto>\n      <DatiContratto>\n        <IdDocumento>B</IdDocumento>\n      </DatiContratto>\n      <DatiConvenzione>\n        <IdDocumento>InIasi]p]a</IdDocumento>\n      </DatiConvenzione>\n      <DatiRicezione>\n        <IdDocumento>{capBc</IdDocumento>\n      </DatiRicezione>\n      <DatiFattureCollegate>\n        <IdDocumento>pIL]}tLL}n]B}n]iBtLc</IdDocumento>\n      </DatiFattureCollegate>\n      <DatiSAL>\n        <RiferimentoFase>519</RiferimentoFase>\n      </DatiSAL>\n      <DatiDDT>\n        <NumeroDDT>BnLc{ni</NumeroDDT>\n        <DataDDT>1973-11-05</DataDDT>\n      </DatiDDT>\n      <DatiTrasporto />\n      <FatturaPrincipale>\n        <NumeroFatturaPrincipale>L</NumeroFatturaPrincipale>\n        <DataFatturaPrincipale>1991-11-06</DataFatturaPrincipale>\n      </FatturaPrincipale>\n    </DatiGenerali>\n    <DatiBeniServizi>\n      <DettaglioLinee>\n        <NumeroLinea>8217</NumeroLinea>\n        <Descrizione>I{SlLceItci</Descrizione>\n        <PrezzoUnitario>-3196579.7650942</PrezzoUnitario>\n        <PrezzoTotale>-2138439.7650942</PrezzoTotale>\n        <AliquotaIVA>-869189.765094196</AliquotaIVA>\n      </DettaglioLinee>\n      <DatiRiepilogo>\n        <AliquotaIVA>1031150</AliquotaIVA>\n        <ImponibileImporto>-3900039.7650942</ImponibileImporto>\n        <Imposta>1213930.2349058</Imposta>\n      </DatiRiepilogo>\n    </DatiBeniServizi>\n    <DatiVeicoli>\n      <Data>1981-10-23</Data>\n      <TotalePercorso>I}pptsL}{I</TotalePercorso>\n    </DatiVeicoli>\n    <DatiPagamento>\n      <CondizioniPagamento>TP02</CondizioniPagamento>\n      <DettaglioPagamento>\n        <ModalitaPagamento>MP08</ModalitaPagamento>\n        <ImportoPagamento>1109440.2349058</ImportoPagamento>\n      </DettaglioPagamento>\n    </DatiPagamento>\n    <Allegati>\n      <NomeAttachment>Bpl{BeL{tmIaeIStaic{pe}Bec{Ic}</NomeAttachment>\n      <AlgoritmoCompressione>IB</AlgoritmoCompressione>\n      <FormatoAttachment>nnn}}IBic}</FormatoAttachment>\n      <DescrizioneAttachment>}e</DescrizioneAttachment>\n      <Attachment>YTM0NZomIzI2OTsmIzM0NTueYQ==</Attachment>\n    </Allegati>\n  </FatturaElettronicaBody>\n</FatturaElettronica>"
+            schema:
+              $ref: '#/components/schemas/Invoice'
+        description: The user attributes
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentIssuedList'
+          description: Ok
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unprocessable Entity
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Create an invoice and issue it
+      tags:
+      - Document
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request POST \\\n     --url ${base_url}/api/v1/companies/:company_id/documents/invoice?issue=:issue \\\n     --header \"Authorization: Bearer ${authorization_token}\" \\\n     --header \"Content-Type: application/xml\" \\\n     --data '${your payload here}'\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'POST /api/v1/companies/:company_id/documents/invoice?issue=:issue HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          Content-Type: application/xml
+
+          ${your payload here}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/documents/invoice?issue=:issue"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}, {"Content-Type", "application/xml"}]
+
+          payload = ${your payload here}
+
+
+          Req.post(url, headers: headers, body: payload)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/documents/invoice?issue=:issue"
+
+          headers = {"Authorization": "Bearer ${authorization_token}", "Content-Type": "application/xml"}
+
+          payload = ${your payload here}
+
+
+          response = requests.post(url, headers=headers, json=payload)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/documents/invoice?issue=:issue\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .header(\"Content-Type\", \"application/xml\")\n  .POST(HttpRequest.BodyPublishers.ofString(${your payload here}))\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/invoice?issue=:issue\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"POST\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/xml\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+  /api/v1/companies/{company_id}/documents/{document_id}/invoice:
+    get:
+      callbacks: {}
+      description: 'Retrieve a specific document invoice along with a signed url to the xml representation of the invoice.
+
+        The signed url provides a secure and temporary access to the xml data.
+
+        '
+      operationId: SibillWeb.Integration.V1.DocumentsActionsController.get_invoice
+      parameters:
+      - description: The company the document invoice belongs to
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The document identifier
+        in: path
+        name: document_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceData'
+          description: Document invoice response
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Not found
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Get a document invoice by its identifier
+      tags:
+      - Document
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request GET \\\n     --url ${base_url}/api/v1/companies/:company_id/documents/:document_id/invoice \\\n     --header \"Authorization: Bearer ${authorization_token}\" \\\n     --header \"Content-Type: application/json\"\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'GET /api/v1/companies/:company_id/documents/:document_id/invoice HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          Content-Type: application/json
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/documents/:document_id/invoice"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}, {"Content-Type", "application/json"}]
+
+
+          Req.get(url, headers: headers)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/documents/:document_id/invoice"
+
+          headers = {"Authorization": "Bearer ${authorization_token}", "Content-Type": "application/json"}
+
+
+          response = requests.get(url, headers=headers)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/documents/:document_id/invoice\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .header(\"Content-Type\", \"application/json\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/:document_id/invoice\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"GET\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+  /api/v1/companies/{company_id}/documents/{document_id}/share-invoice:
+    post:
+      callbacks: {}
+      description: 'Send an invoice courtesy copy through email to some recipient provided in the request body.
+
+
+        The email will contain a link to the actual invoice and maybe contain a personalized body and subject.
+
+        If these are not provided, the email will contain a default body and subject.
+
+
+        If the response is successful, the email will be sent to the recipient but we do not guarantee that the email will be delivered successfully.
+
+        The success of the response means that the system has accepted the request and will attempt to send the email.
+
+        '
+      operationId: SibillWeb.Integration.V1.DocumentsActionsController.share_invoice
+      parameters:
+      - description: The company where to execute the operation
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The document identifier
+        in: path
+        name: document_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendInvoiceData'
+        description: Request
+        required: false
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Ok
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unprocessable entity
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Send an invoice courtesy copy through email
+      tags:
+      - Document
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request POST \\\n     --url ${base_url}/api/v1/companies/:company_id/documents/:document_id/share-invoice \\\n     --header \"Authorization: Bearer ${authorization_token}\" \\\n     --data '${your payload here}'\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'POST /api/v1/companies/:company_id/documents/:document_id/share-invoice HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          ${your payload here}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/documents/:document_id/share-invoice"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}]
+
+          payload = ${your payload here}
+
+
+          Req.post(url, headers: headers, body: payload)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/documents/:document_id/share-invoice"
+
+          headers = {"Authorization": "Bearer ${authorization_token}"}
+
+          payload = ${your payload here}
+
+
+          response = requests.post(url, headers=headers, json=payload)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/documents/:document_id/share-invoice\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .POST(HttpRequest.BodyPublishers.ofString(${your payload here}))\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/:document_id/share-invoice\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"POST\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+  /api/v1/companies/{company_id}/documents/{id}:
+    delete:
+      callbacks: {}
+      operationId: SibillWeb.Integration.V1.DocumentsController.delete
+      parameters:
+      - description: The company where to execute the operation
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The document identifier
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          content:
+            application/json: {}
+          description: Document delete response
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Not found
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Delete an existing document
+      tags:
+      - Document
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request DELETE \\\n     --url ${base_url}/api/v1/companies/:company_id/documents/:document_id \\\n     --header \"Authorization: Bearer ${authorization_token}\"\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'DELETE /api/v1/companies/:company_id/documents/:document_id HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/documents/:document_id"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}]
+
+
+          Req.delete(url, headers: headers)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/documents/:document_id"
+
+          headers = {"Authorization": "Bearer ${authorization_token}"}
+
+
+          response = requests.delete(url, headers=headers)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/documents/:document_id\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .DELETE()\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/:document_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"DELETE\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+    get:
+      callbacks: {}
+      description: Returns all the information for a specific document from its identifier
+      operationId: SibillWeb.Integration.V1.DocumentsController.show
+      parameters:
+      - description: The company the document belongs to
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The document identifier
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: 'Fields that will be expanded. Expandable fields: `category`, `counterpart`, `flows`, `sectional`, `subcategory`'
+        in: query
+        name: expand
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentData'
+          description: Ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Not found
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Get a document
+      tags:
+      - Document
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request GET \\\n     --url ${base_url}/api/v1/companies/:company_id/documents/:document_id \\\n     --header \"Authorization: Bearer ${authorization_token}\"\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'GET /api/v1/companies/:company_id/documents/:document_id HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/documents/:document_id"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}]
+
+
+          Req.get(url, headers: headers)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/documents/:document_id"
+
+          headers = {"Authorization": "Bearer ${authorization_token}"}
+
+
+          response = requests.get(url, headers=headers)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/documents/:document_id\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/:document_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"GET\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+    patch:
+      callbacks: {}
+      operationId: SibillWeb.Integration.V1.DocumentsController.update
+      parameters:
+      - description: The company where to execute the operation
+        in: path
+        name: company_id
+        required: true
+        schema:
+          type: string
+      - description: The document identifier
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: 'Fields that will be expanded. Expandable fields: `category`, `counterpart`, `flows`, `subcategory`'
+        in: query
+        name: expand
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentUpdate'
+        description: Document
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentData'
+          description: Document updated
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Unprocessable Entity
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationError'
+          description: Internal Server Error
+      security:
+      - authorization: []
+      summary: Update an existing document
+      tags:
+      - Document
+      x-codeSamples:
+      - label: ⚡ cURL
+        lang: Shell
+        source: "base_url=\"http://example.com\" # Replace with the correct Sibill integration API host\n\ncurl --request PATCH \\\n     --url ${base_url}/api/v1/companies/:company_id/documents/:document_id \\\n     --header \"Authorization: Bearer ${authorization_token}\" \\\n     --header \"Content-Type: application/json\" \\\n     --data '${your payload here}'\n"
+      - label: 🌐 HTTP
+        lang: HTTP
+        source: 'PATCH /api/v1/companies/:company_id/documents/:document_id HTTP/1.1
+
+          Host: example.com # Replace with the correct Sibill integration API host
+
+          Authorization: Bearer ${authorization_token}
+
+          Content-Type: application/json
+
+          ${your payload here}
+
+          '
+      - label: 💜 Elixir
+        lang: Elixir
+        source: 'Mix.install([:req])
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url <> "/api/v1/companies/:company_id/documents/:document_id"
+
+          headers = [{"Authorization", "Bearer ${authorization_token}"}, {"Content-Type", "application/json"}]
+
+          payload = ${your payload here}
+
+
+          Req.patch(url, headers: headers, body: payload)
+
+          '
+      - label: 🐍 Python
+        lang: Python
+        source: 'import requests
+
+
+          base_url = "http://example.com" # Replace with the correct Sibill integration API host
+
+          url = base_url + "/api/v1/companies/:company_id/documents/:document_id"
+
+          headers = {"Authorization": "Bearer ${authorization_token}", "Content-Type": "application/json"}
+
+          payload = ${your payload here}
+
+
+          response = requests.patch(url, headers=headers, json=payload)
+
+          print(response.text)
+
+          '
+      - label: ☕ Java
+        lang: Java
+        source: "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\n\nString base_url = \"http://example.com\"; // Replace with the correct Sibill integration API host\nString url = base_url + \"/api/v1/companies/:company_id/documents/:document_id\";\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(url))\n  .header(\"Authorization\", \"Bearer ${authorization_token}\")\n  .header(\"Content-Type\", \"application/json\")\n  .PATCH(HttpRequest.BodyPublishers.ofString(${your payload here}))\n  .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());\n"
+      - label: 🐘 PHP
+        lang: PHP
+        source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/:document_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"PATCH\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
+components:
+  schemas:
+    DocumentIssuedList:
+      description: List of issued document representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/DocumentSchema'
+          type: array
+      title: DocumentIssuedList
+      type: object
+    Page:
+      properties:
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          nullable: true
+          type: string
+        size:
+          description: The current page size
+          type: integer
+      title: Page
+      type: object
+    Invoice:
+      description: Invoice data representation
+      properties:
+        fattura_elettronica_body:
+          items:
+            description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body
+            properties:
+              allegati:
+                items:
+                  description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.Allegati
+                  properties:
+                    algoritmo_compressione:
+                      type: string
+                    attachment:
+                      type: string
+                    descrizione_attachment:
+                      type: string
+                    formato_attachment:
+                      type: string
+                    nome_attachment:
+                      type: string
+                  title: Allegati
+                  type: object
+                type: array
+              dati_beni_servizi:
+                properties:
+                  dati_riepilogo:
+                    items:
+                      description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiBeniServizi.DatiRiepilogo
+                      properties:
+                        aliquota_iva:
+                          type: string
+                        arrotondamento:
+                          type: string
+                        esigibilita_iva:
+                          type: string
+                        imponibile_importo:
+                          type: string
+                        imposta:
+                          type: string
+                        natura:
+                          enum:
+                          - N1
+                          - N2
+                          - N2.1
+                          - N2.2
+                          - N3
+                          - N3.1
+                          - N3.2
+                          - N3.3
+                          - N3.4
+                          - N3.5
+                          - N3.6
+                          - N4
+                          - N5
+                          - N6
+                          - N6.1
+                          - N6.2
+                          - N6.3
+                          - N6.4
+                          - N6.5
+                          - N6.6
+                          - N6.7
+                          - N6.8
+                          - N6.9
+                          - N7
+                          type: string
+                        riferimento_normativo:
+                          type: string
+                        spese_accessorie:
+                          type: string
+                      title: DatiRiepilogo
+                      type: object
+                    type: array
+                  dettaglio_linee:
+                    items:
+                      description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiBeniServizi.DettaglioLinee
+                      properties:
+                        aliquota_iva:
+                          type: string
+                        altri_dati_gestionali:
+                          items:
+                            description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiBeniServizi.DettaglioLinee.AltriDatiGestionali
+                            properties:
+                              riferimento_data:
+                                type: string
+                              riferimento_numero:
+                                type: string
+                              riferimento_testo:
+                                type: string
+                              tipo_dato:
+                                type: string
+                            title: AltriDatiGestionali
+                            type: object
+                          type: array
+                        codice_articolo:
+                          items:
+                            description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiBeniServizi.DettaglioLinee.CodiceArticolo
+                            properties:
+                              codice_tipo:
+                                type: string
+                              codice_valore:
+                                type: string
+                            title: CodiceArticolo
+                            type: object
+                          type: array
+                        data_fine_periodo:
+                          type: string
+                        data_inizio_periodo:
+                          type: string
+                        descrizione:
+                          type: string
+                        natura:
+                          enum:
+                          - N1
+                          - N2
+                          - N2.1
+                          - N2.2
+                          - N3
+                          - N3.1
+                          - N3.2
+                          - N3.3
+                          - N3.4
+                          - N3.5
+                          - N3.6
+                          - N4
+                          - N5
+                          - N6
+                          - N6.1
+                          - N6.2
+                          - N6.3
+                          - N6.4
+                          - N6.5
+                          - N6.6
+                          - N6.7
+                          - N6.8
+                          - N6.9
+                          - N7
+                          type: string
+                        numero_linea:
+                          type: string
+                        prezzo_totale:
+                          type: string
+                        prezzo_unitario:
+                          type: string
+                        quantita:
+                          type: string
+                        riferimento_amministrazione:
+                          type: string
+                        ritenuta:
+                          type: string
+                        sconto_maggiorazione:
+                          items:
+                            description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiBeniServizi.DettaglioLinee.ScontoMaggiorazione
+                            properties:
+                              importo:
+                                type: string
+                              percentuale:
+                                type: string
+                              tipo:
+                                type: string
+                            title: ScontoMaggiorazione
+                            type: object
+                          type: array
+                        tipo_cessione_prestazione:
+                          enum:
+                          - SC
+                          - PR
+                          - AB
+                          - AC
+                          type: string
+                        unita_misura:
+                          type: string
+                      required:
+                      - numero_linea
+                      - prezzo_unitario
+                      title: DettaglioLinee
+                      type: object
+                    type: array
+                required:
+                - dettaglio_linee
+                - dati_riepilogo
+                type: object
+              dati_generali:
+                properties:
+                  dati_contratto:
+                    items:
+                      description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiGenerali.RelatedData
+                      properties:
+                        codice_cig:
+                          type: string
+                        codice_commessa_convenzione:
+                          type: string
+                        codice_cup:
+                          type: string
+                        data:
+                          type: string
+                        id_documento:
+                          type: string
+                        num_item:
+                          type: string
+                        riferimento_numero_linea:
+                          items:
+                            type: integer
+                          type: array
+                      title: RelatedData
+                      type: object
+                    type: array
+                  dati_convenzione:
+                    items:
+                      description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiGenerali.RelatedData
+                      properties:
+                        codice_cig:
+                          type: string
+                        codice_commessa_convenzione:
+                          type: string
+                        codice_cup:
+                          type: string
+                        data:
+                          type: string
+                        id_documento:
+                          type: string
+                        num_item:
+                          type: string
+                        riferimento_numero_linea:
+                          items:
+                            type: integer
+                          type: array
+                      title: RelatedData
+                      type: object
+                    type: array
+                  dati_ddt:
+                    items:
+                      description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiGenerali.DatiDDT
+                      properties:
+                        data_ddt:
+                          type: string
+                        numero_ddt:
+                          type: string
+                        riferimento_numero_linea:
+                          items:
+                            type: string
+                          type: array
+                      required:
+                      - data_ddt
+                      title: DatiDDT
+                      type: object
+                    type: array
+                  dati_fatture_collegate:
+                    items:
+                      description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiGenerali.RelatedData
+                      properties:
+                        codice_cig:
+                          type: string
+                        codice_commessa_convenzione:
+                          type: string
+                        codice_cup:
+                          type: string
+                        data:
+                          type: string
+                        id_documento:
+                          type: string
+                        num_item:
+                          type: string
+                        riferimento_numero_linea:
+                          items:
+                            type: integer
+                          type: array
+                      title: RelatedData
+                      type: object
+                    type: array
+                  dati_generali_documento:
+                    properties:
+                      arrotondamento:
+                        type: string
+                      art_73:
+                        enum:
+                        - SI
+                        type: string
+                      causale:
+                        items:
+                          type: string
+                        type: array
+                      data:
+                        type: string
+                      dati_bollo:
+                        properties:
+                          bollo_virtuale:
+                            type: string
+                          importo_bollo:
+                            type: string
+                        type: object
+                      dati_cassa_previdenziale:
+                        items:
+                          description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiGenerali.DatiGeneraliDocumento.DatiCassaPrevidenziale
+                          properties:
+                            al_cassa:
+                              type: string
+                            aliquota_iva:
+                              type: string
+                            imponibile_cassa:
+                              type: string
+                            importo_contributo_cassa:
+                              type: string
+                            natura:
+                              enum:
+                              - N1
+                              - N2
+                              - N2.1
+                              - N2.2
+                              - N3
+                              - N3.1
+                              - N3.2
+                              - N3.3
+                              - N3.4
+                              - N3.5
+                              - N3.6
+                              - N4
+                              - N5
+                              - N6
+                              - N6.1
+                              - N6.2
+                              - N6.3
+                              - N6.4
+                              - N6.5
+                              - N6.6
+                              - N6.7
+                              - N6.8
+                              - N6.9
+                              - N7
+                              type: string
+                            riferimento_amministrazione:
+                              type: string
+                            ritenuta:
+                              type: string
+                            tipo_cassa:
+                              enum:
+                              - TC01
+                              - TC02
+                              - TC03
+                              - TC04
+                              - TC05
+                              - TC06
+                              - TC07
+                              - TC08
+                              - TC09
+                              - TC10
+                              - TC11
+                              - TC12
+                              - TC13
+                              - TC14
+                              - TC15
+                              - TC16
+                              - TC17
+                              - TC18
+                              - TC19
+                              - TC20
+                              - TC21
+                              - TC22
+                              type: string
+                          title: DatiCassaPrevidenziale
+                          type: object
+                        type: array
+                      dati_ritenuta:
+                        items:
+                          description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiGenerali.DatiGeneraliDocumento.DatiRitenuta
+                          properties:
+                            aliquota_ritenuta:
+                              type: string
+                            causale_pagamento:
+                              enum:
+                              - A
+                              - B
+                              - C
+                              - D
+                              - E
+                              - G
+                              - H
+                              - I
+                              - J
+                              - K
+                              - L
+                              - M
+                              - N
+                              - O
+                              - P
+                              - Q
+                              - R
+                              - S
+                              - T
+                              - U
+                              - V
+                              - W
+                              - X
+                              - Y
+                              - Z
+                              - L1
+                              - M1
+                              - M2
+                              - O1
+                              - V1
+                              - V2
+                              - ZO
+                              type: string
+                            importo_ritenuta:
+                              type: string
+                            tipo_ritenuta:
+                              enum:
+                              - RT01
+                              - RT02
+                              - RT03
+                              - RT04
+                              - RT05
+                              - RT06
+                              type: string
+                          title: DatiRitenuta
+                          type: object
+                        type: array
+                      divisa:
+                        type: string
+                      importo_totale_documento:
+                        type: string
+                      numero:
+                        type: string
+                      sconto_maggiorazione:
+                        items:
+                          description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiGenerali.DatiGeneraliDocumento.ScontoMaggiorazione
+                          properties:
+                            importo:
+                              type: string
+                            percentuale:
+                              type: string
+                            tipo:
+                              enum:
+                              - MG
+                              - SC
+                              type: string
+                          title: ScontoMaggiorazione
+                          type: object
+                        type: array
+                      tipo_documento:
+                        enum:
+                        - TD01
+                        - TD02
+                        - TD03
+                        - TD04
+                        - TD05
+                        - TD06
+                        - TD07
+                        - TD08
+                        - TD09
+                        - TD10
+                        - TD11
+                        - TD16
+                        - TD17
+                        - TD18
+                        - TD19
+                        - TD20
+                        - TD21
+                        - TD22
+                        - TD23
+                        - TD24
+                        - TD25
+                        - TD26
+                        - TD27
+                        - TD28
+                        - TD29
+                        type: string
+                    required:
+                    - data
+                    - tipo_documento
+                    type: object
+                  dati_ordine_acquisto:
+                    items:
+                      description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiGenerali.RelatedData
+                      properties:
+                        codice_cig:
+                          type: string
+                        codice_commessa_convenzione:
+                          type: string
+                        codice_cup:
+                          type: string
+                        data:
+                          type: string
+                        id_documento:
+                          type: string
+                        num_item:
+                          type: string
+                        riferimento_numero_linea:
+                          items:
+                            type: integer
+                          type: array
+                      title: RelatedData
+                      type: object
+                    type: array
+                  dati_ricezione:
+                    items:
+                      description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiGenerali.RelatedData
+                      properties:
+                        codice_cig:
+                          type: string
+                        codice_commessa_convenzione:
+                          type: string
+                        codice_cup:
+                          type: string
+                        data:
+                          type: string
+                        id_documento:
+                          type: string
+                        num_item:
+                          type: string
+                        riferimento_numero_linea:
+                          items:
+                            type: integer
+                          type: array
+                      title: RelatedData
+                      type: object
+                    type: array
+                  dati_sal:
+                    items:
+                      description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiGenerali.DatiSAL
+                      properties:
+                        riferimento_fase:
+                          type: string
+                      title: DatiSAL
+                      type: object
+                    type: array
+                  dati_trasporto:
+                    properties:
+                      causale_trasporto:
+                        type: string
+                      data_inizio_trasporto:
+                        type: string
+                      data_ora_consegna:
+                        type: string
+                      data_ora_ritiro:
+                        type: string
+                      dati_anagrafici_vettore:
+                        properties:
+                          anagrafica:
+                            properties:
+                              cod_eori:
+                                type: string
+                              cognome:
+                                type: string
+                              denominazione:
+                                type: string
+                              nome:
+                                type: string
+                              titolo:
+                                type: string
+                            type: object
+                          codice_fiscale:
+                            type: string
+                          id_fiscale_iva:
+                            properties:
+                              id_codice:
+                                type: string
+                              id_paese:
+                                type: string
+                            required:
+                            - id_paese
+                            type: object
+                          numero_licenza_guida:
+                            type: string
+                        required:
+                        - id_fiscale_iva
+                        - anagrafica
+                        type: object
+                      descrizione:
+                        type: string
+                      indirizzo_resa:
+                        properties:
+                          cap:
+                            type: string
+                          comune:
+                            type: string
+                          indirizzo:
+                            type: string
+                          nazione:
+                            type: string
+                          numero_civico:
+                            type: string
+                          provincia:
+                            type: string
+                        type: object
+                      mezzo_trasporto:
+                        type: string
+                      numero_colli:
+                        type: integer
+                      peso_lordo:
+                        type: string
+                      peso_netto:
+                        type: string
+                      tipo_resa:
+                        type: string
+                      unita_misura_peso:
+                        type: string
+                    type: object
+                  fattura_principale:
+                    properties:
+                      data_fattura_principale:
+                        type: string
+                      numero_fattura_principale:
+                        type: string
+                    type: object
+                type: object
+              dati_pagamento:
+                items:
+                  description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiPagamento
+                  properties:
+                    condizioni_pagamento:
+                      enum:
+                      - TP01
+                      - TP02
+                      - TP03
+                      type: string
+                    dettaglio_pagamento:
+                      items:
+                        description: Schema for Sibill.Accounting.Adapter.IT.FPX12.Body.DatiPagamento.DettaglioPagamento
+                        properties:
+                          abi:
+                            type: string
+                          beneficiario:
+                            type: string
+                          bic:
+                            type: string
+                          cab:
+                            type: string
+                          cf_quietanzante:
+                            type: string
+                          cod_ufficio_postale:
+                            type: string
+                          codice_pagamento:
+                            type: string
+                          cognome_quietanzante:
+                            type: string
+                          data_decorrenza_penale:
+                            type: string
+                          data_limite_pagamento_anticipato:
+                            type: string
+                          data_riferimento_termini_pagamento:
+                            type: string
+                          data_scadenza_pagamento:
+                            type: string
+                          giorni_termini_pagamento:
+                            type: integer
+                          iban:
+                            type: string
+                          importo_pagamento:
+                            type: string
+                          istituto_finanziario:
+                            type: string
+                          modalita_pagamento:
+                            enum:
+                            - MP01
+                            - MP02
+                            - MP03
+                            - MP04
+                            - MP05
+                            - MP06
+                            - MP07
+                            - MP08
+                            - MP09
+                            - MP10
+                            - MP11
+                            - MP12
+                            - MP13
+                            - MP14
+                            - MP15
+                            - MP16
+                            - MP17
+                            - MP18
+                            - MP19
+                            - MP20
+                            - MP21
+                            - MP22
+                            - MP23
+                            type: string
+                          nome_quietanzante:
+                            type: string
+                          penalita_pagamenti_ritardati:
+                            type: string
+                          sconto_pagamento_anticipato:
+                            type: string
+                          titolo_quietanzante:
+                            type: string
+                        required:
+                        - modalita_pagamento
+                        - importo_pagamento
+                        title: DettaglioPagamento
+                        type: object
+                      type: array
+                  title: DatiPagamento
+                  type: object
+                type: array
+              dati_veicoli:
+                properties:
+                  data:
+                    type: string
+                  totale_percorso:
+                    type: string
+                type: object
+            required:
+            - dati_beni_servizi
+            - dati_generali
+            title: Body
+            type: object
+          type: array
+        fattura_elettronica_header:
+          properties:
+            cedente_prestatore:
+              properties:
+                contatti:
+                  properties:
+                    email:
+                      type: string
+                    fax:
+                      type: string
+                    telefono:
+                      type: string
+                  type: object
+                dati_anagrafici:
+                  properties:
+                    albo_professionale:
+                      type: string
+                    anagrafica:
+                      properties:
+                        cod_eori:
+                          type: string
+                        cognome:
+                          type: string
+                        denominazione:
+                          type: string
+                        nome:
+                          type: string
+                        titolo:
+                          type: string
+                      type: object
+                    codice_fiscale:
+                      type: string
+                    data_iscrizione_albo:
+                      type: string
+                    id_fiscale_iva:
+                      properties:
+                        id_codice:
+                          type: string
+                        id_paese:
+                          type: string
+                      required:
+                      - id_codice
+                      - id_paese
+                      type: object
+                    numero_iscrizione_albo:
+                      type: string
+                    provincia_albo:
+                      type: string
+                    regime_fiscale:
+                      enum:
+                      - RF01
+                      - RF02
+                      - RF04
+                      - RF05
+                      - RF06
+                      - RF07
+                      - RF08
+                      - RF09
+                      - RF10
+                      - RF11
+                      - RF12
+                      - RF13
+                      - RF14
+                      - RF15
+                      - RF16
+                      - RF17
+                      - RF18
+                      - RF19
+                      - RF20
+                      type: string
+                  required:
+                  - id_fiscale_iva
+                  - anagrafica
+                  - regime_fiscale
+                  type: object
+                iscrizione_rea:
+                  properties:
+                    capitale_sociale:
+                      type: string
+                    numero_rea:
+                      type: string
+                    socio_unico:
+                      enum:
+                      - SU
+                      - SM
+                      type: string
+                    stato_liquidazione:
+                      enum:
+                      - LS
+                      - LN
+                      type: string
+                    ufficio:
+                      type: string
+                  type: object
+                riferimento_amministrazione:
+                  type: string
+                sede:
+                  properties:
+                    cap:
+                      type: string
+                    comune:
+                      type: string
+                    indirizzo:
+                      type: string
+                    nazione:
+                      type: string
+                    numero_civico:
+                      type: string
+                    provincia:
+                      type: string
+                  required:
+                  - cap
+                  type: object
+                stabile_organizzazione:
+                  properties:
+                    cap:
+                      type: string
+                    comune:
+                      type: string
+                    indirizzo:
+                      type: string
+                    nazione:
+                      type: string
+                    numero_civico:
+                      type: string
+                    provincia:
+                      type: string
+                  type: object
+              required:
+              - sede
+              - dati_anagrafici
+              type: object
+            cessionario_committente:
+              properties:
+                dati_anagrafici:
+                  properties:
+                    anagrafica:
+                      properties:
+                        cod_eori:
+                          type: string
+                        cognome:
+                          type: string
+                        denominazione:
+                          type: string
+                        nome:
+                          type: string
+                        titolo:
+                          type: string
+                      type: object
+                    codice_fiscale:
+                      type: string
+                    id_fiscale_iva:
+                      properties:
+                        id_codice:
+                          type: string
+                        id_paese:
+                          type: string
+                      required:
+                      - id_codice
+                      - id_paese
+                      type: object
+                  required:
+                  - anagrafica
+                  type: object
+                rappresentante_fiscale:
+                  properties:
+                    cognome:
+                      type: string
+                    denominazione:
+                      type: string
+                    id_fiscale_iva:
+                      properties:
+                        id_codice:
+                          type: string
+                        id_paese:
+                          type: string
+                      required:
+                      - id_codice
+                      - id_paese
+                      type: object
+                    nome:
+                      type: string
+                  type: object
+                sede:
+                  properties:
+                    cap:
+                      type: string
+                    comune:
+                      type: string
+                    indirizzo:
+                      type: string
+                    nazione:
+                      type: string
+                    numero_civico:
+                      type: string
+                    provincia:
+                      type: string
+                  required:
+                  - cap
+                  type: object
+                stabile_organizzazione:
+                  properties:
+                    cap:
+                      type: string
+                    comune:
+                      type: string
+                    indirizzo:
+                      type: string
+                    nazione:
+                      type: string
+                    numero_civico:
+                      type: string
+                    provincia:
+                      type: string
+                  type: object
+              required:
+              - sede
+              - dati_anagrafici
+              type: object
+            dati_trasmissione:
+              properties:
+                codice_destinatario:
+                  type: string
+                contatti_trasmittente:
+                  properties:
+                    email:
+                      type: string
+                    telefono:
+                      type: string
+                  type: object
+                formato_trasmissione:
+                  enum:
+                  - FPA12
+                  - FPR12
+                  type: string
+                id_trasmittente:
+                  properties:
+                    id_codice:
+                      type: string
+                    id_paese:
+                      type: string
+                  required:
+                  - id_codice
+                  - id_paese
+                  type: object
+                pec_destinatario:
+                  type: string
+                progressivo_invio:
+                  type: string
+              required:
+              - formato_trasmissione
+              - codice_destinatario
+              type: object
+            rappresentante_fiscale:
+              properties:
+                dati_anagrafici:
+                  properties:
+                    anagrafica:
+                      properties:
+                        cod_eori:
+                          type: string
+                        cognome:
+                          type: string
+                        denominazione:
+                          type: string
+                        nome:
+                          type: string
+                        titolo:
+                          type: string
+                      type: object
+                    codice_fiscale:
+                      type: string
+                    id_fiscale_iva:
+                      properties:
+                        id_codice:
+                          type: string
+                        id_paese:
+                          type: string
+                      required:
+                      - id_codice
+                      - id_paese
+                      type: object
+                  required:
+                  - id_fiscale_iva
+                  - anagrafica
+                  type: object
+              required:
+              - dati_anagrafici
+              type: object
+            soggetto_emittente:
+              enum:
+              - CC
+              - TZ
+              type: string
+            terzo_intermediario_o_soggetto_emittente:
+              properties:
+                dati_anagrafici:
+                  properties:
+                    anagrafica:
+                      properties:
+                        cod_eori:
+                          type: string
+                        cognome:
+                          type: string
+                        denominazione:
+                          type: string
+                        nome:
+                          type: string
+                        titolo:
+                          type: string
+                      type: object
+                    codice_fiscale:
+                      type: string
+                    id_fiscale_iva:
+                      properties:
+                        id_codice:
+                          type: string
+                        id_paese:
+                          type: string
+                      required:
+                      - id_paese
+                      type: object
+                  required:
+                  - anagrafica
+                  type: object
+              type: object
+          required:
+          - cessionario_committente
+          - cedente_prestatore
+          - dati_trasmissione
+          type: object
+        namespace:
+          type: string
+        sistema_emittente:
+          type: string
+        versione:
+          enum:
+          - FPA12
+          - FPR12
+          type: string
+      title: Invoice
+      type: object
+    DocumentData:
+      description: Document data object
+      properties:
+        data:
+          $ref: '#/components/schemas/DocumentSchema'
+      title: DocumentData
+      type: object
+    DocumentSchema:
+      description: Document data representation
+      properties:
+        category:
+          description: Category data representation
+          nullable: true
+          properties:
+            id:
+              description: The id of the category
+              example: 019f8035-a1cb-7cec-8039-9d7c1b0eb08c
+              format: uuid
+              readOnly: true
+              type: string
+            name:
+              description: The description of the category
+              readOnly: true
+              type: string
+          readOnly: true
+          type: object
+        counterpart:
+          anyOf:
+          - $ref: '#/components/schemas/CounterpartSchema'
+          nullable: true
+          readOnly: true
+        created_at:
+          description: The creation date time
+          format: date-time
+          readOnly: true
+          type: string
+        creation_date:
+          description: The date of the document. It represents the date which, in the case of an immediate invoice, coincides with the transaction date
+          format: date
+          readOnly: true
+          type: string
+        delivery_date:
+          description: A date representing when the document were delivered
+          nullable: true
+          readOnly: true
+          type: string
+        delivery_status:
+          description: The status of the document delivery
+          nullable: true
+          readOnly: true
+          type: string
+        direction:
+          description: 'Shows whether the document has been issued or received.
+
+
+            Possible values are:
+
+
+            - `ISSUED`: The document was issued by this company
+
+            - `RECEIVED`: The document was received. Beware that self invoices issued by the company will have direction `RECEIVED`
+
+            '
+          enum:
+          - ISSUED
+          - RECEIVED
+          readOnly: true
+          type: string
+        file_name:
+          description: The name of the file sent to the Italian Electronic system (SDI)
+          nullable: true
+          readOnly: true
+          type: string
+        flows:
+          description: A list of payments related to the document
+          items:
+            $ref: '#/components/schemas/FlowSchema'
+          readOnly: true
+          type: array
+        format:
+          description: The document format
+          enum:
+          - FPA12
+          - FPR12
+          - FSM10
+          readOnly: true
+          type: string
+        gross_amount:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+        id:
+          description: The processed document identifier
+          example: 019f8035-a1cb-7e70-8489-fa1bd0bd52b8
+          format: uuid
+          readOnly: true
+          type: string
+        is_e_invoice:
+          description: Represents whether the document is an electronic invoice; if true, the document is an electronic invoice for the Italian Electronic system (SDI)
+          nullable: true
+          readOnly: true
+          type: boolean
+        notes:
+          nullable: true
+          readOnly: true
+          type: string
+        number:
+          description: The invoice number
+          example: NC/12345/2026
+          readOnly: true
+          type: string
+        progressive:
+          description: The progressive number within the sectional
+          example: '12345'
+          nullable: true
+          readOnly: true
+          type: string
+        reasons_and_remarks:
+          description: Document reasons and remarks
+          items:
+            type: string
+          nullable: false
+          readOnly: true
+          type: array
+        sectional:
+          description: The sectional associated with the document number
+          nullable: true
+          properties:
+            id:
+              description: The sectional identifier
+              format: uuid
+              readOnly: true
+              type: string
+            minimum_digits:
+              description: The minimum number of digits used to pad the progressive number
+              nullable: true
+              readOnly: true
+              type: integer
+            prefix:
+              description: The prefix prepended to the progressive number to form the document number
+              example: NC/
+              nullable: true
+              readOnly: true
+              type: string
+            suffix:
+              description: The suffix appended to the progressive number to form the document number
+              example: /2026
+              nullable: true
+              readOnly: true
+              type: string
+          readOnly: true
+          type: object
+        status:
+          description: 'Current internal document status. This field is a mix of status that reflects the document''s progress, both in Sibill and the target tax authority service.
+
+            For the Italian market the tax authority service is SDI.
+
+
+            Possible values are:
+
+
+            - `DRAFT`: The document in draft state. In this state the document is not yet finalized.
+
+            - `CREATED`: The document is finalized. If the document is marked as an electronic invoice, it is sent to the target tax authority service.
+
+            - `SENT`: The document is successfully transmitted to the target tax authority service.
+
+            - `DELIVERED`: The document is transmitted to the tax authority service and successfully delivered to the recipient.
+
+            - `NOT_DELIVERED`: The document is successfully transmitted to the target tax authority service butnot delivered to the recipient.
+
+            - `DISCARDED`: The document is discarded. This typically happens when the document is not valid for the target tax authority service.
+
+            - `REFUSED`: The document is refused. This typically happens for Public Administration entities only. It means that the document is not accepted by the recipient.
+
+            '
+          enum:
+          - DRAFT
+          - CREATED
+          - SENT
+          - DISCARDED
+          - DELIVERED
+          - NOT_DELIVERED
+          - REFUSED
+          readOnly: true
+          type: string
+        subcategory:
+          description: Subcategory data representation
+          nullable: true
+          properties:
+            id:
+              description: The id of the subcategory
+              example: 019f8035-d687-78c9-9a24-d10ddec1cf50
+              format: uuid
+              readOnly: true
+              type: string
+            name:
+              description: The description of the subcategory
+              readOnly: true
+              type: string
+          readOnly: true
+          type: object
+        type:
+          description: 'Current internal document type.
+
+
+            Possible values are:
+
+
+            - `BILL`: Represents a bill.
+
+            - `CREDIT_NOTE`: Represents a credit note.
+
+            - `DEBIT_NOTE`: Represents a debit note.
+
+            - `INVOICE`: Represents an invoice.
+
+            - `OTHER`: Represents other types of document.
+
+            - `PARCEL`: Represents a parcel.
+
+            - `SELF_INVOICE`: Represents a self-invoice.
+
+            - `DELIVERY_NOTE`: Represents a delivery note (DDT).
+
+            - `QUOTE`: Represents a quote.
+
+            '
+          enum:
+          - BILL
+          - RECEIPT
+          - CREDIT_NOTE
+          - DEBIT_NOTE
+          - INVOICE
+          - OTHER
+          - PARCEL
+          - SELF_INVOICE
+          - DELIVERY_NOTE
+          - QUOTE
+          - PAYROLL
+          readOnly: true
+          type: string
+        updated_at:
+          description: The update date time
+          format: date-time
+          readOnly: true
+          type: string
+        vat_amount:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+      title: DocumentSchema
+      type: object
+    DocumentUpdate:
+      description: Update document data object
+      properties:
+        category_id:
+          description: The category identifier. Pass `null` to clear the category and the subcategory.
+          example: 019f8035-d717-7c8c-ad92-c47177ad60c3
+          format: uuid
+          nullable: true
+          type: string
+        notes:
+          description: Document notes (max 1000 characters)
+          maxLength: 1000
+          nullable: true
+          type: string
+        subcategory_id:
+          description: The subcategory identifier. Must belong to the category_id set in the same request, or to the current category if category_id is not provided, otherwise the request returns `422 Unprocessable Entity`.
+          example: 019f8035-d717-717a-a497-5e53cfdc16fd
+          format: uuid
+          nullable: true
+          type: string
+      title: DocumentUpdate
+      type: object
+    CounterpartSchema:
+      description: Counterpart data representation
+      properties:
+        address:
+          description: The address
+          nullable: true
+          readOnly: true
+          type: string
+        city:
+          description: The city
+          nullable: true
+          readOnly: true
+          type: string
+        company_name:
+          description: The company name of the counterpart
+          nullable: true
+          readOnly: true
+          type: string
+        country:
+          description: The country
+          nullable: true
+          readOnly: true
+          type: string
+        destination_code:
+          description: "The destination code (if applicable) for the Italian Electronic system (SDI).\nAll the letters must be uppercase.\n\nPossible (suggested) values are:\n  - `2R4GTO8`: for San Marino.\n  - `XXXXXXX`: for not Italian Country.\n  - `0000000`: for italian identity_type `PERSON`.\n  - defaulted to `999999`: italian identity_type `PA`.\n  - defaulted to `0000000`: if it's unknown.\n\nFor identity_type `COMPANY` and `CONTRACTOR` the lenght must be `7`.\nFor identity_type `PA` the lenght must be `6`.\n"
+          nullable: true
+          readOnly: true
+          type: string
+        id:
+          description: The id of the counterpart
+          example: 019f8035-9c6e-7bca-bc10-478400587b84
+          format: uuid
+          readOnly: true
+          type: string
+        identity_type:
+          description: 'The type of the counterpart.
+
+
+            Possible values are:
+
+            - `COMPANY`: a company
+
+            - `PA`: a public authority
+
+            - `PERSON`: a person
+
+            - `CONTRACTOR`: a contractor
+
+            '
+          enum:
+          - COMPANY
+          - PA
+          - PERSON
+          - CONTRACTOR
+          nullable: true
+          readOnly: true
+          type: string
+        postal_code:
+          description: The postal code (if applicable)
+          nullable: true
+          readOnly: true
+          type: string
+        province_code:
+          description: The province code (if applicable)
+          nullable: true
+          readOnly: true
+          type: string
+        tax_number:
+          description: The tax number
+          nullable: true
+          readOnly: true
+          type: string
+        vat_number:
+          description: The VAT number
+          nullable: true
+          readOnly: true
+          type: string
+      title: CounterpartSchema
+      type: object
+    DocumentList:
+      description: List of document representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/DocumentSchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: DocumentList
+      type: object
+    IntegrationError:
+      properties:
+        errors:
+          description: The list of errors encountered during the operation with detailed information
+          items:
+            properties:
+              code:
+                description: Short code identifying an error type
+                example: bad_request
+                type: string
+              detail:
+                description: The message detail that describes the error
+                example: null value where string expected
+                nullable: true
+                type: string
+              source:
+                nullable: true
+                properties:
+                  pointer:
+                    description: The exact position in the request where the error occurred
+                    example: /data/attributes/name
+                    type: string
+                type: object
+              title:
+                description: The message title that describes the error. It is a short, human-readable summary of the problem
+                example: Invalid value
+                type: string
+            type: object
+          type: array
+      required:
+      - errors
+      title: IntegrationError
+      type: object
+    SendInvoiceData:
+      description: Send an invoice courtesy copy data object
+      properties:
+        body:
+          description: "The body of the email.\n\nIf not provided, a default body will be used:\n\n- in Italian:\n  Buongiorno,\n  abbiamo provveduto all'invio della {INVOICE_TYPE} n. {INVOICE_NUMBER}. È possibile visualizzarla o scaricarne una copia in versione PDF cliccando sul bottone sottostante.\n\n  Grazie e buon lavoro\n"
+          type: string
+        reply_to:
+          format: email
+          minLength: 1
+          nullable: false
+          type: string
+        subject:
+          description: "The subject of the email.\n\nIf not provided, a default subject will be used:\n\n- in Italian:\n  Nostra {INVOICE_TYPE} n. {INVOICE_NUMBER}\n"
+          type: string
+        to:
+          nullable: false
+          oneOf:
+          - format: email
+            minLength: 1
+            nullable: false
+            type: string
+          - items:
+              format: email
+              minLength: 1
+              nullable: false
+              type: string
+            minItems: 1
+            nullable: false
+            type: array
+      required:
+      - to
+      - reply_to
+      title: SendInvoiceData
+      type: object
+    FlowSchema:
+      description: Flow data representation
+      properties:
+        account_id:
+          description: The id of the account
+          example: 019f8035-d726-7b45-847b-05e0fb123222
+          format: uuid
+          nullable: true
+          readOnly: true
+          type: string
+        amount:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+        created_at:
+          description: The date of creation
+          format: date-time
+          readOnly: true
+          type: string
+        document_id:
+          description: The id of the document
+          example: 019f8035-d726-7414-ad31-76243aee0460
+          format: uuid
+          readOnly: true
+          type: string
+        expected_payment_date:
+          description: The date when the flow is due/The date when the flow was paid when the flow is reconciled
+          format: date
+          readOnly: true
+          type: string
+        id:
+          description: The flow identifier
+          example: 019f8035-9d1c-7d2e-9eae-763f79a2d5d9
+          format: uuid
+          readOnly: true
+          type: string
+        payment_date:
+          description: The date when the flow is due
+          format: date
+          readOnly: true
+          type: string
+        payment_method:
+          description: 'The payment method.
+
+
+            Possible values are:
+
+            - `CARD`: Payment by debit or credit card.
+
+            - `CASH`: Payment in cash.
+
+            - `CHECK`: Payment by bank check.
+
+            - `DEFERRED`: Amount not collected at the time of sale (e.g. ticket, corrispettivo).
+
+            - `TAX_FORM`: Payment via tax withholding form (e.g. F24 ritenute d''acconto).
+
+            - `FISCAL_CREDIT`: Payment offset by a fiscal/tax credit.
+
+            - `OTHER`: Any payment method not covered by the other values.
+
+            - `POSTAL`: Payment via postal order or postal current account (bollettino postale).
+
+            - `RIBA`: Ricevuta Bancaria — Italian bank receipt collection instrument.
+
+            - `SDD`: SEPA Direct Debit — recurring bank debit authorised by the payer.
+
+            - `TRANSFER`: Bank wire transfer (bonifico bancario).
+
+            '
+          enum:
+          - CARD
+          - CASH
+          - CHECK
+          - DEFERRED
+          - TAX_FORM
+          - FISCAL_CREDIT
+          - OTHER
+          - POSTAL
+          - RIBA
+          - SDD
+          - TRANSFER
+          nullable: true
+          readOnly: true
+          type: string
+        payment_status:
+          description: 'The payment status.
+
+
+            Possible values are:
+
+            - `PAID`: The flow has been paid.
+
+            - `TO_PAY`: The flow is to be paid.
+
+            '
+          enum:
+          - PAID
+          - TO_PAY
+          readOnly: true
+          type: string
+      title: FlowSchema
+      type: object
+    InvoiceData:
+      description: Invoice data object
+      properties:
+        data:
+          properties:
+            invoice:
+              $ref: '#/components/schemas/Invoice'
+            xml_url:
+              description: Signed url for XML representation of the invoice. This field is available as soon as the invoice is sent to the SDI. This URL is valid for a limited time and should be used promptly. Please note that the URL will expire after a certain period of time, so it is recommended to download the XML file as soon as possible.
+              nullable: true
+              readOnly: true
+              type: string
+          type: object
+      title: InvoiceData
+      type: object
+  securitySchemes:
+    authorization:
+      description: Sibill Integration API scheme documentation
+      scheme: bearer
+      type: https
