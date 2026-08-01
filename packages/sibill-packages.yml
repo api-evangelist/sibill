@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: searched
+source: registry search (npm, PyPI) + https://docs.sibill.com/
+# No FIRST-PARTY SDK is published by Sibill; the docs reference no official client
+# libraries and the github.com/sibill org has 0 public repos. One community CLI
+# wraps the Integration API but is maintained by a third party (webion-hub), so it
+# is recorded here with official:false and NOT wired as an SDKs/CLI canonical pointer.
+packages:
+  - language: javascript
+    registry: npm
+    name: sibill-cli
+    url: https://www.npmjs.com/package/sibill-cli
+    install: npm install -g sibill-cli
+    official: false
+    maintainer: webion-hub
+    repository: https://github.com/webion-hub/sibill-cli
+    description: >-
+      Community CLI for the Sibill Integration API (manage companies, bank accounts,
+      documents, transactions, reconciliations). Not published by Sibill.
+notes: >-
+  No official Sibill-published SDK found on npm, PyPI, or the docs. The pypi
+  package named "sibill" appears unrelated (empty metadata) and is excluded.

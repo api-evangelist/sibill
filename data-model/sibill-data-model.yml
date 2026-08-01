@@ -1,0 +1,91 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/sibill-openapi-original.json
+# Entity-relationship graph derived from OpenAPI schema id-reference fields and
+# the path hierarchy (every resource is scoped under a Company).
+entities:
+  - name: Company
+    schema: CompanyList
+    root: true
+  - name: Account
+    schema: AccountSchema
+  - name: Category
+    schema: CategorySchema
+  - name: Subcategory
+    schema: SubcategorySchema
+  - name: Counterpart
+    schema: CounterpartSchema
+  - name: DocumentSectional
+    schema: DocumentSectionalSchema
+  - name: Document
+    schema: DocumentSchema
+  - name: Flow
+    schema: FlowSchema
+  - name: Product
+    schema: ProductSchema
+  - name: Reconciliation
+    schema: ReconciliationSchema
+  - name: Transaction
+    schema: TransactionSchema
+relationships:
+  - from: Account
+    to: Company
+    type: belongs_to
+    via: path company_id
+  - from: Subcategory
+    to: Category
+    type: belongs_to
+    via: category_id
+  - from: Document
+    to: Category
+    type: belongs_to
+    via: category
+  - from: Document
+    to: Counterpart
+    type: belongs_to
+    via: counterpart
+  - from: Document
+    to: Subcategory
+    type: belongs_to
+    via: subcategory
+  - from: Document
+    to: DocumentSectional
+    type: belongs_to
+    via: sectional
+  - from: Document
+    to: Flow
+    type: has_many
+    via: flows
+  - from: Flow
+    to: Account
+    type: belongs_to
+    via: account_id
+  - from: Flow
+    to: Document
+    type: belongs_to
+    via: document_id
+  - from: Reconciliation
+    to: Flow
+    type: belongs_to
+    via: flow_id
+  - from: Reconciliation
+    to: Transaction
+    type: belongs_to
+    via: transaction_id
+  - from: Transaction
+    to: Account
+    type: belongs_to
+    via: account_id
+  - from: Transaction
+    to: Category
+    type: belongs_to
+    via: category
+  - from: Transaction
+    to: Subcategory
+    type: belongs_to
+    via: subcategory
+notes: >-
+  Relationship directions inferred from *_id fields and inline related objects in
+  the response schemas. Company is the tenant root; Document is the central
+  invoice/bill entity that ties Counterparts, Categories, Flows and Sectionals
+  together, while Reconciliation binds bank Transactions to payment Flows.

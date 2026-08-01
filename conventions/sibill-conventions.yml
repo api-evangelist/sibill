@@ -1,0 +1,70 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sibill.com/
+spec: openapi/sibill-openapi-original.json
+# Cross-cutting request/response semantics for the Sibill Integration API.
+authentication:
+  style: bearer
+  header: Authorization
+  format: "Bearer ${api_key}"
+  transport: https-only
+  see: authentication/sibill-authentication.yml
+idempotency:
+  supported: false
+  notes: >-
+    The API does not document an idempotency-key header, and none is present in
+    the OpenAPI. Writes are not idempotent by contract; do not emit an Idempotency
+    pointer for this provider.
+pagination:
+  style: cursor
+  request_params:
+    - name: cursor
+      in: query
+      description: Opaque cursor marking a position in the dataset; omit for the first page.
+    - name: page_size
+      in: query
+      description: Number of items per page.
+  response:
+    schema: Page
+    fields:
+      - cursor    # cursor for the next page (nullable when no more results)
+      - size      # current page size
+filtering:
+  param: filter
+  in: query
+  type: object
+  example_fields:
+    documents: [creation_date, delivery_date, direction, status, type, number, counterpart_company_name, notes, progressive, sectional_id, source_id]
+sorting:
+  param: sort
+  in: query
+  notes: Several index operations accept a sort parameter over documented fields.
+field_expansion:
+  param: expand
+  in: query
+  notes: Comma/field list of related resources to inline.
+  examples:
+    documents: [category, counterpart, flows, subcategory]
+error_envelope:
+  format: custom
+  schema: IntegrationError
+  see: errors/sibill-problem-types.yml
+rate_limiting:
+  limit: 10
+  unit: second
+  signal: 429 Too Many Requests (IntegrationError envelope)
+  headers: none documented
+  see: rate-limits/sibill-rate-limits.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  base_path: /api/v1
+  stability: beta
+  see: lifecycle/sibill-lifecycle.yml
+content_type:
+  request: application/json
+  response: application/json
+scoping:
+  notes: >-
+    Almost every resource is nested under /companies/{company_id}; the caller
+    must scope requests to a company the API key can access (403 otherwise).

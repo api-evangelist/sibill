@@ -1,0 +1,62 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/sibill-openapi-original.json
+docs: https://docs.sibill.com/
+# The Sibill Integration API does NOT use RFC 9457 application/problem+json.
+# Every 4xx/5xx response returns the custom "IntegrationError" envelope.
+format: custom
+envelope:
+  schema: IntegrationError
+  shape:
+    errors:
+      - code: "Short machine code identifying the error type (e.g. bad_request)"
+        detail: "Human-readable message describing the error (nullable)"
+        source:
+          pointer: "JSON pointer to the offending field (nullable)"
+  example:
+    errors:
+      - code: bad_request
+        detail: "null value where string expected"
+        source:
+          pointer: "/data/attributes/name"
+problems:
+  - status: 400
+    code: bad_request
+    title: Bad request
+    detail: The request was malformed or a parameter failed validation.
+    envelope: IntegrationError
+  - status: 401
+    code: unauthorized
+    title: Unauthorized
+    detail: Missing or invalid Bearer token in the Authorization header.
+    envelope: IntegrationError
+  - status: 403
+    code: forbidden
+    title: Forbidden
+    detail: The authenticated key is not permitted to access this company or resource.
+    envelope: IntegrationError
+  - status: 404
+    code: not_found
+    title: Resource not found
+    detail: The requested resource does not exist.
+    envelope: IntegrationError
+  - status: 422
+    code: unprocessable_entity
+    title: Unprocessable entity
+    detail: The request body was well-formed but failed business validation.
+    envelope: IntegrationError
+  - status: 429
+    code: too_many_requests
+    title: Too many requests
+    detail: Rate limit exceeded (10 requests/second). Back off and retry.
+    envelope: IntegrationError
+  - status: 500
+    code: internal_server_error
+    title: Internal server error
+    detail: An unexpected error occurred on the Sibill side.
+    envelope: IntegrationError
+notes: >-
+  Derived from the 4xx/5xx responses of all 48 operations in the OpenAPI, which
+  all reference the shared IntegrationError schema. Codes/titles are the standard
+  HTTP semantics; the exact `code` string vocabulary is documented per-operation
+  in the live API reference.

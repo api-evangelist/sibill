@@ -1,0 +1,27 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Sibill Integration API
+  version: 1.0.0
+extends: openapi/sibill-openapi-original.json
+# Our enhancements over the harvested spec. The original is never mutated; the
+# published spec ships an internal cluster server URL and no top-level metadata.
+actions:
+  - target: $.servers
+    update:
+      - url: https://integration.sibill.com/api/v1
+        description: Production
+      - url: https://integration.dev.sibill.com/api/v1
+        description: Development (sandbox)
+  - target: $.info
+    update:
+      description: >-
+        Sibill Integration API — REST access to the Sibill financial-management
+        platform for Italian SMEs: companies, bank accounts, categories,
+        counterparts, documents (electronic invoices submitted to SDI), payment
+        flows, reconciliations, products, and transactions. Bearer API-key auth,
+        cursor pagination, field expansion, and outbound webhooks.
+      x-apievangelist-rating-notes: >-
+        Bearer auth, cursor pagination, expand/filter/sort, 10 req/s rate limit,
+        custom IntegrationError envelope, Document/Flow webhooks. No idempotency
+        contract, no OAuth scopes, no published status page.
+      x-agentic-access-profile: agentic-access/sibill-agentic-access.yml

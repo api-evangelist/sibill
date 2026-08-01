@@ -1,0 +1,31 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/sibill-openapi-original.json
+skills:
+  - file: sibill-issue-and-send-invoice.md
+    name: Issue and send an electronic invoice
+    api: openapi/sibill-openapi-original.json
+    operations:
+      - SibillWeb.Integration.V1.CompaniesController.index
+      - SibillWeb.Integration.V1.CounterpartsActionsController.search
+      - SibillWeb.Integration.V1.DocumentsActionsController.create_invoice
+      - SibillWeb.Integration.V1.DocumentsActionsController.get_invoice
+      - SibillWeb.Integration.V1.DocumentsActionsController.share_invoice
+  - file: sibill-reconcile-transaction.md
+    name: Reconcile a bank transaction to a payment flow
+    api: openapi/sibill-openapi-original.json
+    operations:
+      - SibillWeb.Integration.V1.AccountsController.index
+      - SibillWeb.Integration.V1.TransactionsController.index
+      - SibillWeb.Integration.V1.DocumentsController.index
+      - SibillWeb.Integration.V1.FlowsController.index
+      - SibillWeb.Integration.V1.ReconciliationsController.create
+  - file: sibill-manage-counterparts.md
+    name: Manage counterparts (customers and suppliers)
+    api: openapi/sibill-openapi-original.json
+    operations:
+      - SibillWeb.Integration.V1.CounterpartsActionsController.search
+      - SibillWeb.Integration.V1.CounterpartsController.index
+      - SibillWeb.Integration.V1.CounterpartsController.create
+      - SibillWeb.Integration.V1.CounterpartsController.show
+      - SibillWeb.Integration.V1.CounterpartsController.update

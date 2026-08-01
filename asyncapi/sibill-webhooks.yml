@@ -1,0 +1,29 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sibill.com/
+# Sibill documents outbound webhooks but publishes no AsyncAPI document, so this
+# captures the webhook catalog (type: Webhooks). No AsyncAPI spec is fabricated.
+spec_type: Webhooks
+transport: http-callback
+delivery: Sibill POSTs an event payload to a subscriber-configured endpoint.
+events:
+  - name: document.updated
+    label: Document updated
+    resource: Document
+    description: >-
+      Fires when a document (invoice/bill) changes state — e.g. issuance,
+      SDI submission status, or reconciliation. Payload references the Document
+      resource (see openapi DocumentSchema).
+  - name: flow.updated
+    label: Flow updated
+    resource: Flow
+    description: >-
+      Fires when a payment/collection flow attached to a document changes state.
+      Payload references the Flow resource (see openapi FlowSchema).
+verification:
+  notes: >-
+    Signing/verification details are documented in the live webhook reference and
+    were not captured verbatim here. Event-name strings above reflect the two
+    documented webhook resources (Document updated, Flow updated); confirm the
+    exact `type` string and signature header against docs.sibill.com before relying on them.
+docs: https://docs.sibill.com/api-reference/webhook

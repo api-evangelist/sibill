@@ -1,0 +1,40 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/sibill-openapi-original.json
+# Which cross-cutting standards the Sibill Integration API conforms to.
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 securityScheme; auth is HTTP Bearer API key.
+  - id: openid-connect
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a custom IntegrationError envelope (errors[] with code/detail/source.pointer), not application/problem+json.
+  - id: json-api-errors
+    conforms: partial
+    evidence: Error objects carry code/detail/source.pointer in an errors[] array, matching the JSON:API error-object shape.
+  - id: cursor-pagination
+    conforms: true
+    evidence: Index operations use cursor + page_size with a Page{cursor,size} response.
+  - id: field-expansion
+    conforms: true
+    evidence: expand query parameter inlines related resources.
+  - id: bearer-auth-rfc6750
+    conforms: true
+    evidence: Authorization; Bearer token over HTTPS.
+  - id: psd2
+    conforms: context
+    evidence: >-
+      Sibill's platform connects to Italian banks under PSD2 (open banking), but the
+      Integration API itself is a first-party REST API, not a PSD2/Berlin-Group interface.
+  - id: fatturazione-elettronica-sdi
+    conforms: true
+    evidence: >-
+      Documents can be submitted to the Agenzia delle Entrate SDI (Sistema di Interscambio)
+      for Italian electronic invoicing; invoice schemas mirror the FatturaPA structure
+      (DatiPagamento, DatiRiepilogo, DatiDDT, DettaglioLinee, etc.).
+notes: >-
+  Derived from the OpenAPI structure. No third-party security certifications
+  (SOC 2 / ISO 27001 / PCI) were found published, so no Compliance pointer is
+  emitted (see security-programs probe: trust=none).

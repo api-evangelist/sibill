@@ -1,26 +1,287 @@
 aid: sibill
 name: Sibill
-description: 'Sibill is a company surfaced as a portfolio company of creandum and added to the API Evangelist
-  network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting the enrichment pipeline.'
+description: >-
+  Sibill is an Italian fintech platform that centralizes financial and administrative
+  management for small and medium-sized businesses (PMI). It unifies electronic
+  invoicing (submitted to the Agenzia delle Entrate SDI), treasury and cash-flow
+  monitoring, payments, business accounts and debit cards, and AI-assisted
+  reconciliation of bank transactions against invoices and deadlines. The Sibill
+  Integration API exposes companies, bank accounts, categories, counterparts,
+  documents, payment flows, reconciliations, products and transactions over a REST
+  interface secured with Bearer API keys, with cursor pagination, field expansion,
+  and Document/Flow webhooks. Backed by Creandum.
 url: https://raw.githubusercontent.com/api-evangelist/sibill/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://sibill.com/wp-content/uploads/2025/10/monogramma_purple.jpg
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - creandum
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: has-openapi-and-artifacts
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 22
+  pass: local-v1
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Fintech
-apis: []
+- Invoicing
+- Payments
+- Reconciliation
+- Accounting
+- Banking
+- SME
+- Open Banking
+- Electronic Invoicing
+- Italy
+apis:
+- aid: sibill:sibill-account-api
+  name: Sibill Account API
+  description: The Account API from Sibill — 2 operation(s) for account.
+  humanURL: https://docs.sibill.com/
+  baseURL: https://integration.sibill.com/api/v1
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/sibill-account-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sibill.com/
+  - type: APIReference
+    url: https://docs.sibill.com/api-reference
+- aid: sibill:sibill-category-api
+  name: Sibill Category API
+  description: The Category API from Sibill — 2 operation(s) for category.
+  humanURL: https://docs.sibill.com/
+  baseURL: https://integration.sibill.com/api/v1
+  tags:
+  - Category
+  properties:
+  - type: OpenAPI
+    url: openapi/sibill-category-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sibill.com/
+  - type: APIReference
+    url: https://docs.sibill.com/api-reference
+- aid: sibill:sibill-company-api
+  name: Sibill Company API
+  description: The Company API from Sibill — 1 operation(s) for company.
+  humanURL: https://docs.sibill.com/
+  baseURL: https://integration.sibill.com/api/v1
+  tags:
+  - Company
+  properties:
+  - type: OpenAPI
+    url: openapi/sibill-company-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sibill.com/
+  - type: APIReference
+    url: https://docs.sibill.com/api-reference
+- aid: sibill:sibill-counterpart-api
+  name: Sibill Counterpart API
+  description: The Counterpart API from Sibill — 3 operation(s) for counterpart.
+  humanURL: https://docs.sibill.com/
+  baseURL: https://integration.sibill.com/api/v1
+  tags:
+  - Counterpart
+  properties:
+  - type: OpenAPI
+    url: openapi/sibill-counterpart-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sibill.com/
+  - type: APIReference
+    url: https://docs.sibill.com/api-reference
+- aid: sibill:sibill-document-api
+  name: Sibill Document API
+  description: The Document API from Sibill — 5 operation(s) for document.
+  humanURL: https://docs.sibill.com/
+  baseURL: https://integration.sibill.com/api/v1
+  tags:
+  - Document
+  properties:
+  - type: OpenAPI
+    url: openapi/sibill-document-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sibill.com/
+  - type: APIReference
+    url: https://docs.sibill.com/api-reference
+- aid: sibill:sibill-documentsectional-api
+  name: Sibill DocumentSectional API
+  description: The DocumentSectional API from Sibill — 2 operation(s) for documentsectional.
+  humanURL: https://docs.sibill.com/
+  baseURL: https://integration.sibill.com/api/v1
+  tags:
+  - DocumentSectional
+  properties:
+  - type: OpenAPI
+    url: openapi/sibill-documentsectional-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sibill.com/
+  - type: APIReference
+    url: https://docs.sibill.com/api-reference
+- aid: sibill:sibill-flow-api
+  name: Sibill Flow API
+  description: The Flow API from Sibill — 2 operation(s) for flow.
+  humanURL: https://docs.sibill.com/
+  baseURL: https://integration.sibill.com/api/v1
+  tags:
+  - Flow
+  properties:
+  - type: OpenAPI
+    url: openapi/sibill-flow-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sibill.com/
+  - type: APIReference
+    url: https://docs.sibill.com/api-reference
+- aid: sibill:sibill-payment-api
+  name: Sibill Payment API
+  description: The Payment API from Sibill — 2 operation(s) for payment.
+  humanURL: https://docs.sibill.com/
+  baseURL: https://integration.sibill.com/api/v1
+  tags:
+  - Payment
+  properties:
+  - type: OpenAPI
+    url: openapi/sibill-payment-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sibill.com/
+  - type: APIReference
+    url: https://docs.sibill.com/api-reference
+- aid: sibill:sibill-product-api
+  name: Sibill Product API
+  description: The Product API from Sibill — 2 operation(s) for product.
+  humanURL: https://docs.sibill.com/
+  baseURL: https://integration.sibill.com/api/v1
+  tags:
+  - Product
+  properties:
+  - type: OpenAPI
+    url: openapi/sibill-product-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sibill.com/
+  - type: APIReference
+    url: https://docs.sibill.com/api-reference
+- aid: sibill:sibill-reconciliation-api
+  name: Sibill Reconciliation API
+  description: The Reconciliation API from Sibill — 2 operation(s) for reconciliation.
+  humanURL: https://docs.sibill.com/
+  baseURL: https://integration.sibill.com/api/v1
+  tags:
+  - Reconciliation
+  properties:
+  - type: OpenAPI
+    url: openapi/sibill-reconciliation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sibill.com/
+  - type: APIReference
+    url: https://docs.sibill.com/api-reference
+- aid: sibill:sibill-subcategory-api
+  name: Sibill Subcategory API
+  description: The Subcategory API from Sibill — 2 operation(s) for subcategory.
+  humanURL: https://docs.sibill.com/
+  baseURL: https://integration.sibill.com/api/v1
+  tags:
+  - Subcategory
+  properties:
+  - type: OpenAPI
+    url: openapi/sibill-subcategory-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sibill.com/
+  - type: APIReference
+    url: https://docs.sibill.com/api-reference
+- aid: sibill:sibill-transaction-api
+  name: Sibill Transaction API
+  description: The Transaction API from Sibill — 2 operation(s) for transaction.
+  humanURL: https://docs.sibill.com/
+  baseURL: https://integration.sibill.com/api/v1
+  tags:
+  - Transaction
+  properties:
+  - type: OpenAPI
+    url: openapi/sibill-transaction-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sibill.com/
+  - type: APIReference
+    url: https://docs.sibill.com/api-reference
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DeveloperPortal
+  url: https://docs.sibill.com/
+- type: Documentation
+  url: https://docs.sibill.com/
+- type: APIReference
+  url: https://docs.sibill.com/api-reference
+- type: GettingStarted
+  url: https://docs.sibill.com/quickstarts/quickstarts-step-by-step
+- type: Support
+  url: https://docs.sibill.com/faqs
+- type: Blog
+  url: https://sibill.com/blog/
+- type: Pricing
+  url: https://sibill.com/pricing/
+- type: SignUp
+  url: https://app.sibill.com/signup
+- type: Login
+  url: https://app.sibill.com/login
+- type: TermsOfService
+  url: https://sibill.com/termini-e-condizioni/
+- type: PrivacyPolicy
+  url: https://www.iubenda.com/privacy-policy/16454324
+- type: Authentication
+  url: authentication/sibill-authentication.yml
+- type: ChangeLog
+  url: changelog/sibill-changelog.yml
+- type: Lifecycle
+  url: lifecycle/sibill-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/sibill-rate-limits.yml
+- type: Conventions
+  url: conventions/sibill-conventions.yml
+- type: ErrorCatalog
+  url: errors/sibill-problem-types.yml
+- type: DataModel
+  url: data-model/sibill-data-model.yml
+- type: Conformance
+  url: conformance/sibill-conformance.yml
+- type: Sandbox
+  url: sandbox/sibill-sandbox.yml
+- type: Webhooks
+  url: asyncapi/sibill-webhooks.yml
+- type: MCPServer
+  url: mcp/sibill-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Packages
+  url: packages/sibill-packages.yml
+- type: Overlay
+  url: overlays/sibill-openapi-overlay.yaml
+- type: WellKnown
+  url: well-known/sibill-well-known.yml
+- type: LLMsTxt
+  url: llms/sibill-llms.txt
+- type: DomainSecurity
+  url: security/sibill-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/sibill-agentic-access.yml
 - type: Website
   url: https://sibill.com/

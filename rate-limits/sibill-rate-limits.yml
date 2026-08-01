@@ -1,0 +1,16 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sibill.com/
+rate_limits:
+  - scope: global
+    limit_count: 10
+    interval: second
+    description: Maximum of 10 requests per second per API key.
+    exceeded_status: 429
+    exceeded_body: IntegrationError envelope (Too Many Requests)
+headers: none documented
+retry_after: not documented
+notes: >-
+  The docs state a hard limit of 10 requests/second; exceeding it returns HTTP 429
+  with the standard IntegrationError body. No X-RateLimit-* or Retry-After headers
+  are documented.

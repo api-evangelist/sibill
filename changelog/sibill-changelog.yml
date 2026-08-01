@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sibill.com/changelog
+scheme: semver
+current_version: 1.0.0-beta
+entries:
+  - version: 1.0.0
+    date: '2025-02-19'
+    stage: beta
+    breaking: false
+    highlights:
+      - Initial beta release of the Sibill Integration API.
+      - GET endpoint to retrieve all companies.
+      - GET endpoint to retrieve information for a specific document.
+      - POST endpoint to create, submit to SDI (Sistema di Interscambio), and reconcile invoice documents.
+notes: >-
+  The published changelog currently lists a single entry (the 1.0.0 beta launch).
+  Captured verbatim; the live changelog at docs.sibill.com/changelog is the source
+  of truth for newer entries.

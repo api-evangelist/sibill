@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sibill.com/
+versioning:
+  scheme: uri-path
+  current: v1
+  base_path: /api/v1
+  stability: beta
+  docs: https://docs.sibill.com/
+  notes: >-
+    The API and its documentation are published as a BETA. Access credentials and
+    available resources differ between the Development and Production environments.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No formal deprecation/Sunset (RFC 8594) policy is published.
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+changelog: https://docs.sibill.com/changelog
+support:
+  email: api@sibill.it
+environments:
+  production:
+    base_url: https://integration.sibill.com/api/v1
+  development:
+    base_url: https://integration.dev.sibill.com/api/v1
+deprecated_operations: []
+notes: >-
+  No status page (status.sibill.com does not resolve; /status returns 404) and no
+  published deprecation policy were found, so no StatusPage or Deprecation pointer
+  is emitted. Versioning is URI-path (v1) and the surface is a documented beta.

@@ -1,0 +1,36 @@
+{
+  "provider": "sibill",
+  "sources": [
+    "sibill-account-api-openapi.yml",
+    "sibill-category-api-openapi.yml",
+    "sibill-company-api-openapi.yml",
+    "sibill-counterpart-api-openapi.yml",
+    "sibill-document-api-openapi.yml",
+    "sibill-documentsectional-api-openapi.yml",
+    "sibill-flow-api-openapi.yml",
+    "sibill-payment-api-openapi.yml",
+    "sibill-product-api-openapi.yml",
+    "sibill-reconciliation-api-openapi.yml",
+    "sibill-subcategory-api-openapi.yml",
+    "sibill-transaction-api-openapi.yml"
+  ],
+  "outputs": [
+    "sibill-account-api-openapi.yml",
+    "sibill-category-api-openapi.yml",
+    "sibill-company-api-openapi.yml",
+    "sibill-counterpart-api-openapi.yml",
+    "sibill-document-api-openapi.yml",
+    "sibill-documentsectional-api-openapi.yml",
+    "sibill-flow-api-openapi.yml",
+    "sibill-payment-api-openapi.yml",
+    "sibill-product-api-openapi.yml",
+    "sibill-reconciliation-api-openapi.yml",
+    "sibill-subcategory-api-openapi.yml",
+    "sibill-transaction-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

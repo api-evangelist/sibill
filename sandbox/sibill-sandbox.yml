@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sibill.com/
+# Sibill separates a Development (test) environment from Production. Credentials
+# and available resources differ between the two; the docs let you pick the
+# environment before integrating.
+environments:
+  development:
+    base_url: https://integration.dev.sibill.com/api/v1
+    spec_url: https://integration.dev.sibill.com/api/spec
+    purpose: Sandbox / test integration environment with its own credentials.
+  production:
+    base_url: https://integration.sibill.com/api/v1
+    spec_url: https://integration.sibill.com/api/spec
+    purpose: Live environment.
+key_separation:
+  model: separate-credentials-per-environment
+  notes: >-
+    Development and Production issue distinct API keys and expose distinct
+    resources; a Development key cannot be used against Production.
+test_values:
+  notes: >-
+    The public documentation does not publish fixed magic test identifiers
+    (test IBANs, test VAT numbers, test cards). None are recorded here to avoid
+    fabrication; the Development environment is the sandbox surface.

@@ -1,0 +1,48 @@
+# Sibill Integration API
+
+> Sibill is an Italian fintech platform that centralizes financial and administrative management for small and medium-sized businesses (PMI): electronic invoicing (submitted to the Agenzia delle Entrate SDI), treasury/cash-flow, payments, bank-transaction reconciliation, business accounts and cards. The Integration API exposes companies, accounts, categories, counterparts, documents, payment flows, reconciliations, products and transactions over REST. Auth is HTTP Bearer API key over HTTPS; responses use cursor pagination with field expansion. Documentation and API are in BETA.
+
+## API
+- [Sibill Integration API (OpenAPI 3.0)](https://integration.sibill.com/api/spec): 48 operations across 12 resources; production base https://integration.sibill.com/api/v1
+- [Developer documentation](https://docs.sibill.com/): getting started, quick start, authentication, OpenAPI, FAQs, changelog
+
+## Resources
+- Companies — list the companies an API key can access
+- Accounts — bank accounts per company
+- Categories / Subcategories — transaction and document classification
+- Counterparts — customers/suppliers (search by VAT via /counterparts/search)
+- Documents — electronic invoices/bills; create-invoice submits to SDI; share-invoice emails a copy
+- Document Sectionals — invoice numbering sectionals
+- Flows — payment/collection flows attached to documents
+- Reconciliations — match bank transactions to flows
+- Products — catalog line items
+- Transactions — bank transactions
+- Requests — bulk-payment and F24 OCR
+
+## Conventions
+- [Authentication](https://docs.sibill.com/): Authorization: Bearer ${api_key}, HTTPS only, separate keys per environment
+- Pagination: cursor + page_size query params; Page{cursor,size} response
+- Field expansion: expand query param (e.g. category, counterpart, flows, subcategory)
+- Filtering & sorting: filter (object) and sort query params
+- Errors: custom IntegrationError envelope (errors[] with code/detail/source.pointer) — not RFC 9457
+- Rate limit: 10 requests/second (429 on exceed)
+- Webhooks: document.updated and flow.updated events
+
+## Environments
+- Production: https://integration.sibill.com/api/v1
+- Development (sandbox): https://integration.dev.sibill.com/api/v1
+
+## Docs
+- [Changelog](https://docs.sibill.com/changelog)
+- [Company website](https://sibill.com/)
+- Support: api@sibill.it
+
+## Artifacts (API Evangelist)
+- OpenAPI: openapi/sibill-openapi-original.json
+- Authentication: authentication/sibill-authentication.yml
+- Conventions: conventions/sibill-conventions.yml
+- Error catalog: errors/sibill-problem-types.yml
+- Data model: data-model/sibill-data-model.yml
+- Webhooks: asyncapi/sibill-webhooks.yml
+- MCP (candidate): mcp/sibill-mcp.yml
+- Agent skills: skills/_index.yml

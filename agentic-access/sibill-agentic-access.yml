@@ -1,0 +1,646 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/sibill-openapi-original.json
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 48
+  by_action_class:
+    connected: 23
+    acting: 25
+  by_consequence:
+    read: 23
+    safety-critical: 25
+  human_in_the_loop_required: 25
+operations:
+- path: /api/v1/companies
+  method: get
+  operationId: SibillWeb.Integration.V1.CompaniesController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/accounts
+  method: get
+  operationId: SibillWeb.Integration.V1.AccountsController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/accounts/{id}
+  method: get
+  operationId: SibillWeb.Integration.V1.AccountsController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/categories
+  method: get
+  operationId: SibillWeb.Integration.V1.CategoriesController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/categories
+  method: post
+  operationId: SibillWeb.Integration.V1.CategoriesController.create
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/categories/{id}
+  method: delete
+  operationId: SibillWeb.Integration.V1.CategoriesController.delete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/categories/{id}
+  method: get
+  operationId: SibillWeb.Integration.V1.CategoriesController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/categories/{id}
+  method: patch
+  operationId: SibillWeb.Integration.V1.CategoriesController.update
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/counterparts
+  method: get
+  operationId: SibillWeb.Integration.V1.CounterpartsController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/counterparts
+  method: post
+  operationId: SibillWeb.Integration.V1.CounterpartsController.create
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/counterparts/{id}
+  method: get
+  operationId: SibillWeb.Integration.V1.CounterpartsController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/counterparts/{id}
+  method: patch
+  operationId: SibillWeb.Integration.V1.CounterpartsController.update
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/document-sectionals
+  method: get
+  operationId: SibillWeb.Integration.V1.DocumentSectionalsController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/document-sectionals
+  method: post
+  operationId: SibillWeb.Integration.V1.DocumentSectionalsController.create
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/document-sectionals/{id}
+  method: get
+  operationId: SibillWeb.Integration.V1.DocumentSectionalsController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/document-sectionals/{id}
+  method: patch
+  operationId: SibillWeb.Integration.V1.DocumentSectionalsController.update
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/documents
+  method: get
+  operationId: SibillWeb.Integration.V1.DocumentsController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/documents/invoice
+  method: post
+  operationId: SibillWeb.Integration.V1.DocumentsActionsController.create_invoice
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/documents/{document_id}/flows
+  method: get
+  operationId: SibillWeb.Integration.V1.FlowsController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/documents/{document_id}/flows
+  method: post
+  operationId: SibillWeb.Integration.V1.FlowsController.create
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/documents/{document_id}/flows/{id}
+  method: delete
+  operationId: SibillWeb.Integration.V1.FlowsController.delete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/documents/{document_id}/flows/{id}
+  method: get
+  operationId: SibillWeb.Integration.V1.FlowsController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/documents/{document_id}/flows/{id}
+  method: patch
+  operationId: SibillWeb.Integration.V1.FlowsController.update
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/documents/{document_id}/invoice
+  method: get
+  operationId: SibillWeb.Integration.V1.DocumentsActionsController.get_invoice
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/documents/{document_id}/share-invoice
+  method: post
+  operationId: SibillWeb.Integration.V1.DocumentsActionsController.share_invoice
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/documents/{id}
+  method: delete
+  operationId: SibillWeb.Integration.V1.DocumentsController.delete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/documents/{id}
+  method: get
+  operationId: SibillWeb.Integration.V1.DocumentsController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/documents/{id}
+  method: patch
+  operationId: SibillWeb.Integration.V1.DocumentsController.update
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/products
+  method: get
+  operationId: SibillWeb.Integration.V1.ProductsController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/products
+  method: post
+  operationId: SibillWeb.Integration.V1.ProductsController.create
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/products/{id}
+  method: delete
+  operationId: SibillWeb.Integration.V1.ProductsController.delete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/products/{id}
+  method: get
+  operationId: SibillWeb.Integration.V1.ProductsController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/products/{id}
+  method: patch
+  operationId: SibillWeb.Integration.V1.ProductsController.update
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/reconciliations
+  method: get
+  operationId: SibillWeb.Integration.V1.ReconciliationsController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/reconciliations
+  method: post
+  operationId: SibillWeb.Integration.V1.ReconciliationsController.create
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/reconciliations/{id}
+  method: delete
+  operationId: SibillWeb.Integration.V1.ReconciliationsController.delete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/reconciliations/{id}
+  method: get
+  operationId: SibillWeb.Integration.V1.ReconciliationsController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/requests/bulk-payment
+  method: post
+  operationId: SibillWeb.Integration.V1.RequestsController.bulk_payment
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/requests/f24/ocr
+  method: post
+  operationId: SibillWeb.Integration.V1.RequestsController.f24_ocr
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/subcategories
+  method: get
+  operationId: SibillWeb.Integration.V1.SubcategoriesController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/subcategories
+  method: post
+  operationId: SibillWeb.Integration.V1.SubcategoriesController.create
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/subcategories/{id}
+  method: delete
+  operationId: SibillWeb.Integration.V1.SubcategoriesController.delete
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/subcategories/{id}
+  method: get
+  operationId: SibillWeb.Integration.V1.SubcategoriesController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/subcategories/{id}
+  method: patch
+  operationId: SibillWeb.Integration.V1.SubcategoriesController.update
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/companies/{company_id}/transactions
+  method: get
+  operationId: SibillWeb.Integration.V1.TransactionsController.index
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/transactions/{id}
+  method: get
+  operationId: SibillWeb.Integration.V1.TransactionsController.show
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/companies/{company_id}/transactions/{id}
+  method: patch
+  operationId: SibillWeb.Integration.V1.TransactionsController.update
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/counterparts/search
+  method: get
+  operationId: SibillWeb.Integration.V1.CounterpartsActionsController.search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none

@@ -1,0 +1,28 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sibill.com/api-reference/
+spec: openapi/sibill-openapi-original.json
+docs: https://docs.sibill.com/
+summary:
+  types:
+  - http
+  http_schemes:
+  - bearer
+schemes:
+- name: authorization
+  type: http
+  scheme: bearer
+  in: header
+  header: Authorization
+  format: "Bearer ${api_key}"
+  description: >-
+    The Sibill Integration API authenticates every request with an API key sent as
+    a Bearer token in the Authorization header, over HTTPS only. Keys are issued
+    separately per environment (Development vs Production).
+  sources:
+  - openapi/sibill-openapi-original.json
+notes: >-
+  Upgraded from the OpenAPI-derived profile: the published spec declares the
+  scheme with an invalid `type: https`; the docs make clear it is standard HTTP
+  Bearer (RFC 6750) API-key auth. No OAuth/OIDC and no scope surface, so scopes/
+  is intentionally omitted.
