@@ -1,0 +1,1022 @@
+{
+  "item": [
+    {
+      "id": "b2b3d8cf-f70d-4637-97f3-b5baa11196c1",
+      "name": "Payment",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bfe914d5-2484-43b5-8d93-48a0eb5a23fb",
+          "name": "Create a draft bulk payment request",
+          "request": {
+            "name": "Create a draft bulk payment request",
+            "description": {
+              "content": "Creates a draft payment operation from bulk-payment rows and returns the Sibill app redirect URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "companies",
+                ":company_id",
+                "requests",
+                "bulk-payment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) The company where to create the draft payment operation"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payments\": [\n    {\n      \"amount\": {\n        \"amount\": \"<string>\",\n        \"currency\": \"<string>\"\n      },\n      \"payee_identifier\": \"<string>\",\n      \"payee_name\": \"<string>\",\n      \"reason\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7fce804f-4366-4305-9c7d-3d322952ac57",
+              "name": "Bulk payment request created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "bulk-payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to create the draft payment operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payments\": [\n    {\n      \"amount\": {\n        \"amount\": \"2500.00\",\n        \"currency\": \"EUR\"\n      },\n      \"payee_identifier\": \"IT60X0542811101000000123456\",\n      \"payee_name\": \"Mario Rossi\",\n      \"reason\": \"Stipendio maggio 2026\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"request_id\": \"95de87ae-1075-0a56-ae4b-b3d7797b1b66\"\n  },\n  \"links\": [\n    {\n      \"href\": \"https://STjNIrITmb.kbuzCpnPeIweXlxKpkcoTO.yv32zX5E8yGMjFyiXpQR8-zwKPgfMqzxXx+VpBlUywsGr8yN\",\n      \"rel\": \"externalLink\"\n    },\n    {\n      \"href\": \"https://n.ewnDZTbPXn0rusvkt9lRaMfV-iZcDXf+bAE\",\n      \"rel\": \"externalLink\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4df6a2a4-e958-49f5-83f6-a183c3d71b1b",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "bulk-payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to create the draft payment operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payments\": [\n    {\n      \"amount\": {\n        \"amount\": \"2500.00\",\n        \"currency\": \"EUR\"\n      },\n      \"payee_identifier\": \"IT60X0542811101000000123456\",\n      \"payee_name\": \"Mario Rossi\",\n      \"reason\": \"Stipendio maggio 2026\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d77d5604-a0b0-41a8-a331-554d9194dc96",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "bulk-payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to create the draft payment operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payments\": [\n    {\n      \"amount\": {\n        \"amount\": \"2500.00\",\n        \"currency\": \"EUR\"\n      },\n      \"payee_identifier\": \"IT60X0542811101000000123456\",\n      \"payee_name\": \"Mario Rossi\",\n      \"reason\": \"Stipendio maggio 2026\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26c53d86-aeae-44d4-8dd4-ce0297914f2d",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "bulk-payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to create the draft payment operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payments\": [\n    {\n      \"amount\": {\n        \"amount\": \"2500.00\",\n        \"currency\": \"EUR\"\n      },\n      \"payee_identifier\": \"IT60X0542811101000000123456\",\n      \"payee_name\": \"Mario Rossi\",\n      \"reason\": \"Stipendio maggio 2026\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b390560-fe60-4a62-90fb-dc6785ac11fd",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "bulk-payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to create the draft payment operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payments\": [\n    {\n      \"amount\": {\n        \"amount\": \"2500.00\",\n        \"currency\": \"EUR\"\n      },\n      \"payee_identifier\": \"IT60X0542811101000000123456\",\n      \"payee_name\": \"Mario Rossi\",\n      \"reason\": \"Stipendio maggio 2026\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "264ccd00-8139-4a21-a0a4-3ca40d5b54ca",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "bulk-payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to create the draft payment operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payments\": [\n    {\n      \"amount\": {\n        \"amount\": \"2500.00\",\n        \"currency\": \"EUR\"\n      },\n      \"payee_identifier\": \"IT60X0542811101000000123456\",\n      \"payee_name\": \"Mario Rossi\",\n      \"reason\": \"Stipendio maggio 2026\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b589c9a-1427-4019-9ce8-4b550d05acae",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "bulk-payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to create the draft payment operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payments\": [\n    {\n      \"amount\": {\n        \"amount\": \"2500.00\",\n        \"currency\": \"EUR\"\n      },\n      \"payee_identifier\": \"IT60X0542811101000000123456\",\n      \"payee_name\": \"Mario Rossi\",\n      \"reason\": \"Stipendio maggio 2026\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa6b60a6-c6cc-43ca-a0d9-49b1aa501863",
+          "name": "Submit an F24 PDF for OCR processing",
+          "request": {
+            "name": "Submit an F24 PDF for OCR processing",
+            "description": {
+              "content": "Upload a raw F24 PDF for asynchronous OCR processing.\n\nThe PDF is stored in S3 under a company-scoped path and an `F24Upload`\nrecord is created with status `WAITING_OCR`. The response contains a\n`request_id` that uniquely identifies the processing job — use it to\ncorrelate the OCR result delivered later via webhook.\n\nThe request body must be the raw binary content of the PDF file with\n`Content-Type: application/pdf`. The `file_name` query parameter is\nrequired and should reflect the original file name; `label` is optional\nand can be used to attach a human-readable description to the upload.\n\nRequires the `*` wildcard permission or the `payments:f24:write` permission.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "companies",
+                ":company_id",
+                "requests",
+                "f24",
+                "ocr"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "file_name",
+                  "value": "<string>",
+                  "description": "(Required) User-provided file_name for the operation"
+                },
+                {
+                  "disabled": false,
+                  "key": "label",
+                  "value": "<string>",
+                  "description": "(Required) User-provided label for the operation"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) The company where to execute the operation"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/pdf"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "<object>"
+            }
+          },
+          "response": [
+            {
+              "id": "0b335143-d02d-4511-bb33-27e803a1b53c",
+              "name": "OCR request accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "f24",
+                    "ocr"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "file_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "label",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Indicate the original mime type of the resource. It could be <b>application/pdf</b>",
+                    "key": "content-type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>"
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"request_id\": \"string\"\n  },\n  \"links\": [\n    {\n      \"href\": \"https://PDdomeJDwpG.fsfDCz-ehOdlaxYBZfGQfQZ1a\",\n      \"rel\": \"externalLink\"\n    },\n    {\n      \"href\": \"http://sMbRrGBRzeudDDGXzleH.qlevOXlF,MOrh7Z4C-p-p7zwSyDuaB7vIwcsko\",\n      \"rel\": \"externalLink\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e6a10f1-b2bc-493f-b1f4-f6acbebebedc",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "f24",
+                    "ocr"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "file_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "label",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Indicate the original mime type of the resource. It could be <b>application/pdf</b>",
+                    "key": "content-type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "542551fa-2841-4d08-9cb5-02cbe5f33079",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "f24",
+                    "ocr"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "file_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "label",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Indicate the original mime type of the resource. It could be <b>application/pdf</b>",
+                    "key": "content-type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>"
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "619b9728-682b-4580-8c02-9defedc37f91",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "f24",
+                    "ocr"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "file_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "label",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Indicate the original mime type of the resource. It could be <b>application/pdf</b>",
+                    "key": "content-type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>"
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd163d65-9aa0-4406-9bf6-b8580f783803",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "f24",
+                    "ocr"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "file_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "label",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Indicate the original mime type of the resource. It could be <b>application/pdf</b>",
+                    "key": "content-type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>"
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc54b8c3-6f64-4d95-bbd2-c145b10a7ab3",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "f24",
+                    "ocr"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "file_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "label",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Indicate the original mime type of the resource. It could be <b>application/pdf</b>",
+                    "key": "content-type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>"
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbf005e8-1f48-484b-8316-d8f4c5e168e2",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "requests",
+                    "f24",
+                    "ocr"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "file_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "label",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Indicate the original mime type of the resource. It could be <b>application/pdf</b>",
+                    "key": "content-type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://integration.app.svc.cluster.local:4000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f9adc459-7394-4668-8bc5-34c83144d1a6",
+    "name": "Sibill Integration Account Payment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

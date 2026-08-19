@@ -1,0 +1,1738 @@
+{
+  "item": [
+    {
+      "id": "eeabca2e-04eb-4c44-8ff5-9845414873cd",
+      "name": "Counterpart",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f5fd6843-c209-468e-8619-d2d8d013bd47",
+          "name": "Get the list of counterparts",
+          "request": {
+            "name": "Get the list of counterparts",
+            "description": {
+              "content": "The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.\nA cursor is needed to traverse the results.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "companies",
+                ":company_id",
+                "counterparts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The page size"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The pagination cursor. A cursor is used to paginate through a large set of data.\nIt is a unique identifier that represents a specific position in the dataset.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Fields for which we can order the results. Sortable fields: `company_name`"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) The company the counterparts belongs to"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "b02a23e4-3d59-4b7f-ac2c-76ee4041a96c",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterparts belongs to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"address\": \"string\",\n      \"city\": \"string\",\n      \"company_name\": \"string\",\n      \"country\": \"string\",\n      \"destination_code\": \"string\",\n      \"id\": \"019f8035-9c6e-7bca-bc10-478400587b84\",\n      \"identity_type\": \"COMPANY\",\n      \"postal_code\": \"string\",\n      \"province_code\": \"string\",\n      \"tax_number\": \"string\",\n      \"vat_number\": \"string\"\n    },\n    {\n      \"address\": \"string\",\n      \"city\": \"string\",\n      \"company_name\": \"string\",\n      \"country\": \"string\",\n      \"destination_code\": \"string\",\n      \"id\": \"019f8035-9c6e-7bca-bc10-478400587b84\",\n      \"identity_type\": \"COMPANY\",\n      \"postal_code\": \"string\",\n      \"province_code\": \"string\",\n      \"tax_number\": \"string\",\n      \"vat_number\": \"string\"\n    }\n  ],\n  \"page\": {\n    \"cursor\": \"string\",\n    \"size\": 8893\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "979001af-0f3a-4b6b-b8bf-c245aebfd1cf",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterparts belongs to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d460499-2ca4-4e42-a745-24bdc171de5e",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterparts belongs to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f62c6821-c135-49b6-adbe-a281bd80345b",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterparts belongs to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21c6bbd2-a6eb-448a-a940-19cf8bcc492f",
+          "name": "Create a new counterpart",
+          "request": {
+            "name": "Create a new counterpart",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "companies",
+                ":company_id",
+                "counterparts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) The company the counterpart belongs to"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"country\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"identity_type\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\",\n  \"tax_number\": \"<string>\",\n  \"vat_number\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "44e5d4be-b87f-4510-be32-fc292eb356e1",
+              "name": "Counterpart created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"identity_type\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\",\n  \"tax_number\": \"<string>\",\n  \"vat_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"company_name\": \"string\",\n    \"country\": \"string\",\n    \"destination_code\": \"string\",\n    \"id\": \"019f8035-9c6e-7bca-bc10-478400587b84\",\n    \"identity_type\": \"PERSON\",\n    \"postal_code\": \"string\",\n    \"province_code\": \"string\",\n    \"tax_number\": \"string\",\n    \"vat_number\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a0382d4-dd75-4669-97c8-fcd29c104352",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"identity_type\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\",\n  \"tax_number\": \"<string>\",\n  \"vat_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d1034bd-fdac-4ae3-a230-d6beca018772",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"identity_type\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\",\n  \"tax_number\": \"<string>\",\n  \"vat_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c75891c8-5f7c-451b-81c8-12aa4f205b32",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"identity_type\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\",\n  \"tax_number\": \"<string>\",\n  \"vat_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c5bc71b-6c83-4f37-b3d0-9243e3eae4cd",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"identity_type\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\",\n  \"tax_number\": \"<string>\",\n  \"vat_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "846e7f2d-fedc-4b4a-ad5c-4a1d46a63231",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"identity_type\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\",\n  \"tax_number\": \"<string>\",\n  \"vat_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "43eac770-84eb-4f58-afd4-d8408fb67be1",
+          "name": "Get a specific counterpart",
+          "request": {
+            "name": "Get a specific counterpart",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "companies",
+                ":company_id",
+                "counterparts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) The company the counterpart belongs to"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The counterpart identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "45d74403-c625-4140-b334-dafa5629f127",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterpart identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"company_name\": \"string\",\n    \"country\": \"string\",\n    \"destination_code\": \"string\",\n    \"id\": \"019f8035-9c6e-7bca-bc10-478400587b84\",\n    \"identity_type\": \"PERSON\",\n    \"postal_code\": \"string\",\n    \"province_code\": \"string\",\n    \"tax_number\": \"string\",\n    \"vat_number\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fc2bf3b-3b02-40c9-a472-b2456afab13b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterpart identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e22c8df0-cedf-40fc-b767-cc35562bcf8a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterpart identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50b6a73f-aa23-449e-9b09-850ff2db7166",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterpart identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "778ecf0d-fa88-4e7b-9930-df971ff37140",
+          "name": "Update an existing counterpart",
+          "request": {
+            "name": "Update an existing counterpart",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "companies",
+                ":company_id",
+                "counterparts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) The company the counterpart belongs to"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The counterpart identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"country\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c21fc926-2b17-4062-ac83-aa06e7ee6e57",
+              "name": "Counterpart updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterpart identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"country\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"company_name\": \"string\",\n    \"country\": \"string\",\n    \"destination_code\": \"string\",\n    \"id\": \"019f8035-9c6e-7bca-bc10-478400587b84\",\n    \"identity_type\": \"PERSON\",\n    \"postal_code\": \"string\",\n    \"province_code\": \"string\",\n    \"tax_number\": \"string\",\n    \"vat_number\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b09f072-1963-4285-9c48-d19dbc2e7eb9",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterpart identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"country\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58e22925-5225-44cf-90ed-ccbb705bc631",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterpart identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"country\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25185472-82c1-4d30-86c1-be2977655f4e",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterpart identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"country\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05dc5be3-962b-4c5e-a3b5-cfd39fb8a783",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterpart identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"country\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0fa73941-65eb-4dc3-a142-c71a69945c5a",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "counterparts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the counterpart belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The counterpart identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"company_name\": \"<string>\",\n  \"country\": \"<string>\",\n  \"destination_code\": \"<string>\",\n  \"postal_code\": \"<string>\",\n  \"province_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be85dd95-782c-412d-bf5e-4f7126bdcd96",
+          "name": "Search counterpart informations",
+          "request": {
+            "name": "Search counterpart informations",
+            "description": {
+              "content": "Search for counterpart information from a third-party system.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "counterparts",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "vat_number",
+                  "value": "<string>",
+                  "description": "(Required) The VAT number of the counterpart to search"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "252f115f-0443-4d75-965c-4ed42cd2e5bf",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "counterparts",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vat_number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"company_name\": \"string\",\n    \"country\": \"string\",\n    \"postal_code\": \"string\",\n    \"province_code\": \"string\",\n    \"tax_number\": \"string\",\n    \"vat_number\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e1f592a-e4c6-4f3c-bd29-415e74b2c540",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "counterparts",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vat_number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4500cb6f-a5d0-460c-962c-7918c05fce53",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "counterparts",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vat_number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13050ec6-c430-4fec-93bc-db7db7a77a93",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "counterparts",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vat_number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "894444c0-3e9a-4561-9b15-9886c3221c0f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "counterparts",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vat_number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "841b16f6-026a-4ab5-bb54-18bcec1d33d4",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "counterparts",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vat_number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://integration.app.svc.cluster.local:4000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "288063ae-9bf2-48f4-b97b-a061628e6a84",
+    "name": "Sibill Integration Account Counterpart API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

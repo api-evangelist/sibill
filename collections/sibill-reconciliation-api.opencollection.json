@@ -1,0 +1,152 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sibill Integration Account Reconciliation API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reconciliation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all the company's reconciliations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/reconciliations",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the reconciliations belong to"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The page size"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pagination cursor. A cursor is used to paginate through a large set of data.\nIt is a unique identifier that represents a specific position in the dataset.\n"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Fields that will be expanded. Expandable fields: `flow`, `transaction`, `transaction.category`, `transaction.subcategory`"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "List of filters on the resource. Currently the fields that allow to be filtered are: `transaction_id`, `flow_id`, `created_at`"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Fields for which we can order the results. Sortable fields: `created_at`"
+              }
+            ]
+          },
+          "docs": "The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.\nA cursor is needed to traverse the results.\n"
+        },
+        {
+          "info": {
+            "name": "Create a new reconciliation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/reconciliations",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company where to execute the operation"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Fields that will be expanded. Expandable fields: `flow`, `transaction`, `transaction.category`, `transaction.subcategory`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new reconciliation between a flow and a bank transaction.\n"
+        },
+        {
+          "info": {
+            "name": "Get a specific reconciliation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/reconciliations/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the reconciliation belongs to"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The reconciliation identifier"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Fields that will be expanded. Expandable fields: `flow`, `transaction`, `transaction.category`, `transaction.subcategory`"
+              }
+            ]
+          },
+          "docs": "Get a specific reconciliation"
+        },
+        {
+          "info": {
+            "name": "Delete an existing reconciliation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/reconciliations/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company where to execute the operation"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The reconciliation identifier"
+              }
+            ]
+          },
+          "docs": "Delete an existing reconciliation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

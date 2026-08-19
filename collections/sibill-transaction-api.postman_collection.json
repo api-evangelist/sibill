@@ -1,0 +1,1523 @@
+{
+  "item": [
+    {
+      "id": "ad4f26e2-61a3-4adc-87ac-65b3a7447ed4",
+      "name": "Transaction",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a4d5b77a-9f11-49f4-b094-071f20e113c0",
+          "name": "List all transactions for the company",
+          "request": {
+            "name": "List all transactions for the company",
+            "description": {
+              "content": "The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.\nA cursor is needed to traverse the results.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "companies",
+                ":company_id",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The page size"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The pagination cursor. A cursor is used to paginate through a large set of data.\nIt is a unique identifier that represents a specific position in the dataset.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Fields that will be expanded. Expandable fields: `category`, `subcategory`, `reconciliations`, `reconciliations.flow`"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Fields for which we can order the results. Sortable fields: `amount`, `created_at`, `date`"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) The company the transactions belong to"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "83808729-5d67-4e54-8ccc-0a502e26204c",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the transactions belong to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"account_id\": \"019f8035-9d9a-7bcc-afc7-c326bae66d33\",\n      \"amount\": {\n        \"amount\": \"12.3\",\n        \"currency\": \"EUR\"\n      },\n      \"bank_code\": \"string\",\n      \"booking_date_time\": \"1984-05-24T13:46:33.982Z\",\n      \"category\": {\n        \"id\": \"019f8035-d6ba-74eb-a48a-cfc8445fa575\",\n        \"name\": \"string\"\n      },\n      \"clean_description\": \"string\",\n      \"counterpart_name\": \"string\",\n      \"created_at\": \"1982-06-22T09:04:17.674Z\",\n      \"date\": \"1971-02-16T20:07:36.050Z\",\n      \"description\": \"string\",\n      \"id\": \"019f8035-9d9a-7361-88e5-71cba72de431\",\n      \"reconciliations\": [\n        {\n          \"id\": \"019f8035-9d48-7c47-ad94-07b96040f2fd\",\n          \"flow_id\": \"019f8035-9d48-7786-bcec-8f030557370d\",\n          \"transaction_id\": \"019f8035-9d48-75e4-bfe0-8633cb3d815f\",\n          \"created_at\": \"1964-02-07T03:33:20.487Z\",\n          \"flow\": {\n            \"account_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"document_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"expected_payment_date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"transaction\": {\n            \"value\": \"<Circular reference to #/components/schemas/TransactionSchema detected>\"\n          }\n        },\n        {\n          \"id\": \"019f8035-9d48-7c47-ad94-07b96040f2fd\",\n          \"flow_id\": \"019f8035-9d48-7786-bcec-8f030557370d\",\n          \"transaction_id\": \"019f8035-9d48-75e4-bfe0-8633cb3d815f\",\n          \"created_at\": \"1964-11-30T06:10:06.378Z\",\n          \"flow\": {\n            \"account_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"document_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"expected_payment_date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"transaction\": {\n            \"value\": \"<Circular reference to #/components/schemas/TransactionSchema detected>\"\n          }\n        }\n      ],\n      \"subcategory\": {\n        \"id\": \"019f8035-d6ba-7bdc-a8cc-ebeb5c95f88a\",\n        \"name\": \"string\"\n      },\n      \"type\": \"OTHER\",\n      \"value_date_time\": \"2026-02-08T07:45:13.894Z\"\n    },\n    {\n      \"account_id\": \"019f8035-9d9a-7bcc-afc7-c326bae66d33\",\n      \"amount\": {\n        \"amount\": \"12.3\",\n        \"currency\": \"EUR\"\n      },\n      \"bank_code\": \"string\",\n      \"booking_date_time\": \"1959-03-28T06:27:19.086Z\",\n      \"category\": {\n        \"id\": \"019f8035-d6ba-74eb-a48a-cfc8445fa575\",\n        \"name\": \"string\"\n      },\n      \"clean_description\": \"string\",\n      \"counterpart_name\": \"string\",\n      \"created_at\": \"1991-10-10T21:17:33.115Z\",\n      \"date\": \"1960-11-20T21:56:34.737Z\",\n      \"description\": \"string\",\n      \"id\": \"019f8035-9d9a-7361-88e5-71cba72de431\",\n      \"reconciliations\": [\n        {\n          \"id\": \"019f8035-9d48-7c47-ad94-07b96040f2fd\",\n          \"flow_id\": \"019f8035-9d48-7786-bcec-8f030557370d\",\n          \"transaction_id\": \"019f8035-9d48-75e4-bfe0-8633cb3d815f\",\n          \"created_at\": \"1954-06-10T07:10:39.809Z\",\n          \"flow\": {\n            \"account_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"document_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"expected_payment_date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"transaction\": {\n            \"value\": \"<Circular reference to #/components/schemas/TransactionSchema detected>\"\n          }\n        },\n        {\n          \"id\": \"019f8035-9d48-7c47-ad94-07b96040f2fd\",\n          \"flow_id\": \"019f8035-9d48-7786-bcec-8f030557370d\",\n          \"transaction_id\": \"019f8035-9d48-75e4-bfe0-8633cb3d815f\",\n          \"created_at\": \"1989-12-08T05:48:59.012Z\",\n          \"flow\": {\n            \"account_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"document_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"expected_payment_date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payment_status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"transaction\": {\n            \"value\": \"<Circular reference to #/components/schemas/TransactionSchema detected>\"\n          }\n        }\n      ],\n      \"subcategory\": {\n        \"id\": \"019f8035-d6ba-7bdc-a8cc-ebeb5c95f88a\",\n        \"name\": \"string\"\n      },\n      \"type\": \"POS\",\n      \"value_date_time\": \"1994-01-10T10:01:57.615Z\"\n    }\n  ],\n  \"page\": {\n    \"cursor\": \"string\",\n    \"size\": 7381\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5fc88fe-202b-47d0-91dd-89235a30639b",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the transactions belong to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25117cba-8913-43aa-8eae-59092e0f3539",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the transactions belong to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd553e8b-ea44-43c1-b18f-29b225d1f654",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the transactions belong to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f28c3c2e-2931-45e9-9ffc-b254d004616a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the transactions belong to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8396a5d0-0ce7-423e-b09b-f061327c307c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the transactions belong to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dcfdd723-589a-4e0b-86eb-ae93e7d30faa",
+          "name": "Get a transaction",
+          "request": {
+            "name": "Get a transaction",
+            "description": {
+              "content": "Returns all the information for a specific transaction from its identifier",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "companies",
+                ":company_id",
+                "transactions",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Fields that will be expanded. Expandable fields: `category`, `subcategory`, `reconciliations`, `reconciliations.flow`"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) The company the transaction belongs to"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The transaction identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "0c81f028-2a58-4894-8967-f22913348c52",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the transaction belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"account_id\": \"019f8035-9d9a-7bcc-afc7-c326bae66d33\",\n    \"amount\": {\n      \"amount\": \"12.3\",\n      \"currency\": \"EUR\"\n    },\n    \"bank_code\": \"string\",\n    \"booking_date_time\": \"1966-07-11T00:15:16.578Z\",\n    \"category\": {\n      \"id\": \"019f8035-d6ba-74eb-a48a-cfc8445fa575\",\n      \"name\": \"string\"\n    },\n    \"clean_description\": \"string\",\n    \"counterpart_name\": \"string\",\n    \"created_at\": \"1966-09-22T20:26:27.791Z\",\n    \"date\": \"1994-08-30T19:18:49.050Z\",\n    \"description\": \"string\",\n    \"id\": \"019f8035-9d9a-7361-88e5-71cba72de431\",\n    \"reconciliations\": [\n      {\n        \"id\": \"019f8035-9d48-7c47-ad94-07b96040f2fd\",\n        \"flow_id\": \"019f8035-9d48-7786-bcec-8f030557370d\",\n        \"transaction_id\": \"019f8035-9d48-75e4-bfe0-8633cb3d815f\",\n        \"created_at\": \"1968-09-09T05:47:29.580Z\",\n        \"flow\": {\n          \"account_id\": \"019f8035-d726-7b45-847b-05e0fb123222\",\n          \"amount\": {\n            \"amount\": \"12.3\",\n            \"currency\": \"EUR\"\n          },\n          \"created_at\": \"2021-10-28T14:01:30.497Z\",\n          \"document_id\": \"019f8035-d726-7414-ad31-76243aee0460\",\n          \"expected_payment_date\": \"1951-10-30\",\n          \"id\": \"019f8035-9d1c-7d2e-9eae-763f79a2d5d9\",\n          \"payment_date\": \"2000-05-25\",\n          \"payment_method\": \"CARD\",\n          \"payment_status\": \"PAID\"\n        },\n        \"transaction\": {\n          \"value\": \"<Circular reference to #/components/schemas/TransactionSchema detected>\"\n        }\n      },\n      {\n        \"id\": \"019f8035-9d48-7c47-ad94-07b96040f2fd\",\n        \"flow_id\": \"019f8035-9d48-7786-bcec-8f030557370d\",\n        \"transaction_id\": \"019f8035-9d48-75e4-bfe0-8633cb3d815f\",\n        \"created_at\": \"2017-01-17T11:35:08.813Z\",\n        \"flow\": {\n          \"account_id\": \"019f8035-d726-7b45-847b-05e0fb123222\",\n          \"amount\": {\n            \"amount\": \"12.3\",\n            \"currency\": \"EUR\"\n          },\n          \"created_at\": \"1967-09-09T03:10:51.796Z\",\n          \"document_id\": \"019f8035-d726-7414-ad31-76243aee0460\",\n          \"expected_payment_date\": \"1997-08-23\",\n          \"id\": \"019f8035-9d1c-7d2e-9eae-763f79a2d5d9\",\n          \"payment_date\": \"1951-09-01\",\n          \"payment_method\": \"CARD\",\n          \"payment_status\": \"PAID\"\n        },\n        \"transaction\": {\n          \"value\": \"<Circular reference to #/components/schemas/TransactionSchema detected>\"\n        }\n      }\n    ],\n    \"subcategory\": {\n      \"id\": \"019f8035-d6ba-7bdc-a8cc-ebeb5c95f88a\",\n      \"name\": \"string\"\n    },\n    \"type\": \"CASH\",\n    \"value_date_time\": \"1990-10-29T01:28:23.983Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01633a34-a1fc-4b79-ac5f-787dc8047351",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the transaction belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0b30b03-cf37-4376-aa7d-0469be3858ac",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the transaction belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5f8699f-8752-4bdf-a592-6bddf5e68589",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the transaction belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e4cc125-36ec-4909-984a-86f95030e8e4",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the transaction belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4341cee7-add3-4ba4-a728-4ef47ac15119",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company the transaction belongs to"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dd20eec3-c6e8-4969-b6ab-4588712a96ea",
+          "name": "Update an existing transaction",
+          "request": {
+            "name": "Update an existing transaction",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "companies",
+                ":company_id",
+                "transactions",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Fields that will be expanded. Expandable fields: `category`, `subcategory`, `reconciliations`, `reconciliations.flow`"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) The company where to execute the operation"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The transaction identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_id\": \"<uuid>\",\n  \"subcategory_id\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "912cebd5-c219-4787-acce-6bf4f65aeef8",
+              "name": "Transaction updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category_id\": \"019f8035-d6ff-73dd-8af1-111d6de30803\",\n  \"subcategory_id\": \"019f8035-d6ff-76c8-bd5c-10da006a11b9\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"account_id\": \"019f8035-9d9a-7bcc-afc7-c326bae66d33\",\n    \"amount\": {\n      \"amount\": \"12.3\",\n      \"currency\": \"EUR\"\n    },\n    \"bank_code\": \"string\",\n    \"booking_date_time\": \"1966-07-11T00:15:16.578Z\",\n    \"category\": {\n      \"id\": \"019f8035-d6ba-74eb-a48a-cfc8445fa575\",\n      \"name\": \"string\"\n    },\n    \"clean_description\": \"string\",\n    \"counterpart_name\": \"string\",\n    \"created_at\": \"1966-09-22T20:26:27.791Z\",\n    \"date\": \"1994-08-30T19:18:49.050Z\",\n    \"description\": \"string\",\n    \"id\": \"019f8035-9d9a-7361-88e5-71cba72de431\",\n    \"reconciliations\": [\n      {\n        \"id\": \"019f8035-9d48-7c47-ad94-07b96040f2fd\",\n        \"flow_id\": \"019f8035-9d48-7786-bcec-8f030557370d\",\n        \"transaction_id\": \"019f8035-9d48-75e4-bfe0-8633cb3d815f\",\n        \"created_at\": \"1968-09-09T05:47:29.580Z\",\n        \"flow\": {\n          \"account_id\": \"019f8035-d726-7b45-847b-05e0fb123222\",\n          \"amount\": {\n            \"amount\": \"12.3\",\n            \"currency\": \"EUR\"\n          },\n          \"created_at\": \"2021-10-28T14:01:30.497Z\",\n          \"document_id\": \"019f8035-d726-7414-ad31-76243aee0460\",\n          \"expected_payment_date\": \"1951-10-30\",\n          \"id\": \"019f8035-9d1c-7d2e-9eae-763f79a2d5d9\",\n          \"payment_date\": \"2000-05-25\",\n          \"payment_method\": \"CARD\",\n          \"payment_status\": \"PAID\"\n        },\n        \"transaction\": {\n          \"value\": \"<Circular reference to #/components/schemas/TransactionSchema detected>\"\n        }\n      },\n      {\n        \"id\": \"019f8035-9d48-7c47-ad94-07b96040f2fd\",\n        \"flow_id\": \"019f8035-9d48-7786-bcec-8f030557370d\",\n        \"transaction_id\": \"019f8035-9d48-75e4-bfe0-8633cb3d815f\",\n        \"created_at\": \"2017-01-17T11:35:08.813Z\",\n        \"flow\": {\n          \"account_id\": \"019f8035-d726-7b45-847b-05e0fb123222\",\n          \"amount\": {\n            \"amount\": \"12.3\",\n            \"currency\": \"EUR\"\n          },\n          \"created_at\": \"1967-09-09T03:10:51.796Z\",\n          \"document_id\": \"019f8035-d726-7414-ad31-76243aee0460\",\n          \"expected_payment_date\": \"1997-08-23\",\n          \"id\": \"019f8035-9d1c-7d2e-9eae-763f79a2d5d9\",\n          \"payment_date\": \"1951-09-01\",\n          \"payment_method\": \"CARD\",\n          \"payment_status\": \"PAID\"\n        },\n        \"transaction\": {\n          \"value\": \"<Circular reference to #/components/schemas/TransactionSchema detected>\"\n        }\n      }\n    ],\n    \"subcategory\": {\n      \"id\": \"019f8035-d6ba-7bdc-a8cc-ebeb5c95f88a\",\n      \"name\": \"string\"\n    },\n    \"type\": \"CASH\",\n    \"value_date_time\": \"1990-10-29T01:28:23.983Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b6a0515-a22c-4e53-8bd4-10b672c89eaa",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category_id\": \"019f8035-d6ff-73dd-8af1-111d6de30803\",\n  \"subcategory_id\": \"019f8035-d6ff-76c8-bd5c-10da006a11b9\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e1785b6-21e2-4207-b106-a8da98d4c1de",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category_id\": \"019f8035-d6ff-73dd-8af1-111d6de30803\",\n  \"subcategory_id\": \"019f8035-d6ff-76c8-bd5c-10da006a11b9\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65197d21-4214-441b-84a8-f120ddddb10a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category_id\": \"019f8035-d6ff-73dd-8af1-111d6de30803\",\n  \"subcategory_id\": \"019f8035-d6ff-76c8-bd5c-10da006a11b9\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "006bc6d1-731a-4cae-9216-a5c6266d39e6",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category_id\": \"019f8035-d6ff-73dd-8af1-111d6de30803\",\n  \"subcategory_id\": \"019f8035-d6ff-76c8-bd5c-10da006a11b9\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cac91977-5a47-4392-8221-2febdf84082a",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category_id\": \"019f8035-d6ff-73dd-8af1-111d6de30803\",\n  \"subcategory_id\": \"019f8035-d6ff-76c8-bd5c-10da006a11b9\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf320f44-92ee-422b-970a-2f20313330a0",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category_id\": \"019f8035-d6ff-73dd-8af1-111d6de30803\",\n  \"subcategory_id\": \"019f8035-d6ff-76c8-bd5c-10da006a11b9\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efe4016c-47b0-4683-925f-31d201209f3c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    ":company_id",
+                    "transactions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) The company where to execute the operation"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The transaction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category_id\": \"019f8035-d6ff-73dd-8af1-111d6de30803\",\n  \"subcategory_id\": \"019f8035-d6ff-76c8-bd5c-10da006a11b9\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    },\n    {\n      \"code\": \"bad_request\",\n      \"detail\": \"null value where string expected\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/name\"\n      },\n      \"title\": \"Invalid value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://integration.app.svc.cluster.local:4000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "500cc87c-7d8d-44c2-9ab1-b28162ad8c68",
+    "name": "Sibill Integration Account Transaction API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

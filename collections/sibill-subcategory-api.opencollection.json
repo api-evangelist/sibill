@@ -1,0 +1,163 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sibill Integration Account Subcategory API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subcategory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all subcategories for the company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/subcategories",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the subcategories belong to"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The page size"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pagination cursor. A cursor is used to paginate through a large set of data.\nIt is a unique identifier that represents a specific position in the dataset.\n"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "List of filters on the resource. Currently the fields that allow to be filtered are: `id`, `category_id`, `name`"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Fields for which we can order the results. Sortable fields: `category_id`, `name`"
+              }
+            ]
+          },
+          "docs": "The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.\nA cursor is needed to traverse the results.\n"
+        },
+        {
+          "info": {
+            "name": "Create a new subcategory",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/subcategories",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the subcategory belongs to"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new subcategory under a parent category. The parent category must\nbelong to the same company; otherwise the request returns `404 Not Found`.\n"
+        },
+        {
+          "info": {
+            "name": "Get a subcategory",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/subcategories/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the subcategory belongs to"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The subcategory identifier"
+              }
+            ]
+          },
+          "docs": "Returns all the information for a specific subcategory from its identifier"
+        },
+        {
+          "info": {
+            "name": "Update an existing subcategory",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/subcategories/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the subcategory belongs to"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The subcategory identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing subcategory"
+        },
+        {
+          "info": {
+            "name": "Delete a subcategory",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/subcategories/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the subcategory belongs to"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The subcategory identifier"
+              }
+            ]
+          },
+          "docs": "Deletes the subcategory and clears its reference from associated transactions.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

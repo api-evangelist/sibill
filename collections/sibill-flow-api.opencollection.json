@@ -1,0 +1,181 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sibill Integration Account Flow API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Flow",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of flows for the given document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/documents/:document_id/flows",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the flows belongs to"
+              },
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "The document identifier"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The page size"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pagination cursor. A cursor is used to paginate through a large set of data.\nIt is a unique identifier that represents a specific position in the dataset.\n"
+              }
+            ]
+          },
+          "docs": "The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.\nA cursor is needed to traverse the results.\n"
+        },
+        {
+          "info": {
+            "name": "Create a new flow for the given document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/documents/:document_id/flows",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the flow belongs to"
+              },
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "The document identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new flow for the given document"
+        },
+        {
+          "info": {
+            "name": "Get a specific flow for the document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/documents/:document_id/flows/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the flow belongs to"
+              },
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "The document identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The flow identifier"
+              }
+            ]
+          },
+          "docs": "Get a specific flow for the document"
+        },
+        {
+          "info": {
+            "name": "Update an existing flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/documents/:document_id/flows/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company where to execute the operation"
+              },
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "The document identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The flow identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing flow"
+        },
+        {
+          "info": {
+            "name": "Delete a flow for the given document",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/documents/:document_id/flows/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the flow belongs to"
+              },
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "The document identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The flow identifier"
+              }
+            ]
+          },
+          "docs": "Delete a flow for the given document"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

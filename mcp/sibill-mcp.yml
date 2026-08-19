@@ -5,150 +5,154 @@ status: candidate
 server:
   name: sibill
   transport: http
-  # No official hosted MCP server was found; tools below are candidate tools derived
-  # one-per-operation from the Sibill Integration API OpenAPI (48 operations).
 tools:
-  - name: list_companies
-    description: "List all the available companies"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CompaniesController.index
-  - name: list_accounts
-    description: "List all accounts for the company"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.AccountsController.index
-  - name: get_accounts
-    description: "Get a account"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.AccountsController.show
-  - name: list_categories
-    description: "List all categories for the company"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CategoriesController.index
-  - name: create_categories
-    description: "Create a new category"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CategoriesController.create
-  - name: delete_categories
-    description: "Delete a category"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CategoriesController.delete
-  - name: get_categories
-    description: "Get a category"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CategoriesController.show
-  - name: update_categories
-    description: "Update an existing category"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CategoriesController.update
-  - name: list_counterparts
-    description: "Get the list of counterparts"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CounterpartsController.index
-  - name: create_counterparts
-    description: "Create a new counterpart"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CounterpartsController.create
-  - name: get_counterparts
-    description: "Get a specific counterpart"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CounterpartsController.show
-  - name: update_counterparts
-    description: "Update an existing counterpart"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CounterpartsController.update
-  - name: list_document_sectionals
-    description: "List all document sectionals for the company"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentSectionalsController.index
-  - name: create_document_sectionals
-    description: "Create a new document sectional"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentSectionalsController.create
-  - name: get_document_sectionals
-    description: "Get a document sectional"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentSectionalsController.show
-  - name: update_document_sectionals
-    description: "Update an existing document sectional"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentSectionalsController.update
-  - name: list_documents
-    description: "List all the company's documents"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsController.index
-  - name: create_invoice_documents_actions
-    description: "Create an invoice and issue it"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsActionsController.create_invoice
-  - name: list_flows
-    description: "Get the list of flows for the given document"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.FlowsController.index
-  - name: create_flows
-    description: "Create a new flow for the given document"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.FlowsController.create
-  - name: delete_flows
-    description: "Delete a flow for the given document"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.FlowsController.delete
-  - name: get_flows
-    description: "Get a specific flow for the document"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.FlowsController.show
-  - name: update_flows
-    description: "Update an existing flow"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.FlowsController.update
-  - name: get_invoice_documents_actions
-    description: "Get a document invoice by its identifier"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsActionsController.get_invoice
-  - name: share_invoice_documents_actions
-    description: "Send an invoice courtesy copy through email"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsActionsController.share_invoice
-  - name: delete_documents
-    description: "Delete an existing document"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsController.delete
-  - name: get_documents
-    description: "Get a document"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsController.show
-  - name: update_documents
-    description: "Update an existing document"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsController.update
-  - name: list_products
-    description: "Get the list of products"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ProductsController.index
-  - name: create_products
-    description: "Create a new product"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ProductsController.create
-  - name: delete_products
-    description: "Delete a product"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ProductsController.delete
-  - name: get_products
-    description: "Get a specific product"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ProductsController.show
-  - name: update_products
-    description: "Update an existing product"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ProductsController.update
-  - name: list_reconciliations
-    description: "List all the company's reconciliations"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ReconciliationsController.index
-  - name: create_reconciliations
-    description: "Create a new reconciliation"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ReconciliationsController.create
-  - name: delete_reconciliations
-    description: "Delete an existing reconciliation"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ReconciliationsController.delete
-  - name: get_reconciliations
-    description: "Get a specific reconciliation"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ReconciliationsController.show
-  - name: bulk_payment_requests
-    description: "Create a draft bulk payment request"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.RequestsController.bulk_payment
-  - name: f24_ocr_requests
-    description: "Submit an F24 PDF for OCR processing"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.RequestsController.f24_ocr
-  - name: list_subcategories
-    description: "List all subcategories for the company"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.SubcategoriesController.index
-  - name: create_subcategories
-    description: "Create a new subcategory"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.SubcategoriesController.create
-  - name: delete_subcategories
-    description: "Delete a subcategory"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.SubcategoriesController.delete
-  - name: get_subcategories
-    description: "Get a subcategory"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.SubcategoriesController.show
-  - name: update_subcategories
-    description: "Update an existing subcategory"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.SubcategoriesController.update
-  - name: list_transactions
-    description: "List all transactions for the company"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.TransactionsController.index
-  - name: get_transactions
-    description: "Get a transaction"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.TransactionsController.show
-  - name: update_transactions
-    description: "Update an existing transaction"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.TransactionsController.update
-  - name: search_counterparts_actions
-    description: "Search counterpart informations"
-    source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CounterpartsActionsController.search
+- name: list_companies
+  description: List all the available companies
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CompaniesController.index
+- name: list_accounts
+  description: List all accounts for the company
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.AccountsController.index
+- name: get_accounts
+  description: Get a account
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.AccountsController.show
+- name: list_categories
+  description: List all categories for the company
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CategoriesController.index
+- name: create_categories
+  description: Create a new category
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CategoriesController.create
+- name: delete_categories
+  description: Delete a category
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CategoriesController.delete
+- name: get_categories
+  description: Get a category
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CategoriesController.show
+- name: update_categories
+  description: Update an existing category
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CategoriesController.update
+- name: list_counterparts
+  description: Get the list of counterparts
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CounterpartsController.index
+- name: create_counterparts
+  description: Create a new counterpart
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CounterpartsController.create
+- name: get_counterparts
+  description: Get a specific counterpart
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CounterpartsController.show
+- name: update_counterparts
+  description: Update an existing counterpart
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CounterpartsController.update
+- name: list_document_sectionals
+  description: List all document sectionals for the company
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentSectionalsController.index
+- name: create_document_sectionals
+  description: Create a new document sectional
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentSectionalsController.create
+- name: get_document_sectionals
+  description: Get a document sectional
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentSectionalsController.show
+- name: update_document_sectionals
+  description: Update an existing document sectional
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentSectionalsController.update
+- name: list_documents
+  description: List all the company's documents
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsController.index
+- name: create_invoice_documents_actions
+  description: Create an invoice and issue it
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsActionsController.create_invoice
+- name: list_flows
+  description: Get the list of flows for the given document
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.FlowsController.index
+- name: create_flows
+  description: Create a new flow for the given document
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.FlowsController.create
+- name: delete_flows
+  description: Delete a flow for the given document
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.FlowsController.delete
+- name: get_flows
+  description: Get a specific flow for the document
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.FlowsController.show
+- name: update_flows
+  description: Update an existing flow
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.FlowsController.update
+- name: get_invoice_documents_actions
+  description: Get a document invoice by its identifier
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsActionsController.get_invoice
+- name: share_invoice_documents_actions
+  description: Send an invoice courtesy copy through email
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsActionsController.share_invoice
+- name: delete_documents
+  description: Delete an existing document
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsController.delete
+- name: get_documents
+  description: Get a document
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsController.show
+- name: update_documents
+  description: Update an existing document
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.DocumentsController.update
+- name: list_products
+  description: Get the list of products
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ProductsController.index
+- name: create_products
+  description: Create a new product
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ProductsController.create
+- name: delete_products
+  description: Delete a product
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ProductsController.delete
+- name: get_products
+  description: Get a specific product
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ProductsController.show
+- name: update_products
+  description: Update an existing product
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ProductsController.update
+- name: list_reconciliations
+  description: List all the company's reconciliations
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ReconciliationsController.index
+- name: create_reconciliations
+  description: Create a new reconciliation
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ReconciliationsController.create
+- name: delete_reconciliations
+  description: Delete an existing reconciliation
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ReconciliationsController.delete
+- name: get_reconciliations
+  description: Get a specific reconciliation
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.ReconciliationsController.show
+- name: bulk_payment_requests
+  description: Create a draft bulk payment request
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.RequestsController.bulk_payment
+- name: f24_ocr_requests
+  description: Submit an F24 PDF for OCR processing
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.RequestsController.f24_ocr
+- name: list_subcategories
+  description: List all subcategories for the company
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.SubcategoriesController.index
+- name: create_subcategories
+  description: Create a new subcategory
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.SubcategoriesController.create
+- name: delete_subcategories
+  description: Delete a subcategory
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.SubcategoriesController.delete
+- name: get_subcategories
+  description: Get a subcategory
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.SubcategoriesController.show
+- name: update_subcategories
+  description: Update an existing subcategory
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.SubcategoriesController.update
+- name: list_transactions
+  description: List all transactions for the company
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.TransactionsController.index
+- name: get_transactions
+  description: Get a transaction
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.TransactionsController.show
+- name: update_transactions
+  description: Update an existing transaction
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.TransactionsController.update
+- name: search_counterparts_actions
+  description: Search counterpart informations
+  source_operation: openapi/sibill-openapi-original.json#SibillWeb.Integration.V1.CounterpartsActionsController.search
+deployment:
+  mode: none
+  verified: derived
+  tools: 48
+  checked: '2026-08-12'
+  source: catalog MCP census

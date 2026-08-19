@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sibill Integration Account Company API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Company",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all the available companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies",
+            "params": [
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Fields that will be expanded. Expandable fields: `company_identity`, `subscriptions`"
+              }
+            ]
+          },
+          "docs": "List all the companies for the current integrator"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

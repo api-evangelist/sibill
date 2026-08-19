@@ -1,0 +1,163 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sibill Integration Account Category API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Category",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all categories for the company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/categories",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the categories belong to"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The page size"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pagination cursor. A cursor is used to paginate through a large set of data.\nIt is a unique identifier that represents a specific position in the dataset.\n"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "List of filters on the resource. Currently the fields that allow to be filtered are: `id`, `name`"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Fields for which we can order the results. Sortable fields: `name`"
+              }
+            ]
+          },
+          "docs": "The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.\nA cursor is needed to traverse the results.\n"
+        },
+        {
+          "info": {
+            "name": "Create a new category",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/categories",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the category belongs to"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new category"
+        },
+        {
+          "info": {
+            "name": "Get a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/categories/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the category belongs to"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The category identifier"
+              }
+            ]
+          },
+          "docs": "Returns all the information for a specific category from its identifier"
+        },
+        {
+          "info": {
+            "name": "Update an existing category",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/categories/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the category belongs to"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The category identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing category"
+        },
+        {
+          "info": {
+            "name": "Delete a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/categories/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the category belongs to"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The category identifier"
+              }
+            ]
+          },
+          "docs": "Deletes the category and clears its reference from associated transactions,\nrecurrences and counterparts.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

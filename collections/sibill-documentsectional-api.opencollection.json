@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sibill Integration Account DocumentSectional API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DocumentSectional",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all document sectionals for the company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/document-sectionals",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the document sectionals belong to"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The page size"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pagination cursor. A cursor is used to paginate through a large set of data.\nIt is a unique identifier that represents a specific position in the dataset.\n"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "List of filters on the resource. Currently the fields that allow to be filtered are: `id`, `prefix`, `suffix`, `year`"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Fields for which we can order the results. Sortable fields: `created_at`"
+              }
+            ]
+          },
+          "docs": "The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.\nA cursor is needed to traverse the results.\n"
+        },
+        {
+          "info": {
+            "name": "Create a new document sectional",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/document-sectionals",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the document sectional belongs to"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new document sectional"
+        },
+        {
+          "info": {
+            "name": "Get a document sectional",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/document-sectionals/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the document sectional belongs to"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The document sectional identifier"
+              }
+            ]
+          },
+          "docs": "Returns all the information for a specific document sectional from its identifier"
+        },
+        {
+          "info": {
+            "name": "Update an existing document sectional",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/document-sectionals/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the document sectional belongs to"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The document sectional identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing document sectional"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

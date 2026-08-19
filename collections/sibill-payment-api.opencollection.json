@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sibill Integration Account Payment API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a draft bulk payment request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/requests/bulk-payment",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company where to create the draft payment operation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a draft payment operation from bulk-payment rows and returns the Sibill app redirect URL."
+        },
+        {
+          "info": {
+            "name": "Submit an F24 PDF for OCR processing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/requests/f24/ocr",
+            "headers": [
+              {
+                "name": "content-type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company where to execute the operation"
+              },
+              {
+                "name": "file_name",
+                "value": "",
+                "type": "query",
+                "description": "User-provided file_name for the operation"
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query",
+                "description": "User-provided label for the operation"
+              }
+            ]
+          },
+          "docs": "Upload a raw F24 PDF for asynchronous OCR processing.\n\nThe PDF is stored in S3 under a company-scoped path and an `F24Upload`\nrecord is created with status `WAITING_OCR`. The response contains a\n`request_id` that uniquely identifies the processing job — use it to\ncorrelate the OCR result delivered later via webhook.\n\nThe request body must be the raw binary content of the PDF file with\n`Content-Type: application/pdf`. The `file_name` query parameter is\nrequired and should reflect the original fil"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

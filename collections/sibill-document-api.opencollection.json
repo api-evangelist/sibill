@@ -1,0 +1,265 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sibill Integration Account Document API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Document",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all the company's documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/documents",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the documents belong to"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The page size"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pagination cursor. A cursor is used to paginate through a large set of data.\nIt is a unique identifier that represents a specific position in the dataset.\n"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Fields that will be expanded. Expandable fields: `category`, `counterpart`, `flows`, `subcategory`"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "List of filters on the resource. Currently the fields that allow to be filtered are: `creation_date`, `delivery_date`, `direction`, `status`, `type`, `number`,`counterpart_company_name`, `notes`, `progressive`, `sectional_id`, `source_id`"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Fields for which we can order the results. Sortable fields: `created_at`, `creation_date`, `delivery_date`, `number`, `progressive`"
+              }
+            ]
+          },
+          "docs": "The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.\nA cursor is needed to traverse the results.\n"
+        },
+        {
+          "info": {
+            "name": "Create an invoice and issue it",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/documents/invoice",
+            "headers": [
+              {
+                "name": "content-type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company where to execute the operation"
+              },
+              {
+                "name": "issue",
+                "value": "",
+                "type": "query",
+                "description": "Issue the invoice after creating it. If true, the invoice is issued. Default value is false. In this case, the invoice is created as a draft and not issued."
+              },
+              {
+                "name": "reconciliation_identifier",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier used to match an invoice with its corresponding transaction. This can be, for example, an ID coming from your collection system (ex. Transaction ID on Stripe or Paypal) that you want to pass when issuing the invoice to be able to reconcile the movement and the invoice automatically"
+              },
+              {
+                "name": "sectional_id",
+                "value": "",
+                "type": "query",
+                "description": "The sectional identifier to associate with the document"
+              },
+              {
+                "name": "automatic_number",
+                "value": "",
+                "type": "query",
+                "description": "Automatically populate/override invoice number with the next number of `sectional_id`. If `sectional_id` is null, it generates a number without sectional"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an invoice. By default will be created as draft and not issued.\n\n\nThe request body (that could be <b>application/xml</b> or <b>application/json</b>) represent the <a href='https://www.fatturapa.gov.it/it/norme-e-regole/documentazione-fattura-elettronica/formato-fatturapa/' target='_blank'>Italian Electronic invoice format</a>.\nFor example, if the XML content comes from another system — perhaps as a file — the request body will contain the file's content.\nThe content should represent only "
+        },
+        {
+          "info": {
+            "name": "Get a document invoice by its identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/documents/:document_id/invoice",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the document invoice belongs to"
+              },
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "The document identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific document invoice along with a signed url to the xml representation of the invoice.\nThe signed url provides a secure and temporary access to the xml data.\n"
+        },
+        {
+          "info": {
+            "name": "Send an invoice courtesy copy through email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/documents/:document_id/share-invoice",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company where to execute the operation"
+              },
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "The document identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send an invoice courtesy copy through email to some recipient provided in the request body.\n\nThe email will contain a link to the actual invoice and maybe contain a personalized body and subject.\nIf these are not provided, the email will contain a default body and subject.\n\nIf the response is successful, the email will be sent to the recipient but we do not guarantee that the email will be delivered successfully.\nThe success of the response means that the system has accepted the request and will"
+        },
+        {
+          "info": {
+            "name": "Get a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/documents/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company the document belongs to"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The document identifier"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Fields that will be expanded. Expandable fields: `category`, `counterpart`, `flows`, `sectional`, `subcategory`"
+              }
+            ]
+          },
+          "docs": "Returns all the information for a specific document from its identifier"
+        },
+        {
+          "info": {
+            "name": "Update an existing document",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/documents/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company where to execute the operation"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The document identifier"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Fields that will be expanded. Expandable fields: `category`, `counterpart`, `flows`, `subcategory`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing document"
+        },
+        {
+          "info": {
+            "name": "Delete an existing document",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://integration.app.svc.cluster.local:4000/api/v1/companies/:company_id/documents/:id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "The company where to execute the operation"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The document identifier"
+              }
+            ]
+          },
+          "docs": "Delete an existing document"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
