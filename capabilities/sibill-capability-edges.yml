@@ -1,0 +1,26 @@
+slug: sibill
+provider: Sibill
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Document
+  spec_file: sibill-document-api-openapi.yml
+  capability_id: BC-200.30
+  capability_id_l1: BC-200
+  capability_name: Accounts Receivable Management
+  confidence: 0.75
+  evidence: POST /api/v1/companies/{company_id}/documents/invoice Create an invoice and issue it; POST
+    .../share-invoice Send an invoice courtesy copy through email
+  reason: Issuing and distributing electronic invoices (submitted to the Italian SDI per the vendor description)
+    is customer invoicing, i.e. Accounts Receivable Management. Some residual ambiguity because the generic
+    document list may also cover received/payable invoices.
