@@ -128,6 +128,8 @@ apis:
   humanURL: https://docs.sibill.com/
   baseURL: https://integration.sibill.com/api/v1
   tags:
+  - Documents
+  tags_raw:
   - Document
   properties:
   - type: OpenAPI
@@ -170,6 +172,8 @@ apis:
   humanURL: https://docs.sibill.com/
   baseURL: https://integration.sibill.com/api/v1
   tags:
+  - Payments
+  tags_raw:
   - Payment
   properties:
   - type: OpenAPI
