@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Sibill Integration Account API
   version: 1.0.0
@@ -18,9 +18,7 @@ paths:
       callbacks: {}
       description: 'The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.
 
-        A cursor is needed to traverse the results.
-
-        '
+        A cursor is needed to traverse the results.'
       operationId: SibillWeb.Integration.V1.AccountsController.index
       parameters:
       - description: The company the accounts belong to
@@ -263,17 +261,6 @@ paths:
         source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/accounts/:account_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"GET\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
 components:
   schemas:
-    Page:
-      properties:
-        cursor:
-          description: A cursor that can be used to fetch the next page of results
-          nullable: true
-          type: string
-        size:
-          description: The current page size
-          type: integer
-      title: Page
-      type: object
     AccountList:
       description: List of account representations
       properties:
@@ -285,45 +272,17 @@ components:
           $ref: '#/components/schemas/Page'
       title: AccountList
       type: object
-    AccountData:
-      description: Account data object
+    Page:
       properties:
-        data:
-          $ref: '#/components/schemas/AccountSchema'
-      title: AccountData
-      type: object
-    IntegrationError:
-      properties:
-        errors:
-          description: The list of errors encountered during the operation with detailed information
-          items:
-            properties:
-              code:
-                description: Short code identifying an error type
-                example: bad_request
-                type: string
-              detail:
-                description: The message detail that describes the error
-                example: null value where string expected
-                nullable: true
-                type: string
-              source:
-                nullable: true
-                properties:
-                  pointer:
-                    description: The exact position in the request where the error occurred
-                    example: /data/attributes/name
-                    type: string
-                type: object
-              title:
-                description: The message title that describes the error. It is a short, human-readable summary of the problem
-                example: Invalid value
-                type: string
-            type: object
-          type: array
-      required:
-      - errors
-      title: IntegrationError
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          type:
+          - string
+          - 'null'
+        size:
+          description: The current page size
+          type: integer
+      title: Page
       type: object
     AccountSchema:
       description: Account data representation
@@ -333,7 +292,6 @@ components:
           example:
             amount: '12.3'
             currency: EUR
-          nullable: true
           properties:
             amount:
               minLength: 1
@@ -526,13 +484,16 @@ components:
           required:
           - currency
           - amount
-          type: object
+          type:
+          - object
+          - 'null'
         balance_date:
           description: The date when the account balance was last updated
           format: date-time
-          nullable: true
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         created_at:
           description: Creation date of the record
           format: date-time
@@ -543,7 +504,6 @@ components:
           example:
             amount: '12.3'
             currency: EUR
-          nullable: true
           properties:
             amount:
               minLength: 1
@@ -736,7 +696,9 @@ components:
           required:
           - currency
           - amount
-          type: object
+          type:
+          - object
+          - 'null'
         currency:
           description: 'The currency of the account.
 
@@ -926,15 +888,15 @@ components:
           - ZAR
           - ZMW
           - ZWL
-          nullable: true
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         current_balance:
           description: Money representation through amount and currency properties
           example:
             amount: '12.3'
             currency: EUR
-          nullable: true
           properties:
             amount:
               minLength: 1
@@ -1127,7 +1089,9 @@ components:
           required:
           - currency
           - amount
-          type: object
+          type:
+          - object
+          - 'null'
         id:
           description: The id of the account
           example: 019f8035-9c14-7aa7-9185-f8cd9f742d26
@@ -1136,10 +1100,53 @@ components:
           type: string
         nickname:
           description: A friendly name for the account
-          nullable: true
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
       title: AccountSchema
+      type: object
+    AccountData:
+      description: Account data object
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountSchema'
+      title: AccountData
+      type: object
+    IntegrationError:
+      properties:
+        errors:
+          description: The list of errors encountered during the operation with detailed information
+          items:
+            properties:
+              code:
+                description: Short code identifying an error type
+                example: bad_request
+                type: string
+              detail:
+                description: The message detail that describes the error
+                example: null value where string expected
+                type:
+                - string
+                - 'null'
+              source:
+                properties:
+                  pointer:
+                    description: The exact position in the request where the error occurred
+                    example: /data/attributes/name
+                    type: string
+                type:
+                - object
+                - 'null'
+              title:
+                description: The message title that describes the error. It is a short, human-readable summary of the problem
+                example: Invalid value
+                type: string
+            type: object
+          type: array
+      required:
+      - errors
+      title: IntegrationError
       type: object
   securitySchemes:
     authorization:

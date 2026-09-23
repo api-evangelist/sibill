@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Sibill Integration Account Flow API
+  title: Sibill Integration Flow API
   version: 1.0.0
   x-logo:
     altText: Sibill logo
@@ -18,9 +18,7 @@ paths:
       callbacks: {}
       description: 'The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.
 
-        A cursor is needed to traverse the results.
-
-        '
+        A cursor is needed to traverse the results.'
       operationId: SibillWeb.Integration.V1.FlowsController.index
       parameters:
       - description: The company the flows belongs to
@@ -647,17 +645,6 @@ paths:
         source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/:document_id/flows/:flow_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"PATCH\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
 components:
   schemas:
-    Page:
-      properties:
-        cursor:
-          description: A cursor that can be used to fetch the next page of results
-          nullable: true
-          type: string
-        size:
-          description: The current page size
-          type: integer
-      title: Page
-      type: object
     FlowCreate:
       description: Create flow data object
       properties:
@@ -665,8 +652,9 @@ components:
           description: The id of the account
           example: 019f8035-d770-7a49-a7e9-5e4c20a3381a
           format: uuid
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         amount:
           description: Money representation through amount and currency properties
           example:
@@ -914,8 +902,9 @@ components:
           - RIBA
           - SDD
           - TRANSFER
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         payment_status:
           description: 'The payment status.
 
@@ -938,295 +927,24 @@ components:
       - payment_status
       title: FlowCreate
       type: object
+    Page:
+      properties:
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          type:
+          - string
+          - 'null'
+        size:
+          description: The current page size
+          type: integer
+      title: Page
+      type: object
     FlowData:
       description: Flow data object
       properties:
         data:
           $ref: '#/components/schemas/FlowSchema'
       title: FlowData
-      type: object
-    FlowUpdate:
-      description: Update flow data object
-      properties:
-        amount:
-          description: Money representation through amount and currency properties
-          example:
-            amount: '12.3'
-            currency: EUR
-          properties:
-            amount:
-              minLength: 1
-              pattern: ^[0-9]*\.?[0-9]+$
-              readOnly: false
-              type: string
-            currency:
-              enum:
-              - AED
-              - AFN
-              - ALL
-              - AMD
-              - ANG
-              - AOA
-              - ARS
-              - AUD
-              - AWG
-              - AZN
-              - BAM
-              - BBD
-              - BDT
-              - BGN
-              - BHD
-              - BIF
-              - BMD
-              - BND
-              - BOB
-              - BOV
-              - BRL
-              - BSD
-              - BTN
-              - BWP
-              - BYN
-              - BZD
-              - CAD
-              - CDF
-              - CHE
-              - CHF
-              - CHW
-              - CLF
-              - CLP
-              - CNY
-              - COP
-              - COU
-              - CRC
-              - CUC
-              - CUP
-              - CVE
-              - CZK
-              - DJF
-              - DKK
-              - DOP
-              - DZD
-              - EGP
-              - ERN
-              - ETB
-              - EUR
-              - FJD
-              - FKP
-              - GBP
-              - GEL
-              - GHS
-              - GIP
-              - GMD
-              - GNF
-              - GTQ
-              - GYD
-              - HKD
-              - HNL
-              - HRK
-              - HTG
-              - HUF
-              - IDR
-              - ILS
-              - INR
-              - IQD
-              - IRR
-              - ISK
-              - JMD
-              - JOD
-              - JPY
-              - KES
-              - KGS
-              - KHR
-              - KMF
-              - KPW
-              - KRW
-              - KWD
-              - KYD
-              - KZT
-              - LAK
-              - LBP
-              - LKR
-              - LRD
-              - LSL
-              - LYD
-              - MAD
-              - MDL
-              - MGA
-              - MKD
-              - MMK
-              - MNT
-              - MOP
-              - MRU
-              - MUR
-              - MVR
-              - MWK
-              - MXN
-              - MXV
-              - MYR
-              - MZN
-              - NAD
-              - NGN
-              - NIO
-              - NOK
-              - NPR
-              - NZD
-              - OMR
-              - PAB
-              - PEN
-              - PGK
-              - PHP
-              - PKR
-              - PLN
-              - PYG
-              - QAR
-              - RON
-              - RSD
-              - RUB
-              - RWF
-              - SAR
-              - SBD
-              - SCR
-              - SDG
-              - SEK
-              - SGD
-              - SHP
-              - SLL
-              - SOS
-              - SRD
-              - SSP
-              - STN
-              - SVC
-              - SYP
-              - SZL
-              - THB
-              - TJS
-              - TMT
-              - TND
-              - TOP
-              - TRY
-              - TTD
-              - TWD
-              - TZS
-              - UAH
-              - UGX
-              - USD
-              - USN
-              - UYI
-              - UYU
-              - UYW
-              - UZS
-              - VES
-              - VND
-              - VUV
-              - WST
-              - XAF
-              - XAG
-              - XAU
-              - XBA
-              - XBB
-              - XBC
-              - XBD
-              - XCD
-              - XDR
-              - XOF
-              - XPD
-              - XPF
-              - XPT
-              - XSU
-              - XTS
-              - XUA
-              - XXX
-              - YER
-              - ZAR
-              - ZMW
-              - ZWL
-              readOnly: false
-              type: string
-          required:
-          - currency
-          - amount
-          type: object
-        expected_payment_date:
-          description: The date when the flow is due
-          format: date
-          type: string
-        id:
-          description: The flow identifier
-          example: 019f8035-d795-7309-8237-08857e973d3d
-          format: uuid
-          readOnly: true
-          type: string
-        payment_date:
-          description: The date when the flow was paid
-          format: date
-          type: string
-        payment_method:
-          description: The payment method
-          enum:
-          - CARD
-          - CASH
-          - CHECK
-          - DEFERRED
-          - TAX_FORM
-          - FISCAL_CREDIT
-          - OTHER
-          - POSTAL
-          - RIBA
-          - SDD
-          - TRANSFER
-          nullable: true
-          type: string
-        payment_status:
-          description: The payment status
-          enum:
-          - PAID
-          - TO_PAY
-          type: string
-      title: FlowUpdate
-      type: object
-    FlowList:
-      description: List of flow representations
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/FlowSchema'
-          type: array
-        page:
-          $ref: '#/components/schemas/Page'
-      title: FlowList
-      type: object
-    IntegrationError:
-      properties:
-        errors:
-          description: The list of errors encountered during the operation with detailed information
-          items:
-            properties:
-              code:
-                description: Short code identifying an error type
-                example: bad_request
-                type: string
-              detail:
-                description: The message detail that describes the error
-                example: null value where string expected
-                nullable: true
-                type: string
-              source:
-                nullable: true
-                properties:
-                  pointer:
-                    description: The exact position in the request where the error occurred
-                    example: /data/attributes/name
-                    type: string
-                type: object
-              title:
-                description: The message title that describes the error. It is a short, human-readable summary of the problem
-                example: Invalid value
-                type: string
-            type: object
-          type: array
-      required:
-      - errors
-      title: IntegrationError
       type: object
     FlowSchema:
       description: Flow data representation
@@ -1235,9 +953,10 @@ components:
           description: The id of the account
           example: 019f8035-d726-7b45-847b-05e0fb123222
           format: uuid
-          nullable: true
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         amount:
           description: Money representation through amount and currency properties
           example:
@@ -1504,9 +1223,10 @@ components:
           - RIBA
           - SDD
           - TRANSFER
-          nullable: true
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         payment_status:
           description: 'The payment status.
 
@@ -1524,6 +1244,292 @@ components:
           readOnly: true
           type: string
       title: FlowSchema
+      type: object
+    FlowUpdate:
+      description: Update flow data object
+      properties:
+        amount:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+        expected_payment_date:
+          description: The date when the flow is due
+          format: date
+          type: string
+        id:
+          description: The flow identifier
+          example: 019f8035-d795-7309-8237-08857e973d3d
+          format: uuid
+          readOnly: true
+          type: string
+        payment_date:
+          description: The date when the flow was paid
+          format: date
+          type: string
+        payment_method:
+          description: The payment method
+          enum:
+          - CARD
+          - CASH
+          - CHECK
+          - DEFERRED
+          - TAX_FORM
+          - FISCAL_CREDIT
+          - OTHER
+          - POSTAL
+          - RIBA
+          - SDD
+          - TRANSFER
+          type:
+          - string
+          - 'null'
+        payment_status:
+          description: The payment status
+          enum:
+          - PAID
+          - TO_PAY
+          type: string
+      title: FlowUpdate
+      type: object
+    FlowList:
+      description: List of flow representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/FlowSchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: FlowList
+      type: object
+    IntegrationError:
+      properties:
+        errors:
+          description: The list of errors encountered during the operation with detailed information
+          items:
+            properties:
+              code:
+                description: Short code identifying an error type
+                example: bad_request
+                type: string
+              detail:
+                description: The message detail that describes the error
+                example: null value where string expected
+                type:
+                - string
+                - 'null'
+              source:
+                properties:
+                  pointer:
+                    description: The exact position in the request where the error occurred
+                    example: /data/attributes/name
+                    type: string
+                type:
+                - object
+                - 'null'
+              title:
+                description: The message title that describes the error. It is a short, human-readable summary of the problem
+                example: Invalid value
+                type: string
+            type: object
+          type: array
+      required:
+      - errors
+      title: IntegrationError
       type: object
   securitySchemes:
     authorization:

@@ -1,18 +1,7 @@
 {
   "provider": "sibill",
   "sources": [
-    "sibill-account-api-openapi.yml",
-    "sibill-category-api-openapi.yml",
-    "sibill-company-api-openapi.yml",
-    "sibill-counterpart-api-openapi.yml",
-    "sibill-document-api-openapi.yml",
-    "sibill-documentsectional-api-openapi.yml",
-    "sibill-flow-api-openapi.yml",
-    "sibill-payment-api-openapi.yml",
-    "sibill-product-api-openapi.yml",
-    "sibill-reconciliation-api-openapi.yml",
-    "sibill-subcategory-api-openapi.yml",
-    "sibill-transaction-api-openapi.yml"
+    "_original/sibill-openapi-original.json"
   ],
   "outputs": [
     "sibill-account-api-openapi.yml",
@@ -31,6 +20,35 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sibill-openapi-original.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "sibill-openapi-original.json: declared missing tag: Account",
+    "sibill-openapi-original.json: declared missing tag: Category",
+    "sibill-openapi-original.json: declared missing tag: Company",
+    "sibill-openapi-original.json: declared missing tag: Counterpart",
+    "sibill-openapi-original.json: declared missing tag: Document",
+    "sibill-openapi-original.json: declared missing tag: DocumentSectional",
+    "sibill-openapi-original.json: declared missing tag: Flow",
+    "sibill-openapi-original.json: declared missing tag: Payment",
+    "sibill-openapi-original.json: declared missing tag: Product",
+    "sibill-openapi-original.json: declared missing tag: Reconciliation",
+    "sibill-openapi-original.json: declared missing tag: Subcategory",
+    "sibill-openapi-original.json: declared missing tag: Transaction",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "sibill-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sibill-category-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sibill-company-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sibill-counterpart-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sibill-document-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sibill-documentsectional-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sibill-flow-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sibill-payment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sibill-product-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sibill-reconciliation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sibill-subcategory-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sibill-transaction-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

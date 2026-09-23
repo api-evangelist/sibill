@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Sibill Integration Account Payment API
+  title: Sibill Integration Payment API
   version: 1.0.0
   x-logo:
     altText: Sibill logo
@@ -224,9 +224,7 @@ paths:
         and can be used to attach a human-readable description to the upload.
 
 
-        Requires the `*` wildcard permission or the `payments:f24:write` permission.
-
-        '
+        Requires the `*` wildcard permission or the `payments:f24:write` permission.'
       operationId: SibillWeb.Integration.V1.RequestsController.f24_ocr
       parameters:
       - description: The company where to execute the operation
@@ -406,16 +404,18 @@ components:
               detail:
                 description: The message detail that describes the error
                 example: null value where string expected
-                nullable: true
-                type: string
+                type:
+                - string
+                - 'null'
               source:
-                nullable: true
                 properties:
                   pointer:
                     description: The exact position in the request where the error occurred
                     example: /data/attributes/name
                     type: string
-                type: object
+                type:
+                - object
+                - 'null'
               title:
                 description: The message title that describes the error. It is a short, human-readable summary of the problem
                 example: Invalid value

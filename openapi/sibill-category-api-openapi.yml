@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Sibill Integration Account Category API
+  title: Sibill Integration Category API
   version: 1.0.0
   x-logo:
     altText: Sibill logo
@@ -18,9 +18,7 @@ paths:
       callbacks: {}
       description: 'The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.
 
-        A cursor is needed to traverse the results.
-
-        '
+        A cursor is needed to traverse the results.'
       operationId: SibillWeb.Integration.V1.CategoriesController.index
       parameters:
       - description: The company the categories belong to
@@ -285,9 +283,7 @@ paths:
       callbacks: {}
       description: 'Deletes the category and clears its reference from associated transactions,
 
-        recurrences and counterparts.
-
-        '
+        recurrences and counterparts.'
       operationId: SibillWeb.Integration.V1.CategoriesController.delete
       parameters:
       - description: The company the category belongs to
@@ -641,41 +637,6 @@ paths:
         source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/categories/:category_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"PATCH\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
 components:
   schemas:
-    Page:
-      properties:
-        cursor:
-          description: A cursor that can be used to fetch the next page of results
-          nullable: true
-          type: string
-        size:
-          description: The current page size
-          type: integer
-      title: Page
-      type: object
-    CategoryUpdate:
-      description: Update category data object
-      properties:
-        color:
-          description: The color used to visually represent the category, encoded as a hex string (e.g. `#ff0000`)
-          type: string
-        name:
-          description: The name of the category
-          type: string
-      title: CategoryUpdate
-      type: object
-    CategoryCreate:
-      description: Create category data object
-      properties:
-        color:
-          description: The color used to visually represent the category, encoded as a hex string (e.g. `#ff0000`). Defaults to `#ffffff` if not provided.
-          type: string
-        name:
-          description: The name of the category
-          type: string
-      required:
-      - name
-      title: CategoryCreate
-      type: object
     CategoryList:
       description: List of category representations
       properties:
@@ -687,45 +648,17 @@ components:
           $ref: '#/components/schemas/Page'
       title: CategoryList
       type: object
-    IntegrationError:
+    Page:
       properties:
-        errors:
-          description: The list of errors encountered during the operation with detailed information
-          items:
-            properties:
-              code:
-                description: Short code identifying an error type
-                example: bad_request
-                type: string
-              detail:
-                description: The message detail that describes the error
-                example: null value where string expected
-                nullable: true
-                type: string
-              source:
-                nullable: true
-                properties:
-                  pointer:
-                    description: The exact position in the request where the error occurred
-                    example: /data/attributes/name
-                    type: string
-                type: object
-              title:
-                description: The message title that describes the error. It is a short, human-readable summary of the problem
-                example: Invalid value
-                type: string
-            type: object
-          type: array
-      required:
-      - errors
-      title: IntegrationError
-      type: object
-    CategoryData:
-      description: Category data object
-      properties:
-        data:
-          $ref: '#/components/schemas/CategorySchema'
-      title: CategoryData
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          type:
+          - string
+          - 'null'
+        size:
+          description: The current page size
+          type: integer
+      title: Page
       type: object
     CategorySchema:
       description: Category data representation
@@ -745,6 +678,72 @@ components:
           readOnly: true
           type: string
       title: CategorySchema
+      type: object
+    CategoryUpdate:
+      description: Update category data object
+      properties:
+        color:
+          description: The color used to visually represent the category, encoded as a hex string (e.g. `#ff0000`)
+          type: string
+        name:
+          description: The name of the category
+          type: string
+      title: CategoryUpdate
+      type: object
+    CategoryData:
+      description: Category data object
+      properties:
+        data:
+          $ref: '#/components/schemas/CategorySchema'
+      title: CategoryData
+      type: object
+    CategoryCreate:
+      description: Create category data object
+      properties:
+        color:
+          description: The color used to visually represent the category, encoded as a hex string (e.g. `#ff0000`). Defaults to `#ffffff` if not provided.
+          type: string
+        name:
+          description: The name of the category
+          type: string
+      required:
+      - name
+      title: CategoryCreate
+      type: object
+    IntegrationError:
+      properties:
+        errors:
+          description: The list of errors encountered during the operation with detailed information
+          items:
+            properties:
+              code:
+                description: Short code identifying an error type
+                example: bad_request
+                type: string
+              detail:
+                description: The message detail that describes the error
+                example: null value where string expected
+                type:
+                - string
+                - 'null'
+              source:
+                properties:
+                  pointer:
+                    description: The exact position in the request where the error occurred
+                    example: /data/attributes/name
+                    type: string
+                type:
+                - object
+                - 'null'
+              title:
+                description: The message title that describes the error. It is a short, human-readable summary of the problem
+                example: Invalid value
+                type: string
+            type: object
+          type: array
+      required:
+      - errors
+      title: IntegrationError
       type: object
   securitySchemes:
     authorization:

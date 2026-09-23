@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Sibill Integration Account Subcategory API
+  title: Sibill Integration Subcategory API
   version: 1.0.0
   x-logo:
     altText: Sibill logo
@@ -18,9 +18,7 @@ paths:
       callbacks: {}
       description: 'The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.
 
-        A cursor is needed to traverse the results.
-
-        '
+        A cursor is needed to traverse the results.'
       operationId: SibillWeb.Integration.V1.SubcategoriesController.index
       parameters:
       - description: The company the subcategories belong to
@@ -154,9 +152,7 @@ paths:
       callbacks: {}
       description: 'Creates a new subcategory under a parent category. The parent category must
 
-        belong to the same company; otherwise the request returns `404 Not Found`.
-
-        '
+        belong to the same company; otherwise the request returns `404 Not Found`.'
       operationId: SibillWeb.Integration.V1.SubcategoriesController.create
       parameters:
       - description: The company the subcategory belongs to
@@ -288,9 +284,7 @@ paths:
   /api/v1/companies/{company_id}/subcategories/{id}:
     delete:
       callbacks: {}
-      description: 'Deletes the subcategory and clears its reference from associated transactions.
-
-        '
+      description: Deletes the subcategory and clears its reference from associated transactions.
       operationId: SibillWeb.Integration.V1.SubcategoriesController.delete
       parameters:
       - description: The company the subcategory belongs to
@@ -644,12 +638,31 @@ paths:
         source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/subcategories/:subcategory_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"PATCH\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
 components:
   schemas:
+    SubcategoryData:
+      description: Subcategory data object
+      properties:
+        data:
+          $ref: '#/components/schemas/SubcategorySchema'
+      title: SubcategoryData
+      type: object
+    SubcategoryList:
+      description: List of subcategory representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SubcategorySchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: SubcategoryList
+      type: object
     Page:
       properties:
         cursor:
           description: A cursor that can be used to fetch the next page of results
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         size:
           description: The current page size
           type: integer
@@ -678,50 +691,6 @@ components:
           type: string
       title: SubcategoryUpdate
       type: object
-    SubcategoryList:
-      description: List of subcategory representations
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/SubcategorySchema'
-          type: array
-        page:
-          $ref: '#/components/schemas/Page'
-      title: SubcategoryList
-      type: object
-    IntegrationError:
-      properties:
-        errors:
-          description: The list of errors encountered during the operation with detailed information
-          items:
-            properties:
-              code:
-                description: Short code identifying an error type
-                example: bad_request
-                type: string
-              detail:
-                description: The message detail that describes the error
-                example: null value where string expected
-                nullable: true
-                type: string
-              source:
-                nullable: true
-                properties:
-                  pointer:
-                    description: The exact position in the request where the error occurred
-                    example: /data/attributes/name
-                    type: string
-                type: object
-              title:
-                description: The message title that describes the error. It is a short, human-readable summary of the problem
-                example: Invalid value
-                type: string
-            type: object
-          type: array
-      required:
-      - errors
-      title: IntegrationError
-      type: object
     SubcategorySchema:
       description: Subcategory data representation
       properties:
@@ -742,12 +711,40 @@ components:
           type: string
       title: SubcategorySchema
       type: object
-    SubcategoryData:
-      description: Subcategory data object
+    IntegrationError:
       properties:
-        data:
-          $ref: '#/components/schemas/SubcategorySchema'
-      title: SubcategoryData
+        errors:
+          description: The list of errors encountered during the operation with detailed information
+          items:
+            properties:
+              code:
+                description: Short code identifying an error type
+                example: bad_request
+                type: string
+              detail:
+                description: The message detail that describes the error
+                example: null value where string expected
+                type:
+                - string
+                - 'null'
+              source:
+                properties:
+                  pointer:
+                    description: The exact position in the request where the error occurred
+                    example: /data/attributes/name
+                    type: string
+                type:
+                - object
+                - 'null'
+              title:
+                description: The message title that describes the error. It is a short, human-readable summary of the problem
+                example: Invalid value
+                type: string
+            type: object
+          type: array
+      required:
+      - errors
+      title: IntegrationError
       type: object
   securitySchemes:
     authorization:

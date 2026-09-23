@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Sibill Integration Account DocumentSectional API
+  title: Sibill Integration Document Sectional API
   version: 1.0.0
   x-logo:
     altText: Sibill logo
@@ -18,9 +18,7 @@ paths:
       callbacks: {}
       description: 'The return value is paginated. By default the response contains 25 elements per page but can be instructed to return more elements per page.
 
-        A cursor is needed to traverse the results.
-
-        '
+        A cursor is needed to traverse the results.'
       operationId: SibillWeb.Integration.V1.DocumentSectionalsController.index
       parameters:
       - description: The company the document sectionals belong to
@@ -529,17 +527,6 @@ paths:
         source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/document-sectionals/:document_sectional_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"PATCH\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
 components:
   schemas:
-    Page:
-      properties:
-        cursor:
-          description: A cursor that can be used to fetch the next page of results
-          nullable: true
-          type: string
-        size:
-          description: The current page size
-          type: integer
-      title: Page
-      type: object
     DocumentSectionalSchema:
       description: Document sectional data representation
       properties:
@@ -551,27 +538,74 @@ components:
           type: string
         minimum_digits:
           description: The minimum number of digits used to pad the progressive number
-          nullable: true
           readOnly: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         prefix:
           description: The prefix prepended to the progressive number to form the document number
           example: NC/
-          nullable: true
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         suffix:
           description: The suffix appended to the progressive number to form the document number
           example: /2026
-          nullable: true
           readOnly: true
-          type: string
+          type:
+          - string
+          - 'null'
         year:
           description: The year the sectional applies to
           example: 2026
           readOnly: true
           type: integer
       title: DocumentSectionalSchema
+      type: object
+    DocumentSectionalData:
+      description: Document sectional data object
+      properties:
+        data:
+          $ref: '#/components/schemas/DocumentSectionalSchema'
+      title: DocumentSectionalData
+      type: object
+    Page:
+      properties:
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          type:
+          - string
+          - 'null'
+        size:
+          description: The current page size
+          type: integer
+      title: Page
+      type: object
+    DocumentSectionalCreate:
+      description: Create document sectional data object
+      properties:
+        minimum_digits:
+          description: The minimum number of digits used to pad the progressive number
+          type:
+          - integer
+          - 'null'
+        prefix:
+          description: The prefix prepended to the progressive number to form the document number. Either `prefix` or `suffix` must be provided.
+          type:
+          - string
+          - 'null'
+        suffix:
+          description: The suffix appended to the progressive number to form the document number. Either `prefix` or `suffix` must be provided.
+          type:
+          - string
+          - 'null'
+        year:
+          description: The year the sectional applies to
+          type: integer
+      required:
+      - year
+      title: DocumentSectionalCreate
       type: object
     DocumentSectionalList:
       description: List of document sectional representations
@@ -583,6 +617,29 @@ components:
         page:
           $ref: '#/components/schemas/Page'
       title: DocumentSectionalList
+      type: object
+    DocumentSectionalUpdate:
+      description: Update document sectional data object
+      properties:
+        minimum_digits:
+          description: The minimum number of digits used to pad the progressive number
+          type:
+          - integer
+          - 'null'
+        prefix:
+          description: The prefix prepended to the progressive number to form the document number
+          type:
+          - string
+          - 'null'
+        suffix:
+          description: The suffix appended to the progressive number to form the document number
+          type:
+          - string
+          - 'null'
+        year:
+          description: The year the sectional applies to
+          type: integer
+      title: DocumentSectionalUpdate
       type: object
     IntegrationError:
       properties:
@@ -597,16 +654,18 @@ components:
               detail:
                 description: The message detail that describes the error
                 example: null value where string expected
-                nullable: true
-                type: string
+                type:
+                - string
+                - 'null'
               source:
-                nullable: true
                 properties:
                   pointer:
                     description: The exact position in the request where the error occurred
                     example: /data/attributes/name
                     type: string
-                type: object
+                type:
+                - object
+                - 'null'
               title:
                 description: The message title that describes the error. It is a short, human-readable summary of the problem
                 example: Invalid value
@@ -616,55 +675,6 @@ components:
       required:
       - errors
       title: IntegrationError
-      type: object
-    DocumentSectionalCreate:
-      description: Create document sectional data object
-      properties:
-        minimum_digits:
-          description: The minimum number of digits used to pad the progressive number
-          nullable: true
-          type: integer
-        prefix:
-          description: The prefix prepended to the progressive number to form the document number. Either `prefix` or `suffix` must be provided.
-          nullable: true
-          type: string
-        suffix:
-          description: The suffix appended to the progressive number to form the document number. Either `prefix` or `suffix` must be provided.
-          nullable: true
-          type: string
-        year:
-          description: The year the sectional applies to
-          type: integer
-      required:
-      - year
-      title: DocumentSectionalCreate
-      type: object
-    DocumentSectionalData:
-      description: Document sectional data object
-      properties:
-        data:
-          $ref: '#/components/schemas/DocumentSectionalSchema'
-      title: DocumentSectionalData
-      type: object
-    DocumentSectionalUpdate:
-      description: Update document sectional data object
-      properties:
-        minimum_digits:
-          description: The minimum number of digits used to pad the progressive number
-          nullable: true
-          type: integer
-        prefix:
-          description: The prefix prepended to the progressive number to form the document number
-          nullable: true
-          type: string
-        suffix:
-          description: The suffix appended to the progressive number to form the document number
-          nullable: true
-          type: string
-        year:
-          description: The year the sectional applies to
-          type: integer
-      title: DocumentSectionalUpdate
       type: object
   securitySchemes:
     authorization:
