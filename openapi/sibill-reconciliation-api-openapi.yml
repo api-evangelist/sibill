@@ -534,29 +534,6 @@ components:
       - transaction_id
       title: ReconciliationCreate
       type: object
-    ReconciliationList:
-      description: List of reconciliation representations
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ReconciliationSchema'
-          type: array
-        page:
-          $ref: '#/components/schemas/Page'
-      title: ReconciliationList
-      type: object
-    Page:
-      properties:
-        cursor:
-          description: A cursor that can be used to fetch the next page of results
-          type:
-          - string
-          - 'null'
-        size:
-          description: The current page size
-          type: integer
-      title: Page
-      type: object
     FlowSchema:
       description: Flow data representation
       properties:
@@ -890,6 +867,29 @@ components:
       required:
       - errors
       title: IntegrationError
+      type: object
+    Page:
+      properties:
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          type:
+          - string
+          - 'null'
+        size:
+          description: The current page size
+          type: integer
+      title: Page
+      type: object
+    ReconciliationList:
+      description: List of reconciliation representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ReconciliationSchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: ReconciliationList
       type: object
     TransactionSchema:
       description: Transaction data representation

@@ -583,12 +583,23 @@ paths:
         source: "<?php\n\n$url = \"http://example.com/api/v1/counterparts/search\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"GET\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
 components:
   schemas:
-    CounterpartData:
-      description: Counterpart data representation
+    CounterpartSearchData:
+      description: Counterpart search result representation
       properties:
         data:
-          $ref: '#/components/schemas/CounterpartSchema'
-      title: CounterpartData
+          $ref: '#/components/schemas/CounterpartSearchSchema'
+      title: CounterpartSearchData
+      type: object
+    CounterpartList:
+      description: List of counterpart representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/CounterpartSchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: CounterpartList
       type: object
     CounterpartCreate:
       description: Create counterpart data object
@@ -663,28 +674,12 @@ components:
       - country
       title: CounterpartCreate
       type: object
-    Page:
-      properties:
-        cursor:
-          description: A cursor that can be used to fetch the next page of results
-          type:
-          - string
-          - 'null'
-        size:
-          description: The current page size
-          type: integer
-      title: Page
-      type: object
-    CounterpartList:
-      description: List of counterpart representations
+    CounterpartData:
+      description: Counterpart data representation
       properties:
         data:
-          items:
-            $ref: '#/components/schemas/CounterpartSchema'
-          type: array
-        page:
-          $ref: '#/components/schemas/Page'
-      title: CounterpartList
+          $ref: '#/components/schemas/CounterpartSchema'
+      title: CounterpartData
       type: object
     CounterpartSchema:
       description: Counterpart data representation
@@ -775,6 +770,93 @@ components:
           - 'null'
       title: CounterpartSchema
       type: object
+    IntegrationError:
+      properties:
+        errors:
+          description: The list of errors encountered during the operation with detailed information
+          items:
+            properties:
+              code:
+                description: Short code identifying an error type
+                example: bad_request
+                type: string
+              detail:
+                description: The message detail that describes the error
+                example: null value where string expected
+                type:
+                - string
+                - 'null'
+              source:
+                properties:
+                  pointer:
+                    description: The exact position in the request where the error occurred
+                    example: /data/attributes/name
+                    type: string
+                type:
+                - object
+                - 'null'
+              title:
+                description: The message title that describes the error. It is a short, human-readable summary of the problem
+                example: Invalid value
+                type: string
+            type: object
+          type: array
+      required:
+      - errors
+      title: IntegrationError
+      type: object
+    Page:
+      properties:
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          type:
+          - string
+          - 'null'
+        size:
+          description: The current page size
+          type: integer
+      title: Page
+      type: object
+    CounterpartUpdate:
+      description: Update counterpart data object
+      properties:
+        address:
+          description: The address
+          type:
+          - string
+          - 'null'
+        city:
+          description: The city
+          type:
+          - string
+          - 'null'
+        company_name:
+          description: The company name of the counterpart
+          type:
+          - string
+          - 'null'
+        country:
+          description: The country (ISO code)
+          type:
+          - string
+          - 'null'
+        destination_code:
+          description: The destination code (if applicable) for the Italian Electronic system (SDI).
+          type:
+          - string
+          - 'null'
+        postal_code:
+          description: The postal code (if applicable)
+          type:
+          - string
+          - 'null'
+        province_code:
+          description: The province code (if applicable)
+          type:
+          - string
+          - 'null'
+      title: CounterpartUpdate
+      type: object
     CounterpartSearchSchema:
       description: Counterpart search result representation
       properties:
@@ -827,88 +909,6 @@ components:
           - string
           - 'null'
       title: CounterpartSearchSchema
-      type: object
-    CounterpartSearchData:
-      description: Counterpart search result representation
-      properties:
-        data:
-          $ref: '#/components/schemas/CounterpartSearchSchema'
-      title: CounterpartSearchData
-      type: object
-    IntegrationError:
-      properties:
-        errors:
-          description: The list of errors encountered during the operation with detailed information
-          items:
-            properties:
-              code:
-                description: Short code identifying an error type
-                example: bad_request
-                type: string
-              detail:
-                description: The message detail that describes the error
-                example: null value where string expected
-                type:
-                - string
-                - 'null'
-              source:
-                properties:
-                  pointer:
-                    description: The exact position in the request where the error occurred
-                    example: /data/attributes/name
-                    type: string
-                type:
-                - object
-                - 'null'
-              title:
-                description: The message title that describes the error. It is a short, human-readable summary of the problem
-                example: Invalid value
-                type: string
-            type: object
-          type: array
-      required:
-      - errors
-      title: IntegrationError
-      type: object
-    CounterpartUpdate:
-      description: Update counterpart data object
-      properties:
-        address:
-          description: The address
-          type:
-          - string
-          - 'null'
-        city:
-          description: The city
-          type:
-          - string
-          - 'null'
-        company_name:
-          description: The company name of the counterpart
-          type:
-          - string
-          - 'null'
-        country:
-          description: The country (ISO code)
-          type:
-          - string
-          - 'null'
-        destination_code:
-          description: The destination code (if applicable) for the Italian Electronic system (SDI).
-          type:
-          - string
-          - 'null'
-        postal_code:
-          description: The postal code (if applicable)
-          type:
-          - string
-          - 'null'
-        province_code:
-          description: The province code (if applicable)
-          type:
-          - string
-          - 'null'
-      title: CounterpartUpdate
       type: object
   securitySchemes:
     authorization:

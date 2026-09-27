@@ -969,698 +969,6 @@ paths:
         source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/documents/:document_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"PATCH\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
 components:
   schemas:
-    DocumentData:
-      description: Document data object
-      properties:
-        data:
-          $ref: '#/components/schemas/DocumentSchema'
-      title: DocumentData
-      type: object
-    Page:
-      properties:
-        cursor:
-          description: A cursor that can be used to fetch the next page of results
-          type:
-          - string
-          - 'null'
-        size:
-          description: The current page size
-          type: integer
-      title: Page
-      type: object
-    DocumentSchema:
-      description: Document data representation
-      properties:
-        category:
-          description: Category data representation
-          properties:
-            id:
-              description: The id of the category
-              example: 019f8035-a1cb-7cec-8039-9d7c1b0eb08c
-              format: uuid
-              readOnly: true
-              type: string
-            name:
-              description: The description of the category
-              readOnly: true
-              type: string
-          readOnly: true
-          type:
-          - object
-          - 'null'
-        counterpart:
-          anyOf:
-          - $ref: '#/components/schemas/CounterpartSchema'
-          readOnly: true
-        created_at:
-          description: The creation date time
-          format: date-time
-          readOnly: true
-          type: string
-        creation_date:
-          description: The date of the document. It represents the date which, in the case of an immediate invoice, coincides with the transaction date
-          format: date
-          readOnly: true
-          type: string
-        delivery_date:
-          description: A date representing when the document were delivered
-          readOnly: true
-          type:
-          - string
-          - 'null'
-        delivery_status:
-          description: The status of the document delivery
-          readOnly: true
-          type:
-          - string
-          - 'null'
-        direction:
-          description: 'Shows whether the document has been issued or received.
-
-
-            Possible values are:
-
-
-            - `ISSUED`: The document was issued by this company
-
-            - `RECEIVED`: The document was received. Beware that self invoices issued by the company will have direction `RECEIVED`
-
-            '
-          enum:
-          - ISSUED
-          - RECEIVED
-          readOnly: true
-          type: string
-        file_name:
-          description: The name of the file sent to the Italian Electronic system (SDI)
-          readOnly: true
-          type:
-          - string
-          - 'null'
-        flows:
-          description: A list of payments related to the document
-          items:
-            $ref: '#/components/schemas/FlowSchema'
-          readOnly: true
-          type: array
-        format:
-          description: The document format
-          enum:
-          - FPA12
-          - FPR12
-          - FSM10
-          readOnly: true
-          type: string
-        gross_amount:
-          description: Money representation through amount and currency properties
-          example:
-            amount: '12.3'
-            currency: EUR
-          properties:
-            amount:
-              minLength: 1
-              pattern: ^[0-9]*\.?[0-9]+$
-              readOnly: false
-              type: string
-            currency:
-              enum:
-              - AED
-              - AFN
-              - ALL
-              - AMD
-              - ANG
-              - AOA
-              - ARS
-              - AUD
-              - AWG
-              - AZN
-              - BAM
-              - BBD
-              - BDT
-              - BGN
-              - BHD
-              - BIF
-              - BMD
-              - BND
-              - BOB
-              - BOV
-              - BRL
-              - BSD
-              - BTN
-              - BWP
-              - BYN
-              - BZD
-              - CAD
-              - CDF
-              - CHE
-              - CHF
-              - CHW
-              - CLF
-              - CLP
-              - CNY
-              - COP
-              - COU
-              - CRC
-              - CUC
-              - CUP
-              - CVE
-              - CZK
-              - DJF
-              - DKK
-              - DOP
-              - DZD
-              - EGP
-              - ERN
-              - ETB
-              - EUR
-              - FJD
-              - FKP
-              - GBP
-              - GEL
-              - GHS
-              - GIP
-              - GMD
-              - GNF
-              - GTQ
-              - GYD
-              - HKD
-              - HNL
-              - HRK
-              - HTG
-              - HUF
-              - IDR
-              - ILS
-              - INR
-              - IQD
-              - IRR
-              - ISK
-              - JMD
-              - JOD
-              - JPY
-              - KES
-              - KGS
-              - KHR
-              - KMF
-              - KPW
-              - KRW
-              - KWD
-              - KYD
-              - KZT
-              - LAK
-              - LBP
-              - LKR
-              - LRD
-              - LSL
-              - LYD
-              - MAD
-              - MDL
-              - MGA
-              - MKD
-              - MMK
-              - MNT
-              - MOP
-              - MRU
-              - MUR
-              - MVR
-              - MWK
-              - MXN
-              - MXV
-              - MYR
-              - MZN
-              - NAD
-              - NGN
-              - NIO
-              - NOK
-              - NPR
-              - NZD
-              - OMR
-              - PAB
-              - PEN
-              - PGK
-              - PHP
-              - PKR
-              - PLN
-              - PYG
-              - QAR
-              - RON
-              - RSD
-              - RUB
-              - RWF
-              - SAR
-              - SBD
-              - SCR
-              - SDG
-              - SEK
-              - SGD
-              - SHP
-              - SLL
-              - SOS
-              - SRD
-              - SSP
-              - STN
-              - SVC
-              - SYP
-              - SZL
-              - THB
-              - TJS
-              - TMT
-              - TND
-              - TOP
-              - TRY
-              - TTD
-              - TWD
-              - TZS
-              - UAH
-              - UGX
-              - USD
-              - USN
-              - UYI
-              - UYU
-              - UYW
-              - UZS
-              - VES
-              - VND
-              - VUV
-              - WST
-              - XAF
-              - XAG
-              - XAU
-              - XBA
-              - XBB
-              - XBC
-              - XBD
-              - XCD
-              - XDR
-              - XOF
-              - XPD
-              - XPF
-              - XPT
-              - XSU
-              - XTS
-              - XUA
-              - XXX
-              - YER
-              - ZAR
-              - ZMW
-              - ZWL
-              readOnly: false
-              type: string
-          required:
-          - currency
-          - amount
-          type: object
-        id:
-          description: The processed document identifier
-          example: 019f8035-a1cb-7e70-8489-fa1bd0bd52b8
-          format: uuid
-          readOnly: true
-          type: string
-        is_e_invoice:
-          description: Represents whether the document is an electronic invoice; if true, the document is an electronic invoice for the Italian Electronic system (SDI)
-          readOnly: true
-          type:
-          - boolean
-          - 'null'
-        notes:
-          readOnly: true
-          type:
-          - string
-          - 'null'
-        number:
-          description: The invoice number
-          example: NC/12345/2026
-          readOnly: true
-          type: string
-        progressive:
-          description: The progressive number within the sectional
-          example: '12345'
-          readOnly: true
-          type:
-          - string
-          - 'null'
-        reasons_and_remarks:
-          description: Document reasons and remarks
-          items:
-            type: string
-          readOnly: true
-          type: array
-        sectional:
-          description: The sectional associated with the document number
-          properties:
-            id:
-              description: The sectional identifier
-              format: uuid
-              readOnly: true
-              type: string
-            minimum_digits:
-              description: The minimum number of digits used to pad the progressive number
-              readOnly: true
-              type:
-              - integer
-              - 'null'
-            prefix:
-              description: The prefix prepended to the progressive number to form the document number
-              example: NC/
-              readOnly: true
-              type:
-              - string
-              - 'null'
-            suffix:
-              description: The suffix appended to the progressive number to form the document number
-              example: /2026
-              readOnly: true
-              type:
-              - string
-              - 'null'
-          readOnly: true
-          type:
-          - object
-          - 'null'
-        status:
-          description: 'Current internal document status. This field is a mix of status that reflects the document''s progress, both in Sibill and the target tax authority service.
-
-            For the Italian market the tax authority service is SDI.
-
-
-            Possible values are:
-
-
-            - `DRAFT`: The document in draft state. In this state the document is not yet finalized.
-
-            - `CREATED`: The document is finalized. If the document is marked as an electronic invoice, it is sent to the target tax authority service.
-
-            - `SENT`: The document is successfully transmitted to the target tax authority service.
-
-            - `DELIVERED`: The document is transmitted to the tax authority service and successfully delivered to the recipient.
-
-            - `NOT_DELIVERED`: The document is successfully transmitted to the target tax authority service butnot delivered to the recipient.
-
-            - `DISCARDED`: The document is discarded. This typically happens when the document is not valid for the target tax authority service.
-
-            - `REFUSED`: The document is refused. This typically happens for Public Administration entities only. It means that the document is not accepted by the recipient.
-
-            '
-          enum:
-          - DRAFT
-          - CREATED
-          - SENT
-          - DISCARDED
-          - DELIVERED
-          - NOT_DELIVERED
-          - REFUSED
-          readOnly: true
-          type: string
-        subcategory:
-          description: Subcategory data representation
-          properties:
-            id:
-              description: The id of the subcategory
-              example: 019f8035-d687-78c9-9a24-d10ddec1cf50
-              format: uuid
-              readOnly: true
-              type: string
-            name:
-              description: The description of the subcategory
-              readOnly: true
-              type: string
-          readOnly: true
-          type:
-          - object
-          - 'null'
-        type:
-          description: 'Current internal document type.
-
-
-            Possible values are:
-
-
-            - `BILL`: Represents a bill.
-
-            - `CREDIT_NOTE`: Represents a credit note.
-
-            - `DEBIT_NOTE`: Represents a debit note.
-
-            - `INVOICE`: Represents an invoice.
-
-            - `OTHER`: Represents other types of document.
-
-            - `PARCEL`: Represents a parcel.
-
-            - `SELF_INVOICE`: Represents a self-invoice.
-
-            - `DELIVERY_NOTE`: Represents a delivery note (DDT).
-
-            - `QUOTE`: Represents a quote.
-
-            '
-          enum:
-          - BILL
-          - RECEIPT
-          - CREDIT_NOTE
-          - DEBIT_NOTE
-          - INVOICE
-          - OTHER
-          - PARCEL
-          - SELF_INVOICE
-          - DELIVERY_NOTE
-          - QUOTE
-          - PAYROLL
-          readOnly: true
-          type: string
-        updated_at:
-          description: The update date time
-          format: date-time
-          readOnly: true
-          type: string
-        vat_amount:
-          description: Money representation through amount and currency properties
-          example:
-            amount: '12.3'
-            currency: EUR
-          properties:
-            amount:
-              minLength: 1
-              pattern: ^[0-9]*\.?[0-9]+$
-              readOnly: false
-              type: string
-            currency:
-              enum:
-              - AED
-              - AFN
-              - ALL
-              - AMD
-              - ANG
-              - AOA
-              - ARS
-              - AUD
-              - AWG
-              - AZN
-              - BAM
-              - BBD
-              - BDT
-              - BGN
-              - BHD
-              - BIF
-              - BMD
-              - BND
-              - BOB
-              - BOV
-              - BRL
-              - BSD
-              - BTN
-              - BWP
-              - BYN
-              - BZD
-              - CAD
-              - CDF
-              - CHE
-              - CHF
-              - CHW
-              - CLF
-              - CLP
-              - CNY
-              - COP
-              - COU
-              - CRC
-              - CUC
-              - CUP
-              - CVE
-              - CZK
-              - DJF
-              - DKK
-              - DOP
-              - DZD
-              - EGP
-              - ERN
-              - ETB
-              - EUR
-              - FJD
-              - FKP
-              - GBP
-              - GEL
-              - GHS
-              - GIP
-              - GMD
-              - GNF
-              - GTQ
-              - GYD
-              - HKD
-              - HNL
-              - HRK
-              - HTG
-              - HUF
-              - IDR
-              - ILS
-              - INR
-              - IQD
-              - IRR
-              - ISK
-              - JMD
-              - JOD
-              - JPY
-              - KES
-              - KGS
-              - KHR
-              - KMF
-              - KPW
-              - KRW
-              - KWD
-              - KYD
-              - KZT
-              - LAK
-              - LBP
-              - LKR
-              - LRD
-              - LSL
-              - LYD
-              - MAD
-              - MDL
-              - MGA
-              - MKD
-              - MMK
-              - MNT
-              - MOP
-              - MRU
-              - MUR
-              - MVR
-              - MWK
-              - MXN
-              - MXV
-              - MYR
-              - MZN
-              - NAD
-              - NGN
-              - NIO
-              - NOK
-              - NPR
-              - NZD
-              - OMR
-              - PAB
-              - PEN
-              - PGK
-              - PHP
-              - PKR
-              - PLN
-              - PYG
-              - QAR
-              - RON
-              - RSD
-              - RUB
-              - RWF
-              - SAR
-              - SBD
-              - SCR
-              - SDG
-              - SEK
-              - SGD
-              - SHP
-              - SLL
-              - SOS
-              - SRD
-              - SSP
-              - STN
-              - SVC
-              - SYP
-              - SZL
-              - THB
-              - TJS
-              - TMT
-              - TND
-              - TOP
-              - TRY
-              - TTD
-              - TWD
-              - TZS
-              - UAH
-              - UGX
-              - USD
-              - USN
-              - UYI
-              - UYU
-              - UYW
-              - UZS
-              - VES
-              - VND
-              - VUV
-              - WST
-              - XAF
-              - XAG
-              - XAU
-              - XBA
-              - XBB
-              - XBC
-              - XBD
-              - XCD
-              - XDR
-              - XOF
-              - XPD
-              - XPF
-              - XPT
-              - XSU
-              - XTS
-              - XUA
-              - XXX
-              - YER
-              - ZAR
-              - ZMW
-              - ZWL
-              readOnly: false
-              type: string
-          required:
-          - currency
-          - amount
-          type: object
-      title: DocumentSchema
-      type: object
-    SendInvoiceData:
-      description: Send an invoice courtesy copy data object
-      properties:
-        body:
-          description: "The body of the email.\n\nIf not provided, a default body will be used:\n\n- in Italian:\n  Buongiorno,\n  abbiamo provveduto all'invio della {INVOICE_TYPE} n. {INVOICE_NUMBER}. È possibile visualizzarla o scaricarne una copia in versione PDF cliccando sul bottone sottostante.\n\n  Grazie e buon lavoro\n"
-          type: string
-        reply_to:
-          format: email
-          minLength: 1
-          type: string
-        subject:
-          description: "The subject of the email.\n\nIf not provided, a default subject will be used:\n\n- in Italian:\n  Nostra {INVOICE_TYPE} n. {INVOICE_NUMBER}\n"
-          type: string
-        to:
-          oneOf:
-          - format: email
-            minLength: 1
-            type: string
-          - items:
-              format: email
-              minLength: 1
-              type: string
-            minItems: 1
-            type: array
-      required:
-      - to
-      - reply_to
-      title: SendInvoiceData
-      type: object
     Invoice:
       description: Invoice data representation
       properties:
@@ -2712,31 +2020,6 @@ components:
           type: string
       title: Invoice
       type: object
-    DocumentUpdate:
-      description: Update document data object
-      properties:
-        category_id:
-          description: The category identifier. Pass `null` to clear the category and the subcategory.
-          example: 019f8035-d717-7c8c-ad92-c47177ad60c3
-          format: uuid
-          type:
-          - string
-          - 'null'
-        notes:
-          description: Document notes (max 1000 characters)
-          maxLength: 1000
-          type:
-          - string
-          - 'null'
-        subcategory_id:
-          description: The subcategory identifier. Must belong to the category_id set in the same request, or to the current category if category_id is not provided, otherwise the request returns `422 Unprocessable Entity`.
-          example: 019f8035-d717-717a-a497-5e53cfdc16fd
-          format: uuid
-          type:
-          - string
-          - 'null'
-      title: DocumentUpdate
-      type: object
     FlowSchema:
       description: Flow data representation
       properties:
@@ -3125,6 +2408,15 @@ components:
           - 'null'
       title: CounterpartSchema
       type: object
+    DocumentIssuedList:
+      description: List of issued document representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/DocumentSchema'
+          type: array
+      title: DocumentIssuedList
+      type: object
     InvoiceData:
       description: Invoice data object
       properties:
@@ -3140,6 +2432,697 @@ components:
               - 'null'
           type: object
       title: InvoiceData
+      type: object
+    DocumentList:
+      description: List of document representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/DocumentSchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: DocumentList
+      type: object
+    DocumentData:
+      description: Document data object
+      properties:
+        data:
+          $ref: '#/components/schemas/DocumentSchema'
+      title: DocumentData
+      type: object
+    SendInvoiceData:
+      description: Send an invoice courtesy copy data object
+      properties:
+        body:
+          description: "The body of the email.\n\nIf not provided, a default body will be used:\n\n- in Italian:\n  Buongiorno,\n  abbiamo provveduto all'invio della {INVOICE_TYPE} n. {INVOICE_NUMBER}. È possibile visualizzarla o scaricarne una copia in versione PDF cliccando sul bottone sottostante.\n\n  Grazie e buon lavoro\n"
+          type: string
+        reply_to:
+          format: email
+          minLength: 1
+          type: string
+        subject:
+          description: "The subject of the email.\n\nIf not provided, a default subject will be used:\n\n- in Italian:\n  Nostra {INVOICE_TYPE} n. {INVOICE_NUMBER}\n"
+          type: string
+        to:
+          oneOf:
+          - format: email
+            minLength: 1
+            type: string
+          - items:
+              format: email
+              minLength: 1
+              type: string
+            minItems: 1
+            type: array
+      required:
+      - to
+      - reply_to
+      title: SendInvoiceData
+      type: object
+    DocumentSchema:
+      description: Document data representation
+      properties:
+        category:
+          description: Category data representation
+          properties:
+            id:
+              description: The id of the category
+              example: 019f8035-a1cb-7cec-8039-9d7c1b0eb08c
+              format: uuid
+              readOnly: true
+              type: string
+            name:
+              description: The description of the category
+              readOnly: true
+              type: string
+          readOnly: true
+          type:
+          - object
+          - 'null'
+        counterpart:
+          anyOf:
+          - $ref: '#/components/schemas/CounterpartSchema'
+          readOnly: true
+        created_at:
+          description: The creation date time
+          format: date-time
+          readOnly: true
+          type: string
+        creation_date:
+          description: The date of the document. It represents the date which, in the case of an immediate invoice, coincides with the transaction date
+          format: date
+          readOnly: true
+          type: string
+        delivery_date:
+          description: A date representing when the document were delivered
+          readOnly: true
+          type:
+          - string
+          - 'null'
+        delivery_status:
+          description: The status of the document delivery
+          readOnly: true
+          type:
+          - string
+          - 'null'
+        direction:
+          description: 'Shows whether the document has been issued or received.
+
+
+            Possible values are:
+
+
+            - `ISSUED`: The document was issued by this company
+
+            - `RECEIVED`: The document was received. Beware that self invoices issued by the company will have direction `RECEIVED`
+
+            '
+          enum:
+          - ISSUED
+          - RECEIVED
+          readOnly: true
+          type: string
+        file_name:
+          description: The name of the file sent to the Italian Electronic system (SDI)
+          readOnly: true
+          type:
+          - string
+          - 'null'
+        flows:
+          description: A list of payments related to the document
+          items:
+            $ref: '#/components/schemas/FlowSchema'
+          readOnly: true
+          type: array
+        format:
+          description: The document format
+          enum:
+          - FPA12
+          - FPR12
+          - FSM10
+          readOnly: true
+          type: string
+        gross_amount:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+        id:
+          description: The processed document identifier
+          example: 019f8035-a1cb-7e70-8489-fa1bd0bd52b8
+          format: uuid
+          readOnly: true
+          type: string
+        is_e_invoice:
+          description: Represents whether the document is an electronic invoice; if true, the document is an electronic invoice for the Italian Electronic system (SDI)
+          readOnly: true
+          type:
+          - boolean
+          - 'null'
+        notes:
+          readOnly: true
+          type:
+          - string
+          - 'null'
+        number:
+          description: The invoice number
+          example: NC/12345/2026
+          readOnly: true
+          type: string
+        progressive:
+          description: The progressive number within the sectional
+          example: '12345'
+          readOnly: true
+          type:
+          - string
+          - 'null'
+        reasons_and_remarks:
+          description: Document reasons and remarks
+          items:
+            type: string
+          readOnly: true
+          type: array
+        sectional:
+          description: The sectional associated with the document number
+          properties:
+            id:
+              description: The sectional identifier
+              format: uuid
+              readOnly: true
+              type: string
+            minimum_digits:
+              description: The minimum number of digits used to pad the progressive number
+              readOnly: true
+              type:
+              - integer
+              - 'null'
+            prefix:
+              description: The prefix prepended to the progressive number to form the document number
+              example: NC/
+              readOnly: true
+              type:
+              - string
+              - 'null'
+            suffix:
+              description: The suffix appended to the progressive number to form the document number
+              example: /2026
+              readOnly: true
+              type:
+              - string
+              - 'null'
+          readOnly: true
+          type:
+          - object
+          - 'null'
+        status:
+          description: 'Current internal document status. This field is a mix of status that reflects the document''s progress, both in Sibill and the target tax authority service.
+
+            For the Italian market the tax authority service is SDI.
+
+
+            Possible values are:
+
+
+            - `DRAFT`: The document in draft state. In this state the document is not yet finalized.
+
+            - `CREATED`: The document is finalized. If the document is marked as an electronic invoice, it is sent to the target tax authority service.
+
+            - `SENT`: The document is successfully transmitted to the target tax authority service.
+
+            - `DELIVERED`: The document is transmitted to the tax authority service and successfully delivered to the recipient.
+
+            - `NOT_DELIVERED`: The document is successfully transmitted to the target tax authority service butnot delivered to the recipient.
+
+            - `DISCARDED`: The document is discarded. This typically happens when the document is not valid for the target tax authority service.
+
+            - `REFUSED`: The document is refused. This typically happens for Public Administration entities only. It means that the document is not accepted by the recipient.
+
+            '
+          enum:
+          - DRAFT
+          - CREATED
+          - SENT
+          - DISCARDED
+          - DELIVERED
+          - NOT_DELIVERED
+          - REFUSED
+          readOnly: true
+          type: string
+        subcategory:
+          description: Subcategory data representation
+          properties:
+            id:
+              description: The id of the subcategory
+              example: 019f8035-d687-78c9-9a24-d10ddec1cf50
+              format: uuid
+              readOnly: true
+              type: string
+            name:
+              description: The description of the subcategory
+              readOnly: true
+              type: string
+          readOnly: true
+          type:
+          - object
+          - 'null'
+        type:
+          description: 'Current internal document type.
+
+
+            Possible values are:
+
+
+            - `BILL`: Represents a bill.
+
+            - `CREDIT_NOTE`: Represents a credit note.
+
+            - `DEBIT_NOTE`: Represents a debit note.
+
+            - `INVOICE`: Represents an invoice.
+
+            - `OTHER`: Represents other types of document.
+
+            - `PARCEL`: Represents a parcel.
+
+            - `SELF_INVOICE`: Represents a self-invoice.
+
+            - `DELIVERY_NOTE`: Represents a delivery note (DDT).
+
+            - `QUOTE`: Represents a quote.
+
+            '
+          enum:
+          - BILL
+          - RECEIPT
+          - CREDIT_NOTE
+          - DEBIT_NOTE
+          - INVOICE
+          - OTHER
+          - PARCEL
+          - SELF_INVOICE
+          - DELIVERY_NOTE
+          - QUOTE
+          - PAYROLL
+          readOnly: true
+          type: string
+        updated_at:
+          description: The update date time
+          format: date-time
+          readOnly: true
+          type: string
+        vat_amount:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+      title: DocumentSchema
       type: object
     IntegrationError:
       properties:
@@ -3176,25 +3159,42 @@ components:
       - errors
       title: IntegrationError
       type: object
-    DocumentList:
-      description: List of document representations
+    Page:
       properties:
-        data:
-          items:
-            $ref: '#/components/schemas/DocumentSchema'
-          type: array
-        page:
-          $ref: '#/components/schemas/Page'
-      title: DocumentList
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          type:
+          - string
+          - 'null'
+        size:
+          description: The current page size
+          type: integer
+      title: Page
       type: object
-    DocumentIssuedList:
-      description: List of issued document representations
+    DocumentUpdate:
+      description: Update document data object
       properties:
-        data:
-          items:
-            $ref: '#/components/schemas/DocumentSchema'
-          type: array
-      title: DocumentIssuedList
+        category_id:
+          description: The category identifier. Pass `null` to clear the category and the subcategory.
+          example: 019f8035-d717-7c8c-ad92-c47177ad60c3
+          format: uuid
+          type:
+          - string
+          - 'null'
+        notes:
+          description: Document notes (max 1000 characters)
+          maxLength: 1000
+          type:
+          - string
+          - 'null'
+        subcategory_id:
+          description: The subcategory identifier. Must belong to the category_id set in the same request, or to the current category if category_id is not provided, otherwise the request returns `422 Unprocessable Entity`.
+          example: 019f8035-d717-717a-a497-5e53cfdc16fd
+          format: uuid
+          type:
+          - string
+          - 'null'
+      title: DocumentUpdate
       type: object
   securitySchemes:
     authorization:

@@ -638,59 +638,6 @@ paths:
         source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/subcategories/:subcategory_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"PATCH\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
 components:
   schemas:
-    SubcategoryData:
-      description: Subcategory data object
-      properties:
-        data:
-          $ref: '#/components/schemas/SubcategorySchema'
-      title: SubcategoryData
-      type: object
-    SubcategoryList:
-      description: List of subcategory representations
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/SubcategorySchema'
-          type: array
-        page:
-          $ref: '#/components/schemas/Page'
-      title: SubcategoryList
-      type: object
-    Page:
-      properties:
-        cursor:
-          description: A cursor that can be used to fetch the next page of results
-          type:
-          - string
-          - 'null'
-        size:
-          description: The current page size
-          type: integer
-      title: Page
-      type: object
-    SubcategoryCreate:
-      description: Create subcategory data object
-      properties:
-        category_id:
-          description: The id of the parent category
-          format: uuid
-          type: string
-        name:
-          description: The name of the subcategory
-          type: string
-      required:
-      - name
-      - category_id
-      title: SubcategoryCreate
-      type: object
-    SubcategoryUpdate:
-      description: Update subcategory data object
-      properties:
-        name:
-          description: The name of the subcategory
-          type: string
-      title: SubcategoryUpdate
-      type: object
     SubcategorySchema:
       description: Subcategory data representation
       properties:
@@ -710,6 +657,13 @@ components:
           readOnly: true
           type: string
       title: SubcategorySchema
+      type: object
+    SubcategoryData:
+      description: Subcategory data object
+      properties:
+        data:
+          $ref: '#/components/schemas/SubcategorySchema'
+      title: SubcategoryData
       type: object
     IntegrationError:
       properties:
@@ -745,6 +699,52 @@ components:
       required:
       - errors
       title: IntegrationError
+      type: object
+    Page:
+      properties:
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          type:
+          - string
+          - 'null'
+        size:
+          description: The current page size
+          type: integer
+      title: Page
+      type: object
+    SubcategoryUpdate:
+      description: Update subcategory data object
+      properties:
+        name:
+          description: The name of the subcategory
+          type: string
+      title: SubcategoryUpdate
+      type: object
+    SubcategoryList:
+      description: List of subcategory representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SubcategorySchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: SubcategoryList
+      type: object
+    SubcategoryCreate:
+      description: Create subcategory data object
+      properties:
+        category_id:
+          description: The id of the parent category
+          format: uuid
+          type: string
+        name:
+          description: The name of the subcategory
+          type: string
+      required:
+      - name
+      - category_id
+      title: SubcategoryCreate
       type: object
   securitySchemes:
     authorization:

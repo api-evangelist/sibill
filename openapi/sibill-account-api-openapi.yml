@@ -261,28 +261,12 @@ paths:
         source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/accounts/:account_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"GET\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\"\n]);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
 components:
   schemas:
-    AccountList:
-      description: List of account representations
+    AccountData:
+      description: Account data object
       properties:
         data:
-          items:
-            $ref: '#/components/schemas/AccountSchema'
-          type: array
-        page:
-          $ref: '#/components/schemas/Page'
-      title: AccountList
-      type: object
-    Page:
-      properties:
-        cursor:
-          description: A cursor that can be used to fetch the next page of results
-          type:
-          - string
-          - 'null'
-        size:
-          description: The current page size
-          type: integer
-      title: Page
+          $ref: '#/components/schemas/AccountSchema'
+      title: AccountData
       type: object
     AccountSchema:
       description: Account data representation
@@ -1106,13 +1090,6 @@ components:
           - 'null'
       title: AccountSchema
       type: object
-    AccountData:
-      description: Account data object
-      properties:
-        data:
-          $ref: '#/components/schemas/AccountSchema'
-      title: AccountData
-      type: object
     IntegrationError:
       properties:
         errors:
@@ -1147,6 +1124,29 @@ components:
       required:
       - errors
       title: IntegrationError
+      type: object
+    Page:
+      properties:
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          type:
+          - string
+          - 'null'
+        size:
+          description: The current page size
+          type: integer
+      title: Page
+      type: object
+    AccountList:
+      description: List of account representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AccountSchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: AccountList
       type: object
   securitySchemes:
     authorization:

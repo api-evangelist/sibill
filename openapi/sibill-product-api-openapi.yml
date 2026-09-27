@@ -633,12 +633,234 @@ paths:
         source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/products/:product_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"PATCH\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
 components:
   schemas:
-    ProductData:
-      description: Product data object
+    ProductCreate:
+      description: Create product data object
       properties:
-        data:
-          $ref: '#/components/schemas/ProductSchema'
-      title: ProductData
+        code:
+          description: The internal code that identifies the product
+          type:
+          - string
+          - 'null'
+        description:
+          description: The description of the product
+          type: string
+        tax_exemption:
+          description: The tax exemption code, required when `vat_percentage` is `0`
+          type:
+          - string
+          - 'null'
+        unit_of_measure:
+          description: The unit of measure of the product (e.g. `pcs`, `kg`, `h`)
+          type:
+          - string
+          - 'null'
+        unit_price:
+          description: Money representation through amount and currency properties
+          example:
+            amount: '12.3'
+            currency: EUR
+          properties:
+            amount:
+              minLength: 1
+              pattern: ^[0-9]*\.?[0-9]+$
+              readOnly: false
+              type: string
+            currency:
+              enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UYW
+              - UZS
+              - VES
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL
+              readOnly: false
+              type: string
+          required:
+          - currency
+          - amount
+          type: object
+        vat_percentage:
+          description: The VAT percentage applied to the product
+          format: float
+          type: number
+      required:
+      - description
+      - unit_price
+      - vat_percentage
+      title: ProductCreate
       type: object
     ProductSchema:
       description: Product data representation
@@ -876,6 +1098,17 @@ components:
           type: number
       title: ProductSchema
       type: object
+    ProductList:
+      description: List of product representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ProductSchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: ProductList
+      type: object
     ProductUpdate:
       description: Update product data object
       properties:
@@ -1101,258 +1334,6 @@ components:
           type: number
       title: ProductUpdate
       type: object
-    ProductCreate:
-      description: Create product data object
-      properties:
-        code:
-          description: The internal code that identifies the product
-          type:
-          - string
-          - 'null'
-        description:
-          description: The description of the product
-          type: string
-        tax_exemption:
-          description: The tax exemption code, required when `vat_percentage` is `0`
-          type:
-          - string
-          - 'null'
-        unit_of_measure:
-          description: The unit of measure of the product (e.g. `pcs`, `kg`, `h`)
-          type:
-          - string
-          - 'null'
-        unit_price:
-          description: Money representation through amount and currency properties
-          example:
-            amount: '12.3'
-            currency: EUR
-          properties:
-            amount:
-              minLength: 1
-              pattern: ^[0-9]*\.?[0-9]+$
-              readOnly: false
-              type: string
-            currency:
-              enum:
-              - AED
-              - AFN
-              - ALL
-              - AMD
-              - ANG
-              - AOA
-              - ARS
-              - AUD
-              - AWG
-              - AZN
-              - BAM
-              - BBD
-              - BDT
-              - BGN
-              - BHD
-              - BIF
-              - BMD
-              - BND
-              - BOB
-              - BOV
-              - BRL
-              - BSD
-              - BTN
-              - BWP
-              - BYN
-              - BZD
-              - CAD
-              - CDF
-              - CHE
-              - CHF
-              - CHW
-              - CLF
-              - CLP
-              - CNY
-              - COP
-              - COU
-              - CRC
-              - CUC
-              - CUP
-              - CVE
-              - CZK
-              - DJF
-              - DKK
-              - DOP
-              - DZD
-              - EGP
-              - ERN
-              - ETB
-              - EUR
-              - FJD
-              - FKP
-              - GBP
-              - GEL
-              - GHS
-              - GIP
-              - GMD
-              - GNF
-              - GTQ
-              - GYD
-              - HKD
-              - HNL
-              - HRK
-              - HTG
-              - HUF
-              - IDR
-              - ILS
-              - INR
-              - IQD
-              - IRR
-              - ISK
-              - JMD
-              - JOD
-              - JPY
-              - KES
-              - KGS
-              - KHR
-              - KMF
-              - KPW
-              - KRW
-              - KWD
-              - KYD
-              - KZT
-              - LAK
-              - LBP
-              - LKR
-              - LRD
-              - LSL
-              - LYD
-              - MAD
-              - MDL
-              - MGA
-              - MKD
-              - MMK
-              - MNT
-              - MOP
-              - MRU
-              - MUR
-              - MVR
-              - MWK
-              - MXN
-              - MXV
-              - MYR
-              - MZN
-              - NAD
-              - NGN
-              - NIO
-              - NOK
-              - NPR
-              - NZD
-              - OMR
-              - PAB
-              - PEN
-              - PGK
-              - PHP
-              - PKR
-              - PLN
-              - PYG
-              - QAR
-              - RON
-              - RSD
-              - RUB
-              - RWF
-              - SAR
-              - SBD
-              - SCR
-              - SDG
-              - SEK
-              - SGD
-              - SHP
-              - SLL
-              - SOS
-              - SRD
-              - SSP
-              - STN
-              - SVC
-              - SYP
-              - SZL
-              - THB
-              - TJS
-              - TMT
-              - TND
-              - TOP
-              - TRY
-              - TTD
-              - TWD
-              - TZS
-              - UAH
-              - UGX
-              - USD
-              - USN
-              - UYI
-              - UYU
-              - UYW
-              - UZS
-              - VES
-              - VND
-              - VUV
-              - WST
-              - XAF
-              - XAG
-              - XAU
-              - XBA
-              - XBB
-              - XBC
-              - XBD
-              - XCD
-              - XDR
-              - XOF
-              - XPD
-              - XPF
-              - XPT
-              - XSU
-              - XTS
-              - XUA
-              - XXX
-              - YER
-              - ZAR
-              - ZMW
-              - ZWL
-              readOnly: false
-              type: string
-          required:
-          - currency
-          - amount
-          type: object
-        vat_percentage:
-          description: The VAT percentage applied to the product
-          format: float
-          type: number
-      required:
-      - description
-      - unit_price
-      - vat_percentage
-      title: ProductCreate
-      type: object
-    Page:
-      properties:
-        cursor:
-          description: A cursor that can be used to fetch the next page of results
-          type:
-          - string
-          - 'null'
-        size:
-          description: The current page size
-          type: integer
-      title: Page
-      type: object
-    ProductList:
-      description: List of product representations
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ProductSchema'
-          type: array
-        page:
-          $ref: '#/components/schemas/Page'
-      title: ProductList
-      type: object
     IntegrationError:
       properties:
         errors:
@@ -1387,6 +1368,25 @@ components:
       required:
       - errors
       title: IntegrationError
+      type: object
+    Page:
+      properties:
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          type:
+          - string
+          - 'null'
+        size:
+          description: The current page size
+          type: integer
+      title: Page
+      type: object
+    ProductData:
+      description: Product data object
+      properties:
+        data:
+          $ref: '#/components/schemas/ProductSchema'
+      title: ProductData
       type: object
   securitySchemes:
     authorization:
