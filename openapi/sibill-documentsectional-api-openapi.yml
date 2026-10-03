@@ -552,75 +552,6 @@ components:
       - year
       title: DocumentSectionalCreate
       type: object
-    DocumentSectionalUpdate:
-      description: Update document sectional data object
-      properties:
-        minimum_digits:
-          description: The minimum number of digits used to pad the progressive number
-          type:
-          - integer
-          - 'null'
-        prefix:
-          description: The prefix prepended to the progressive number to form the document number
-          type:
-          - string
-          - 'null'
-        suffix:
-          description: The suffix appended to the progressive number to form the document number
-          type:
-          - string
-          - 'null'
-        year:
-          description: The year the sectional applies to
-          type: integer
-      title: DocumentSectionalUpdate
-      type: object
-    DocumentSectionalList:
-      description: List of document sectional representations
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/DocumentSectionalSchema'
-          type: array
-        page:
-          $ref: '#/components/schemas/Page'
-      title: DocumentSectionalList
-      type: object
-    IntegrationError:
-      properties:
-        errors:
-          description: The list of errors encountered during the operation with detailed information
-          items:
-            properties:
-              code:
-                description: Short code identifying an error type
-                example: bad_request
-                type: string
-              detail:
-                description: The message detail that describes the error
-                example: null value where string expected
-                type:
-                - string
-                - 'null'
-              source:
-                properties:
-                  pointer:
-                    description: The exact position in the request where the error occurred
-                    example: /data/attributes/name
-                    type: string
-                type:
-                - object
-                - 'null'
-              title:
-                description: The message title that describes the error. It is a short, human-readable summary of the problem
-                example: Invalid value
-                type: string
-            type: object
-          type: array
-      required:
-      - errors
-      title: IntegrationError
-      type: object
     Page:
       properties:
         cursor:
@@ -669,12 +600,81 @@ components:
           type: integer
       title: DocumentSectionalSchema
       type: object
+    DocumentSectionalUpdate:
+      description: Update document sectional data object
+      properties:
+        minimum_digits:
+          description: The minimum number of digits used to pad the progressive number
+          type:
+          - integer
+          - 'null'
+        prefix:
+          description: The prefix prepended to the progressive number to form the document number
+          type:
+          - string
+          - 'null'
+        suffix:
+          description: The suffix appended to the progressive number to form the document number
+          type:
+          - string
+          - 'null'
+        year:
+          description: The year the sectional applies to
+          type: integer
+      title: DocumentSectionalUpdate
+      type: object
     DocumentSectionalData:
       description: Document sectional data object
       properties:
         data:
           $ref: '#/components/schemas/DocumentSectionalSchema'
       title: DocumentSectionalData
+      type: object
+    IntegrationError:
+      properties:
+        errors:
+          description: The list of errors encountered during the operation with detailed information
+          items:
+            properties:
+              code:
+                description: Short code identifying an error type
+                example: bad_request
+                type: string
+              detail:
+                description: The message detail that describes the error
+                example: null value where string expected
+                type:
+                - string
+                - 'null'
+              source:
+                properties:
+                  pointer:
+                    description: The exact position in the request where the error occurred
+                    example: /data/attributes/name
+                    type: string
+                type:
+                - object
+                - 'null'
+              title:
+                description: The message title that describes the error. It is a short, human-readable summary of the problem
+                example: Invalid value
+                type: string
+            type: object
+          type: array
+      required:
+      - errors
+      title: IntegrationError
+      type: object
+    DocumentSectionalList:
+      description: List of document sectional representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/DocumentSectionalSchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: DocumentSectionalList
       type: object
   securitySchemes:
     authorization:

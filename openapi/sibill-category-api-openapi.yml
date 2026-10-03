@@ -637,24 +637,35 @@ paths:
         source: "<?php\n\n$url = \"http://example.com/api/v1/companies/:company_id/categories/:category_id\"; // Replace with the correct Sibill integration API host\n\n$ch = curl_init($url);\n\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, \"PATCH\");\n\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    \"Authorization: Bearer ${authorization_token}\",\n    \"Content-Type: application/json\"\n]);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, <<<BODY\n${your payload here}\nBODY\n);\n\n$response = curl_exec($ch);\n\nif (curl_errno($ch)) {\n    echo 'Curl error: ' . curl_error($ch);\n} else {\n    echo 'Response:' . PHP_EOL;\n    echo $response;\n}\n\ncurl_close($ch);\n"
 components:
   schemas:
-    CategorySchema:
-      description: Category data representation
+    CategoryData:
+      description: Category data object
+      properties:
+        data:
+          $ref: '#/components/schemas/CategorySchema'
+      title: CategoryData
+      type: object
+    CategoryUpdate:
+      description: Update category data object
       properties:
         color:
           description: The color used to visually represent the category, encoded as a hex string (e.g. `#ff0000`)
-          readOnly: true
-          type: string
-        id:
-          description: The id of the category
-          example: 019f8035-9c29-7118-8d9e-0729379c8918
-          format: uuid
-          readOnly: true
           type: string
         name:
           description: The name of the category
-          readOnly: true
           type: string
-      title: CategorySchema
+      title: CategoryUpdate
+      type: object
+    Page:
+      properties:
+        cursor:
+          description: A cursor that can be used to fetch the next page of results
+          type:
+          - string
+          - 'null'
+        size:
+          description: The current page size
+          type: integer
+      title: Page
       type: object
     CategoryCreate:
       description: Create category data object
@@ -668,35 +679,6 @@ components:
       required:
       - name
       title: CategoryCreate
-      type: object
-    CategoryUpdate:
-      description: Update category data object
-      properties:
-        color:
-          description: The color used to visually represent the category, encoded as a hex string (e.g. `#ff0000`)
-          type: string
-        name:
-          description: The name of the category
-          type: string
-      title: CategoryUpdate
-      type: object
-    CategoryData:
-      description: Category data object
-      properties:
-        data:
-          $ref: '#/components/schemas/CategorySchema'
-      title: CategoryData
-      type: object
-    CategoryList:
-      description: List of category representations
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/CategorySchema'
-          type: array
-        page:
-          $ref: '#/components/schemas/Page'
-      title: CategoryList
       type: object
     IntegrationError:
       properties:
@@ -733,17 +715,35 @@ components:
       - errors
       title: IntegrationError
       type: object
-    Page:
+    CategorySchema:
+      description: Category data representation
       properties:
-        cursor:
-          description: A cursor that can be used to fetch the next page of results
-          type:
-          - string
-          - 'null'
-        size:
-          description: The current page size
-          type: integer
-      title: Page
+        color:
+          description: The color used to visually represent the category, encoded as a hex string (e.g. `#ff0000`)
+          readOnly: true
+          type: string
+        id:
+          description: The id of the category
+          example: 019f8035-9c29-7118-8d9e-0729379c8918
+          format: uuid
+          readOnly: true
+          type: string
+        name:
+          description: The name of the category
+          readOnly: true
+          type: string
+      title: CategorySchema
+      type: object
+    CategoryList:
+      description: List of category representations
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/CategorySchema'
+          type: array
+        page:
+          $ref: '#/components/schemas/Page'
+      title: CategoryList
       type: object
   securitySchemes:
     authorization:
